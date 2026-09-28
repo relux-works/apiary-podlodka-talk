@@ -1,0 +1,32 @@
+{
+  "name": "apiary-podlodka-talk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "От чат-ботов к пасеке — Podlodka talk by Relux Works, slides as code (Slidev)",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "slidev slides/slides.md --open",
+    "start": "slidev slides/slides.md",
+    "dev:flat": "VITE_FLAT_CLICKS=1 slidev slides/slides.md",
+    "lint": "python3 .scripts/check-frontmatter.py slides/slides.md themes/rwb-tech/example.md themes/rwb-minimal/example.md",
+    "verify": ".scripts/verify.sh slides/slides.md",
+    "build": "slidev build slides/slides.md --out ../dist",
+    "build:offline": "slidev build slides/slides.md --base ./ --out ../.temp/dist-offline",
+    "export": "slidev export slides/slides.md --output .temp/export/apiary-podlodka-talk.pdf",
+    "notes": "slidev export-notes slides/slides.md --output .temp/export/notes.pdf",
+    "theme:rwb-tech": "slidev themes/rwb-tech/example.md --open",
+    "theme:rwb-minimal": "slidev themes/rwb-minimal/example.md --open"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.19.1",
+    "@slidev/types": "^52.19.1",
+    "unocss": "^66.0.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.63.0"
+  }
+}

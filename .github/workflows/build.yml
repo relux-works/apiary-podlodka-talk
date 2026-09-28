@@ -1,0 +1,57 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deck:
+    name: Build, audit, PDF
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      # playwright-chromium is a devDependency: its install fetches headless Chromium.
+      - run: npm ci
+
+      - name: Lint frontmatter
+        run: npm run lint
+
+      # Offline build + every slide rendered in Chromium and measured:
+      # content inside the layout box, text inside its frame, code not clipped,
+      # console clean. Screenshots and a contact sheet land in .temp/audit.
+      - name: Verify deck
+        run: npm run verify
+
+      - name: Verify theme showcases
+        run: |
+          VERIFY_PORT=8094 .scripts/verify.sh themes/rwb-tech/example.md
+          VERIFY_PORT=8095 .scripts/verify.sh themes/rwb-minimal/example.md
+
+      - name: Export PDF
+        run: npm run export
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: slides-pdf
+          path: .temp/export/*.pdf
+          retention-days: 30
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: slides-audit
+          path: .temp/audit/
+          retention-days: 30
+          if-no-files-found: ignore

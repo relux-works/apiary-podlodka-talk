@@ -33,8 +33,9 @@ jobs:
       - name: Verify deck
         run: npm run verify
 
-      - name: Verify theme showcases
+      - name: Verify diagram gallery and theme showcases
         run: |
+          VERIFY_PORT=8093 .scripts/verify.sh slides/diagrams.md
           VERIFY_PORT=8094 .scripts/verify.sh themes/rwb-tech/example.md
           VERIFY_PORT=8095 .scripts/verify.sh themes/rwb-minimal/example.md
 

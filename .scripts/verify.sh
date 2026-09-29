@@ -21,14 +21,14 @@ if ! npx slidev build "$DECK" --base ./ --out "$PWD/.temp/dist-offline" > .temp/
   tail -30 .temp/verify.log; exit 1
 fi
 
-python3 -m http.server "$PORT" --directory .temp/dist-offline > /dev/null 2>&1 &
+python3 .scripts/serve-static.py "$PORT" .temp/dist-offline > /dev/null 2>&1 &
 SERVER=$!
 trap 'kill $SERVER 2>/dev/null || true' EXIT
-for _ in $(seq 1 20); do curl -s -o /dev/null "http://localhost:$PORT/" && break; sleep 0.2; done
+for _ in $(seq 1 25); do curl -s -o /dev/null "http://127.0.0.1:$PORT/" && break; sleep 0.2; done
 
 rm -rf .temp/audit
 set +e
-node .scripts/audit-overflow.mjs "http://localhost:$PORT/" .temp/audit "$DECK"
+node .scripts/audit-overflow.mjs "http://127.0.0.1:$PORT/" .temp/audit "$DECK"
 AUDIT=$?
 set -e
 node .scripts/contact-sheet.mjs .temp/audit

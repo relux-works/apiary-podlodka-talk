@@ -7,8 +7,6 @@ transition: fade
 # Slidev preloads slide images by their source path; for ../diagrams/… that
 # path 404s in the built deck. The images still load as bundled assets.
 preloadImages: false
-themeConfig:
-  logo: false
 layout: cover
 event: 'PODLODKA · RELUX WORKS'
 who: 'Алексей Григорьев · Иван Опарин'
@@ -21,7 +19,7 @@ role:
 <!--
 Каркас дека по plan/slides-plan.ru.md: титул, открывашки семи частей, один пример рабочего слайда и финал. Слайды заполняются по плану, текст идёт из text/from-buckets-to-apiary.ru.md.
 
-Тема — rwb-tech, пока не пришёл шаблон Подлодки; логотип RWB выключен в themeConfig, потому что доклад от Relux Works. Смена темы — одна строка theme: ../themes/rwb-minimal.
+Тема — rwb-tech с логотипом RWB (решение 29.09), пока не пришёл шаблон Подлодки. Смена темы — одна строка theme: ../themes/rwb-minimal.
 -->
 
 ---
@@ -85,10 +83,10 @@ tag: '05 · ПАСЕКА'
 
 # Имена: *пасека, точка, улей*
 
-<img src="../diagrams/one-node-system.png" alt="Одна точка: Кипер, ульи, матки, соты" style="max-height: 360px; margin: 0 auto; display: block" />
+<DiagOneNode />
 
 <!--
-Пример рабочего слайда и проверка пути к картинкам: рендеры лежат в diagrams/ и подключаются относительным путём ../diagrams/…, без копий в slides/public. Слайд 31 плана.
+Пример рабочего слайда. Схема — сценическая версия diagrams/one-node-system.png, компонент slides/components/DiagOneNode.vue; все схемы — в галерее slides/diagrams.md (npm run diagrams). Слайд 31 плана.
 
 Пасека — вся система. Точка — одна машина. Кипер — главный цикл машины. Улей — процесс: свой каталог, своя доска, свой корневой оркестратор. Матка — корневой оркестратор. Соты — доска. Пчела — один запуск.
 -->

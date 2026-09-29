@@ -34,9 +34,21 @@ These are the author's standing corrections from the previous deck. Apply them w
 | 404 in the console for a diagram | Slidev preloads images by source path | `preloadImages: false` in the headmatter; the image itself loads as a bundled asset |
 | The audit measures only the title slide | deck without `routerMode: hash` | keep `routerMode: hash` in every deck and showcase; the audit now reports unmeasured slides |
 
-Diagrams are referenced by relative path, `<img src="../diagrams/name.png">`, never copied into `slides/public/`.
+## 4. Diagrams
 
-## 4. The verification loop
+The PNGs in `diagrams/` are documentation renders from the wiki: English, light, 8–12 participants, 9–11 px text. They do not read on a dark slide in a hall. Each has a stage version in `slides/components/`, listed in `slides/diagrams.md` (`npm run diagrams`):
+
+- Russian labels, rwb-tech tokens, nothing below 13 px, at most about 12 messages or 10 boxes;
+- drawn for the thesis of its slide in the plan; content checked against the original, nothing added;
+- `<DiagName />` on a slide, `<DiagName reveal />` for click-by-click where the component supports it.
+
+Sequence diagrams are data for `<Seq>`: `actors` with `id`, `label`, optional `sub` and `tone`; `steps` as messages `{ from, to, text, dashed?, tone? }`, dividers `{ section }` and notes `{ note, at }`. Keep a message label shorter than the span it sits on. Structural diagrams are hand-placed SVG with the theme classes (`n`, `n-purple`, `n-lime`, `n-wait`, `frame`, `frame-hive`, `e`, `e-dash`, `t-big`, `t-cap`, `t-sec`). An arrow into a hive ends at the frame edge, not at a box behind the hive's label.
+
+When the original changes in the wiki or a spec, update the stage version by hand and note the source revision in the component's header comment. The audit fails on SVG text outside the drawing or its box; overlaps between labels and lines are checked by eye on the contact sheet. The components use rwb-tech classes; with rwb-minimal they need its equivalents.
+
+Images other than these diagrams are referenced by relative path, `<img src="../diagrams/name.png">`, never copied into `slides/public/`.
+
+## 5. The verification loop
 
 ```bash
 npm run verify
@@ -54,15 +66,15 @@ Then look at `.temp/audit/sheet.png`: the whole deck in one image. Open `slide-N
 
 For a click-by-click check, run `npm run dev` and open `http://localhost:3030/#/N?clicks=K`.
 
-## 5. Rehearsal mode
+## 6. Rehearsal mode
 
 `npm run dev:flat` sets `VITE_FLAT_CLICKS=1`. `slides/setup/transformers.ts` strips every `v-click` before Slidev compiles the deck, `slides/setup/main.ts` makes arrows and space move by whole slides and shows a green «FLAT · no clicks» badge. Stop it and run `npm run dev` to get the clicks back; nothing in the deck changes.
 
-## 6. Themes
+## 7. Themes
 
 Two local themes live in `themes/`; the deck picks one in its headmatter (`theme: ../themes/rwb-tech`). Details and the logo switch are in [`themes/README.md`](../themes/README.md). Switching a finished deck to the other theme is a re-layout, not a toggle: read the target theme's `STYLE.md` and rework the slides that use theme-specific classes.
 
-## 7. Delivery
+## 8. Delivery
 
 - Work on a short-lived branch, signed commits, a pull request, land the reviewed head by fast-forward (the repository's working agreement).
 - The `Build` workflow runs `verify` for the deck and both theme showcases and exports the PDF on every pull request.

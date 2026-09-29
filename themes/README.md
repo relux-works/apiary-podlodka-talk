@@ -31,7 +31,7 @@ Both themes bundle the RWB logo. A deck overrides it in the headmatter:
 
 ```yaml
 themeConfig:
-  logo: false                  # no logo anywhere (this talk)
+  logo: false                  # no logo anywhere
   # logo: /brand/logo.svg      # a file from slides/public/
   # logoAlt: Relux Works
 ```

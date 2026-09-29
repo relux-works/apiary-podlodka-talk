@@ -5,7 +5,7 @@ Private working repository for the Podlodka talk by Alexey and Ivan (Relux Works
 ## Status (2026-09-29)
 
 - The plan exists: 41 slides in seven parts, three demos, questions at the speaker switch and at the end, and cut versions for 60 and 45 minutes.
-- The toolchain is in place: Slidev deck in `slides/` (a skeleton: title, seven part openers, one example slide, final), two themes in `themes/`, a verification gate and CI. Slides are filled from the plan next. The conference template has not arrived; until it does, the deck uses our `rwb-tech` theme without the RWB logo.
+- The toolchain is in place: Slidev deck in `slides/` (a skeleton: title, seven part openers, one example slide, final), two themes in `themes/`, a verification gate and CI. Slides are filled from the plan next. The conference template has not arrived; until it does, the deck uses the `rwb-tech` theme with the RWB logo.
 - The first meeting with the Podlodka advisor is on 2026-09-29 at 14:00 MSK. A review follows about a week later; the conference date is still open.
 
 ## Speakers
@@ -21,7 +21,7 @@ Private working repository for the Podlodka talk by Alexey and Ivan (Relux Works
 | Path | What |
 | --- | --- |
 | [`AGENTS.md`](AGENTS.md) | Start here when working with an agent: sources of truth, commands, definition of done |
-| [`slides/`](slides/) | The deck (`slides.md`), rehearsal-mode setup, `public/` |
+| [`slides/`](slides/) | The deck (`slides.md`), the diagram gallery (`diagrams.md`), stage diagrams in `components/`, rehearsal-mode setup, `public/` |
 | [`themes/`](themes/) | Two Slidev themes, `rwb-tech` and `rwb-minimal`, with their style guides |
 | [`docs/deck-workflow.md`](docs/deck-workflow.md) | How we build the deck: conventions, known traps, verification, delivery |
 | [`plan/slides-plan.ru.md`](plan/slides-plan.ru.md) | The working plan: timing, every slide's theses, demos, what to prepare, sources |
@@ -61,10 +61,12 @@ Node.js 20+ and Python 3. `npm install` brings Slidev and headless Chromium (Pla
 | `.scripts/verify.sh` | lint, offline build, slide audit, contact sheet; exits non-zero on any finding | `npm run verify` | `.temp/dist-offline/`, `.temp/audit/` |
 | `.scripts/audit-overflow.mjs` | measures every slide in Chromium: overflow, text outside frames, clipped code, console errors | called by `verify` | `.temp/audit/slide-NN.png`, `audit.json` |
 | `.scripts/contact-sheet.mjs` | the whole deck in one image | called by `verify` | `.temp/audit/sheet.png` |
+| `.scripts/serve-static.py` | static server for the audit; the stock `http.server` refuses parallel module requests | called by `verify` | — |
 | Slidev export | PDF | `npm run export` | `.temp/export/apiary-podlodka-talk.pdf` |
+| Diagram gallery | the stage versions of all diagrams, one per slide | `npm run diagrams` | http://localhost:3030 |
 | Theme showcases | every layout and component of a theme | `npm run theme:rwb-tech`, `npm run theme:rwb-minimal` | http://localhost:3030 |
 | `.scripts/check-recording.sh` | a demo recording has an audio track that is not silence | `.scripts/check-recording.sh <file>` | stdout |
-| GitHub Actions `Build` | lint, verify deck and both showcases, PDF, on every push and pull request | automatic | artifacts `slides-pdf`, `slides-audit` |
+| GitHub Actions `Build` | lint, verify the deck, the diagram gallery and both showcases, PDF, on every push and pull request | automatic | artifacts `slides-pdf`, `slides-audit` |
 | GitHub Actions `Release` | on a `v*` tag: HTML archive with `HOW_TO_RUN.md` and PDF as a GitHub Release | `git tag -s vX.Y.Z && git push origin vX.Y.Z` | release assets |
 
 `.temp/`, `dist/` and `node_modules/` are gitignored.

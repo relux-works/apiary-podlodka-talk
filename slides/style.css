@@ -4,3 +4,11 @@ html.flat-clicks .slidev-vclick-hidden {
   visibility: visible !important;
   pointer-events: auto !important;
 }
+
+/* Stage diagrams (components/Diag*.vue): frames, dashed edges, text on purple, label knock-out. */
+.slidev-layout svg .frame { fill: none; stroke: var(--rwb-dim); stroke-width: 1.25; }
+.slidev-layout svg .frame-hive { fill: none; stroke: var(--rwb-purple); stroke-width: 1.5; }
+.slidev-layout svg .e-dash { stroke: var(--rwb-sec); stroke-width: 1.25; fill: none; stroke-dasharray: 5 4; }
+.slidev-layout svg .t-on { fill: rgba(255, 255, 255, 0.82); }
+.slidev-layout svg .knock { fill: var(--rwb-bg); }
+.slidev-layout svg .n-wait.note-bg { fill: var(--rwb-bg); }

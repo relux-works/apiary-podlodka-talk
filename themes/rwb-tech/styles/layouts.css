@@ -9,6 +9,8 @@
 .slidev-layout.rwb-cover .who { margin-top: 28px; color: var(--rwb-sec); font-size: 19px; line-height: 1.45; }
 .slidev-layout.rwb-cover .who .name { color: var(--rwb-txt); }
 .slidev-layout.rwb-cover .contacts { position: absolute; left: 36px; bottom: 30px; font-family: var(--rwb-mono); font-size: 14px; color: var(--rwb-sec); }
+.slidev-layout.rwb-cover .rwb-cover-logo { position: absolute; left: 36px; bottom: 30px; }
+.slidev-layout.rwb-cover .contacts.with-logo { left: 150px; bottom: 34px; }
 
 /* Открывашка части: фиолетовый фон, крупный заголовок, 3D-иконка шаблона справа, лесенка квадратов */
 .slidev-layout.rwb-section { background: var(--rwb-purple); color: var(--rwb-txt); overflow: hidden; }

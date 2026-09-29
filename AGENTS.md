@@ -12,6 +12,7 @@ Read this file first, then [`docs/deck-workflow.md`](docs/deck-workflow.md) befo
 | Slide list, timing, demos | [`plan/slides-plan.ru.md`](plan/slides-plan.ru.md) | Slide numbers everywhere refer to this plan. |
 | Open items and decisions | [`open-questions.md`](open-questions.md) | Living list. Anything unverified, estimated or waiting on a person goes here. |
 | The deck | [`slides/slides.md`](slides/slides.md) | Slidev. Speaker notes hold the full spoken text. |
+| Diagrams on slides | [`slides/components/Diag*.vue`](slides/components/), gallery [`slides/diagrams.md`](slides/diagrams.md) | Stage versions of `diagrams/`: Russian, theme tokens, one per slide thesis. Use these, not the PNGs. |
 | Look and layout vocabulary | [`themes/<theme>/STYLE.md`](themes/) | Read the active theme's guide before changing layouts. |
 | Diagrams, cases, research | `diagrams/`, `cases/`, `research/` | Copies from the wiki and curator-playbook. Do not edit; refresh from source. |
 
@@ -35,6 +36,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run lint` | frontmatter traps (`: ` and ` #` in unquoted values) | stdout |
 | `npm run verify` | lint → offline build → every slide measured in Chromium → contact sheet | `.temp/audit/sheet.png`, `slide-NN.png`, `audit.json` |
 | `npm run export` | PDF | `.temp/export/apiary-podlodka-talk.pdf` |
+| `npm run diagrams` | gallery of all stage diagrams | http://localhost:3030 |
 | `npm run theme:rwb-tech`, `theme:rwb-minimal` | theme showcases | http://localhost:3030 |
 | `.scripts/check-recording.sh <file>` | a demo recording has video, an audio track, and the track is not silence | stdout |
 
@@ -49,5 +51,5 @@ Then read `open-questions.md` and the part of the plan you are working on.
 
 - Russian for talk content, English for repository docs.
 - No personal data, credentials or business topics.
-- The active theme is `rwb-tech` with the RWB logo switched off (`themeConfig.logo: false`): the talk is Relux Works, not RWB. The Podlodka template may replace our themes; see `open-questions.md`.
+- The active theme is `rwb-tech` with the RWB logo (decided 29.09). The Podlodka template may replace it; see `open-questions.md`.
 - Mark vision slides as vision («видение» or «в спеке, предложено»), as the plan's tone section requires.

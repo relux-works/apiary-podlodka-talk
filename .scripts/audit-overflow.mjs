@@ -82,6 +82,16 @@ for (let n = 1; n <= total; n++) {
       if (el.scrollWidth > el.clientWidth + 1) tight.push('pre:' + (el.scrollWidth - el.clientWidth) + 'px ' + el.textContent.trim().slice(0, 24))
     }
     for (const svg of lay.querySelectorAll('svg')) {
+      // Text drawn past the drawing's own bounds is cut off by the svg viewport
+      const vb = svg.viewBox && svg.viewBox.baseVal
+      const vw = vb && vb.width ? vb.width : +svg.getAttribute('width') || 0
+      const vh = vb && vb.height ? vb.height : +svg.getAttribute('height') || 0
+      if (vw && vh) {
+        for (const tx of svg.querySelectorAll('text')) {
+          let bb; try { bb = tx.getBBox() } catch { continue }
+          if (bb.width && (bb.x < -1 || bb.y < -1 || bb.x + bb.width > vw + 1 || bb.y + bb.height > vh + 1)) tight.push('svg-edge:' + tx.textContent.trim().slice(0, 30))
+        }
+      }
       const rects = [...svg.querySelectorAll('rect')].map(r => ({ x: +r.getAttribute('x'), y: +r.getAttribute('y'), w: +r.getAttribute('width'), h: +r.getAttribute('height') }))
       for (const tx of svg.querySelectorAll('text')) {
         let bb; try { bb = tx.getBBox() } catch { continue }

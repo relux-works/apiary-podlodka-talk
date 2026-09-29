@@ -8,13 +8,14 @@ withDefaults(defineProps<{ event?: string, who?: string, role?: string | string[
     <img v-if="image" class="cover-img" :src="withBase(image)" alt="" />
     <div v-if="image && subline" class="subline">{{ subline }}</div>
     <Tag v-if="event && !image" :text="event" class="absolute left-9 top-8" />
-    <RwbLogo v-if="logo !== false && !image" class="absolute right-9 top-8" />
     <slot />
     <div v-if="who" class="who">
       <div class="name">{{ who }}</div>
       <div v-for="(line, i) in (Array.isArray(role) ? role : role ? [role] : [])" :key="i">{{ line }}</div>
     </div>
-    <div v-if="contacts" class="contacts">{{ contacts }}</div>
+    <div v-if="contacts" class="contacts" :class="{ 'with-logo': logo !== false && !image }">{{ contacts }}</div>
     <Squares v-if="!image" set="statement" />
+    <!-- после лесенки: справа вверху логотип перекрывал квадрат; на текстовом титуле он внизу слева -->
+    <RwbLogo v-if="logo !== false && !image" class="rwb-cover-logo" />
   </div>
 </template>

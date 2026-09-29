@@ -58,7 +58,6 @@ class: dense
 <style>
 .p12-pill { margin: 0 0 8px 0 !important; }
 .p12-pill .rwb-status { margin-left: 0; }
-.p12-pill .rwb-status.st-open { box-shadow: inset 0 0 0 1.5px var(--rwb-sec-card); color: var(--rwb-sec-card); }
 .p12-nw { white-space: nowrap; }
 </style>
 
@@ -201,7 +200,6 @@ tag: '02 · ДОСКА И АВТОНОМИЯ'
 <style>
 .p12-pill { margin: 0 0 8px 0 !important; }
 .p12-pill .rwb-status { margin-left: 0; }
-.p12-pill .rwb-status.st-open { box-shadow: inset 0 0 0 1.5px var(--rwb-sec-card); color: var(--rwb-sec-card); }
 .p12-nw { white-space: nowrap; }
 </style>
 

@@ -48,7 +48,7 @@ tag: '03 · КРОСС-ХАРНЕСС'
 
 <p class="note st-legend" v-click="3"><Status v="today" text="Claude и Codex — сегодня" /><Status v="proposed" text="Muse, agy, Pi, Qwen — в спеке" /></p>
 
-<p class="lead" v-click="4">Какая модель делает работу, решают роль и политика, а не вкладка, в которой сидит человек.</p>
+<p class="lead" v-click="4">Какая модель делает работу, решают роль и политика. Вкладки человек больше не переключает.</p>
 
 <style>
 .st-legend { margin: 0; }

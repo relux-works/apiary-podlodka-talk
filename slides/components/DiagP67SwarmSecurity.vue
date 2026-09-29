@@ -56,7 +56,7 @@ const odds = [['1 ревьюер', '0,37'], ['2 ревьюера', '0,14'], ['3 
     <text x="16" y="318" class="t-cap">кворум: решение несёт подписи поддержавших</text>
     <!-- иллюстрация из статьи -->
     <rect x="478.75" y="226.75" width="428.5" height="108" rx="12" class="frame" />
-    <text x="494" y="250" class="t-head t-sec">ШАНС, ЧТО ПОДСАЖЕННЫЙ ДЕФЕКТ ПРОЙДЁТ</text>
+    <text x="494" y="250" class="t-head t-sec">ШАНС, ЧТО ПОСЕЯННАЯ УЯЗВИМОСТЬ ПРОЙДЁТ</text>
     <g v-for="(o, i) in odds" :key="o[0]">
       <text :x="494 + i * 140" y="286" class="odds t-lilac">{{ o[1] }}</text>
       <text :x="494 + i * 140" y="304" class="t-cap t-sec">{{ o[0] }}</text>

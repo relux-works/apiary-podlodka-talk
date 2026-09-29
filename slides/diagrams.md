@@ -195,3 +195,367 @@ tag: 'ЗАПАС · ПРЕДЛОЖЕНО'
 <!--
 DiagEstop — сценическая версия diagrams/emergency-stop.png. Раскрытие по кликам: <DiagEstop reveal />.
 -->
+
+---
+layout: default
+tag: 'ЧАСТИ 1–2 · DiagP12Epochs'
+class: dense
+---
+
+# DiagP12Epochs
+
+<DiagP12Epochs />
+
+<!--
+Слайды 2–7, эпохи. Лента эпох над каждым слайдом части 1: пройденные — серые, текущая — сиренью, будущие — пунктиром.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 1–2 · DiagP12Goals'
+class: dense
+---
+
+# DiagP12Goals
+
+<DiagP12Goals />
+
+<!--
+Слайд 11, цели. У оркестратора — цель доски (слот parent/primary, одна на доску), у каждого спавна — своя
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 1–2 · DiagP12Jam'
+class: dense
+---
+
+# DiagP12Jam
+
+<DiagP12Jam />
+
+<!--
+Слайд 6, эпоха 4 «пробки». Разные классы задач идут в одного агента на одной модели; заплатки — Ralph loop
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 1–2 · DiagP12Landing'
+class: dense
+---
+
+# DiagP12Landing
+
+<DiagP12Landing />
+
+<!--
+Слайд 10, Change Request и приземление. Worktree на story → Change Request (неизменяемая ревизия) → проверки
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 1–2 · DiagP12Loop'
+class: dense
+---
+
+# DiagP12Loop
+
+<DiagP12Loop />
+
+<!--
+Слайды 2–5, эпохи 0–3. Один и тот же цикл разработки — «контекст → ответ → правка → сборка → ошибки» —
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 1–2 · DiagP12Phases'
+class: dense
+---
+
+# DiagP12Phases
+
+<DiagP12Phases />
+
+<!--
+Слайд 8, task-board. Слева — иерархия Epic → Story → Task/Bug в .task-board/ репозитория и эскалация
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 1–2 · DiagP12Review'
+class: dense
+---
+
+# DiagP12Review
+
+<DiagP12Review />
+
+<!--
+Слайд 9, цикл продюсер → ревьюер → доработка. Оркестратор спавнит обоих; ревьюер — модель другой семьи;
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 1–2 · DiagP12Vendors'
+class: dense
+---
+
+# DiagP12Vendors
+
+<DiagP12Vendors />
+
+<!--
+Слайд 7, эпоха 5: оркестраторы внутри одного вендора. Codex спавнит Codex, Claude спавнит Claude,
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34Layer'
+class: dense
+---
+
+# DiagP34Layer
+
+<DiagP34Layer />
+
+<!--
+Слайд 16, слой абстракции: оркестратор в любой среде спавнит сабагентов в любой другой. Новая схема.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34Network'
+class: dense
+---
+
+# DiagP34Network
+
+<DiagP34Network />
+
+<!--
+Слайд 19, несколько подписок на одной машине: сетевые профили. Новая схема по картинке цели спеки.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34OneSite'
+class: dense
+---
+
+# DiagP34OneSite
+
+<DiagP34OneSite />
+
+<!--
+Слайд 21, одна точка сборки запуска. Новая схема.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34Profile'
+class: dense
+---
+
+# DiagP34Profile
+
+<DiagP34Profile />
+
+<!--
+Слайд 20, Curator: профиль превращается в управляемый дом, у каждого агента свой контекст. Новая схема.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34Roles'
+class: dense
+---
+
+# DiagP34Roles
+
+<DiagP34Roles />
+
+<!--
+Слайд 23, модели меняются каждую неделю: роль пишет потребности, оператор привязывает, реестр держит строку на модель.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34Router'
+class: dense
+---
+
+# DiagP34Router
+
+<DiagP34Router />
+
+<!--
+Слайд 18, экономика токенов: роутер и его четыре вопроса. Новая схема.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34ThreeTabs'
+class: dense
+---
+
+# DiagP34ThreeTabs
+
+<DiagP34ThreeTabs />
+
+<!--
+Слайд 15, проблема кросс-харнесса: секьюрити-ревью в три вкладки. Новая схема, не из diagrams/.
+-->
+
+---
+layout: default
+tag: 'ЧАСТЬ 5 · DiagP5Anatomy'
+class: dense
+---
+
+# DiagP5Anatomy
+
+<DiagP5Anatomy />
+
+<!--
+Слайд 25, процессы как конфигурация. Анатомия Playbook.json и опубликованного плейбука как набора скиллов.
+-->
+
+---
+layout: default
+tag: 'ЧАСТЬ 5 · DiagP5Cafe'
+class: dense
+---
+
+# DiagP5Cafe
+
+<DiagP5Cafe />
+
+<!--
+Слайд 27, не только код. Заказ поставщику в кафе: четыре вида владельцев на одной машинке.
+-->
+
+---
+layout: default
+tag: 'ЧАСТЬ 5 · DiagP5Dreams'
+class: dense
+---
+
+# DiagP5Dreams
+
+<DiagP5Dreams />
+
+<!--
+Слайд 34, сны. Всё на схеме — предложено 2026-09-25.
+-->
+
+---
+layout: default
+tag: 'ЧАСТЬ 5 · DiagP5Extends'
+class: dense
+---
+
+# DiagP5Extends
+
+<DiagP5Extends />
+
+<!--
+Слайд 26, только отличия. extends и uses поверх dev-cycle.
+-->
+
+---
+layout: default
+tag: 'ЧАСТЬ 5 · DiagP5MusicVideo'
+class: dense
+---
+
+# DiagP5MusicVideo
+
+<DiagP5MusicVideo />
+
+<!--
+Слайд 28, клип за 19 часов как плейбук. Схема процесса, без кадров и звука: кто владеет каким шагом.
+-->
+
+---
+layout: default
+tag: 'ЧАСТЬ 5 · DiagP5Rules'
+class: dense
+---
+
+# DiagP5Rules
+
+<DiagP5Rules />
+
+<!--
+Слайд 29, проверка на реальных пайплайнах. Левая колонка — восемь правил процесса, которые несут длинные промпты
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 6–7 · DiagP67Envelope'
+class: dense
+---
+
+# DiagP67Envelope
+
+<DiagP67Envelope />
+
+<!--
+Слайд 35, waggle: подпись важнее канала. Новая схема части 6.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 6–7 · DiagP67Fencing'
+class: dense
+---
+
+# DiagP67Fencing
+
+<DiagP67Fencing />
+
+<!--
+Слайд 36, два оператора на одной доске. Новая схема части 6.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 6–7 · DiagP67Future'
+class: dense
+---
+
+# DiagP67Future
+
+<DiagP67Future />
+
+<!--
+Слайд 39, картинка будущего. Видение. Новая схема части 6.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 6–7 · DiagP67SwarmSecurity'
+class: dense
+---
+
+# DiagP67SwarmSecurity
+
+<DiagP67SwarmSecurity />
+
+<!--
+Слайд 38, безопасность роя. Видение. Новая схема части 6.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 6–7 · DiagP67WildBees'
+class: dense
+---
+
+# DiagP67WildBees
+
+<DiagP67WildBees />
+
+<!--
+Слайд 37, рой над одной средой. Видение. Новая схема части 6.
+-->

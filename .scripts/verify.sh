@@ -12,6 +12,9 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 DECK="${1:-slides/slides.md}"
 PORT="${VERIFY_PORT:-8093}"
+# Never measure someone else's build: skip ports that already have a listener
+# (a parallel verify in another worktree, a dev server).
+while lsof -nP -iTCP:"$PORT" -sTCP:LISTEN > /dev/null 2>&1; do PORT=$((PORT + 1)); done
 mkdir -p .temp
 
 python3 .scripts/check-frontmatter.py "$DECK"

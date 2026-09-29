@@ -5,7 +5,7 @@ Private working repository for the Podlodka talk by Alexey and Ivan (Relux Works
 ## Status (2026-09-29)
 
 - The plan exists: 41 slides in seven parts, three demos, questions at the speaker switch and at the end, and cut versions for 60 and 45 minutes.
-- The toolchain is in place: Slidev deck in `slides/` (a skeleton: title, seven part openers, one example slide, final), two themes in `themes/`, a verification gate and CI. Slides are filled from the plan next. The conference template has not arrived; until it does, the deck uses the `rwb-tech` theme with the RWB logo.
+- The deck is built from the plan: `slides/slides.md` (title) and one file per part in `slides/parts/`, 57 slides with the openers, full speaker notes, every claim marked with its status and every number cited in the notes. 26 new stage diagrams join the 14 redrawn ones (`npm run diagrams`). Theme: `rwb-tech` with the RWB logo until the conference template arrives. What still needs a person is in `open-questions.md`.
 - The first meeting with the Podlodka advisor is on 2026-09-29 at 14:00 MSK. A review follows about a week later; the conference date is still open.
 
 ## Speakers

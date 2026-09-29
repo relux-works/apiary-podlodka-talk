@@ -19,18 +19,30 @@ page.on('console', m => { if (m.type() === 'error' && !/Wake Lock/.test(m.text()
 page.on('pageerror', e => { if (!/Wake Lock/.test(String(e))) errors.push(String(e)) })
 
 // Slide count comes from the deck source: every `---` that opens a slide
-// (a frontmatter block or a bare separator) starts a new page.
-const deck = process.argv[4] || 'slides.md'
-const lines = fs.readFileSync(deck, 'utf8').split('\n')
-let total = 0
-for (let i = 0; i < lines.length; i++) {
-  if (lines[i].trim() !== '---') continue
-  total++
-  if (i + 1 < lines.length && /^[A-Za-z_][\w-]*:/.test(lines[i + 1])) {
-    i++
-    while (i < lines.length && lines[i].trim() !== '---') i++
+// (a frontmatter block or a bare separator) starts a new page. A slide whose
+// frontmatter is `src: file.md` is replaced by that file's slides.
+function countSlides(file) {
+  const lines = fs.readFileSync(file, 'utf8').split('\n')
+  let n = 0
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim() !== '---') continue
+    if (i + 1 < lines.length && /^[A-Za-z_][\w-]*:/.test(lines[i + 1])) {
+      let src = null
+      i++
+      while (i < lines.length && lines[i].trim() !== '---') {
+        const m = lines[i].match(/^src:\s*['"]?([^'"#]+?)['"]?\s*$/)
+        if (m) src = m[1]
+        i++
+      }
+      n += src ? countSlides(path.resolve(path.dirname(file), src)) : 1
+    } else {
+      n++
+    }
   }
+  return n
 }
+const deck = process.argv[4] || 'slides.md'
+const total = countSlides(deck)
 if (!total) { console.error('could not determine slide count'); process.exit(2) }
 
 const rows = []

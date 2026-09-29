@@ -7,7 +7,8 @@ How we build a talk as code. The process and the traps below come from the iOS C
 - **The post first, the deck from the post.** Slides follow the chapters of `text/from-buckets-to-apiary.ru.md`; the plan maps chapters to slides. If a slide needs a thesis the post does not have, write it into the post at its source (relux-works/blog) and re-copy, or note it in the pull request for the post's owner.
 - **Speaker notes are the speech.** Each slide ends with an HTML comment holding full paragraphs of what is said, not bullets. Do not shorten them when editing a slide. After a rehearsal, rewrite the notes from the transcript.
 - **Numbers are researched, never invented.** Every figure gets a source; an estimate is labelled as an estimate in the notes and listed in `open-questions.md` with what would confirm it.
-- **Vision is labelled.** The plan's tone rule: what works today and what is vision are separated on the slide itself.
+- **Vision is labelled.** The plan's tone rule: what works today and what is vision are separated on the slide itself. Use `<Status v="today|decided|proposed|vision|open" />` — a pill after the title or next to an item («работает сегодня», «решено», «в спеке, предложено», «видение», «открыто»). The status comes from the source (`docs/sources.md`), not from how confident the slide sounds.
+- **The deck is split by part.** `slides/slides.md` holds the title and imports `slides/parts/<n>-<name>.md` through `src:`; each part file starts with its opener. Lint and the audit follow the imports.
 
 ## 2. Slide conventions
 

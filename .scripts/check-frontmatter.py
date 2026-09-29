@@ -19,6 +19,21 @@ BLOCK_START_RE = re.compile(r'^[A-Za-z_][A-Za-z0-9_-]*:')
 SPECIAL = set("'\"|>[{&*!%@")
 
 
+SRC_RE = re.compile(r'^src:[ \t]*[\'"]?([^\'"#]+?)[\'"]?[ \t]*$')
+
+
+def imported(path):
+    """Files a deck pulls in through `src:` slides, recursively."""
+    out = []
+    for line in path.read_text().split('\n'):
+        m = SRC_RE.match(line)
+        if m:
+            child = (path.parent / m.group(1)).resolve()
+            if child.exists():
+                out += [child] + imported(child)
+    return out
+
+
 def offenders(path):
     lines = path.read_text().split('\n')
     found = []
@@ -65,11 +80,18 @@ def main(argv):
         print('usage: check-frontmatter.py <deck.md> [...]', file=sys.stderr)
         return 2
     total = 0
+    paths = []
     for arg in argv:
         path = pathlib.Path(arg)
         if not path.is_file():
             print('missing file: %s' % arg, file=sys.stderr)
             return 2
+        for p in [path.resolve()] + imported(path):
+            if p not in paths:
+                paths.append(p)
+    cwd = pathlib.Path.cwd()
+    for p in paths:
+        path = p.relative_to(cwd) if p.is_relative_to(cwd) else p
         for line_no, key, value, reason in offenders(path):
             total += 1
             print('%s:%d: %s: %s' % (path, line_no, key, value), file=sys.stderr)
@@ -77,7 +99,7 @@ def main(argv):
     if total:
         print('\n%d unquoted frontmatter scalar(s)' % total, file=sys.stderr)
         return 1
-    print('frontmatter ok: %s' % ', '.join(argv))
+    print('frontmatter ok: %d file(s): %s' % (len(paths), ', '.join(str(p.relative_to(cwd) if p.is_relative_to(cwd) else p) for p in paths)))
     return 0
 
 

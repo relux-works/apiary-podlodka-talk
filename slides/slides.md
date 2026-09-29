@@ -22,106 +22,33 @@ about: 'Вместе представляем проект нашей откры
 <!--
 Представляемся оба: Алексей — технический руководитель RnD-разработки (Tech Lead) в МТС, Иван — старший программный инженер в RWB. Вместе мы делаем открытую агентскую инфраструктуру Relux Works, и сегодня показываем её проект.
 
-Каркас дека по plan/slides-plan.ru.md: титул, открывашки семи частей, один пример рабочего слайда и финал. Слайды заполняются по плану, текст идёт из text/from-buckets-to-apiary.ru.md.
-
 Тема — rwb-tech с логотипом RWB (решение 29.09), пока не пришёл шаблон Подлодки. Смена темы — одна строка theme: ../themes/rwb-minimal.
 -->
 
 ---
-layout: section
-num: '01'
-sub: 'Алексей · 8 минут · слайды 1–7'
-icon: notepad
-transition: slide-left
+src: ./parts/1-epochs.md
 ---
 
-# Эпохи
-
-<!--
-Stack Overflow → чат и вёдра → скрипты → агенты → пробки → оркестраторы внутри вендора. На каждом слайде одно и то же: какой класс задач решали, чем и чего это стоило.
--->
-
 ---
-layout: section
-num: '02'
-sub: 'Алексей · 17 минут · демо 1'
-icon: cubes
-transition: slide-left
+src: ./parts/2-board.md
 ---
 
-# Доска и автономия
-
 ---
-layout: section
-num: '03'
-sub: 'Алексей · 10 минут · демо 2'
-icon: server
-transition: slide-left
+src: ./parts/3-cross-harness.md
 ---
 
-# Кросс-харнесс
-
 ---
-layout: section
-num: '04'
-sub: 'Алексей · 9 минут'
-icon: computer
-transition: slide-left
+src: ./parts/4-no-lock-in.md
 ---
 
-# Без привязки к вендору
-
 ---
-layout: section
-num: '05'
-sub: 'Иван · 18 минут · демо 3'
-icon: cubes
-transition: slide-left
+src: ./parts/5-apiary.md
 ---
 
-# Пасека: процессы как конфигурация
-
 ---
-layout: default
-tag: '05 · ПАСЕКА'
+src: ./parts/6-swarm.md
 ---
 
-# Имена: *пасека, точка, улей*
-
-<DiagOneNode />
-
-<!--
-Пример рабочего слайда. Схема — сценическая версия diagrams/one-node-system.png, компонент slides/components/DiagOneNode.vue; все схемы — в галерее slides/diagrams.md (npm run diagrams). Слайд 31 плана.
-
-Пасека — вся система. Точка — одна машина. Кипер — главный цикл машины. Улей — процесс: свой каталог, своя доска, свой корневой оркестратор. Матка — корневой оркестратор. Соты — доска. Пчела — один запуск.
--->
-
 ---
-layout: section
-num: '06'
-sub: 'Иван · 11 минут'
-icon: server
-transition: slide-left
+src: ./parts/7-where-we-are.md
 ---
-
-# Распределённая пасека и рой
-
----
-layout: section
-num: '07'
-sub: 'Оба · 4 минуты'
-icon: notepad
-transition: slide-left
----
-
-# Где мы
-
----
-layout: end
-who: 'Алексей Григорьев · Иван Опарин'
-motif: smile
----
-
-# Спасибо
-
-<p class="lead">Вопросы.</p>

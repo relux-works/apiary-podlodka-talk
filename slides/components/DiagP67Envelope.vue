@@ -55,7 +55,7 @@ const pipes = ['NATS JetStream', 'IRC · XMPP', 'Telegram · Slack', 'почта
     <Step :on="reveal">
       <line x1="644" y1="134" x2="679" y2="134" class="e" :marker-end="`url(#${id})`" />
       <rect x="682.75" y="0.75" width="224.5" height="262" rx="14" class="frame" />
-      <text x="698" y="22" class="t-head t-sec">ТОЧКА БОБА</text>
+      <text x="698" y="22" class="t-head t-sec">МАШИНА БОБА</text>
       <rect x="698" y="36" width="194" height="98" rx="10" class="n-lilac" />
       <text x="795" y="59" text-anchor="middle" class="t-big t-ink">Проверка хоста</text>
       <text x="795" y="80" text-anchor="middle" class="t-ink-sec">подписи по ростеру</text>

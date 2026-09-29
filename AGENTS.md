@@ -1,6 +1,6 @@
 # Agent guide
 
-This repository is the working space for a paired Podlodka talk by Alexey Grigoryev and Ivan Oparin (Relux Works): «От чат-ботов к пасеке», 90 minutes, 41 slides in seven parts, three demos. Alexey presents parts 1–4 (the mechanics: board, autonomy, cross-harness, no vendor lock-in); Ivan presents parts 5–6 (the Apiary, the distributed Apiary and the swarm); part 7 and questions are joint.
+This repository is the working space for a paired Podlodka talk by Alexey Grigoryev and Ivan Oparin (Relux Works), about 45 minutes (ceiling 50) since v4 of 29.09: an opening together, Alexey's half (epochs, the board and autonomy, no vendor lock-in with routing and one-machine communication), Ivan's half (the agent context manager, processes as configuration, across machines and the swarm), a recap together, questions at the end. The plan is `plan/slides-plan.ru.md`, the decisions behind it `plan/deck-v4-brief.md`.
 
 Read this file first, then [`docs/sources.md`](docs/sources.md) and [`docs/deck-workflow.md`](docs/deck-workflow.md) before touching slides.
 

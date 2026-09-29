@@ -629,3 +629,269 @@ class: dense
 <!--
 Слайд после «Снов», третий вход. Одна форма командных строк: keeper для человека, под ним curator (машина и хост сессий),
 -->
+
+---
+layout: default
+tag: 'V4 · ВСТУПЛЕНИЕ, ГЛАВЫ 1–2 · DiagV4AAutonomy'
+class: dense
+---
+
+# DiagV4AAutonomy
+
+<DiagV4AAutonomy />
+
+<!--
+v4, глава 2, слайд «Человек уходит в начало и в конец». Внимание человека до и после оркестратора:
+-->
+
+---
+layout: default
+tag: 'V4 · ВСТУПЛЕНИЕ, ГЛАВЫ 1–2 · DiagV4ACrash'
+class: dense
+---
+
+# DiagV4ACrash
+
+<DiagV4ACrash />
+
+<!--
+v4, глава 2, слайд «Мы переживаем падения» (бывшие «Эксплуатация: что ломается» и «Рестарт хоста»).
+-->
+
+---
+layout: default
+tag: 'V4 · ВСТУПЛЕНИЕ, ГЛАВЫ 1–2 · DiagV4ALanding'
+class: dense
+---
+
+# DiagV4ALanding
+
+<DiagV4ALanding />
+
+<!--
+v4, глава 2 «Доска и автономия», слайд «Каждая история приземляется через ревью».
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВА 3 · DiagV4BOneMachine'
+class: dense
+---
+
+# DiagV4BOneMachine
+
+<DiagV4BOneMachine />
+
+<!--
+Plan v4 slide 32: communication on one machine, problem and solution in one geometry. New stage diagram (v4, 29.09).
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВА 3 · DiagV4BPolicy'
+class: dense
+---
+
+# DiagV4BPolicy
+
+<DiagV4BPolicy />
+
+<!--
+Plan v4 slide 28: the launch policy is configured at runtime. New stage diagram (v4, 29.09).
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВА 3 · DiagV4BSecReview'
+class: dense
+---
+
+# DiagV4BSecReview
+
+<DiagV4BSecReview />
+
+<!--
+Plan v4 slide 26: security review as dependent tasks on one board. New stage diagram (v4, 29.09).
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВА 3 · DiagV4BStack'
+class: dense
+---
+
+# DiagV4BStack
+
+<DiagV4BStack />
+
+<!--
+Plan v4 slide 33, the summary of the first half: we do not need our own agent harness. A simplified replacement of
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 4–5 · DiagV4CHardcoded'
+class: dense
+---
+
+# DiagV4CHardcoded
+
+<DiagV4CHardcoded />
+
+<!--
+v4, слайд 39: проблема главы 5 — процесс зашит в код ядра task-board.
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 4–5 · DiagV4CMachine'
+class: dense
+---
+
+# DiagV4CMachine
+
+<DiagV4CMachine />
+
+<!--
+v4, слайд 44: главный оркестратор машины над оркестраторами процессов. Технические термины вместо пасечных
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 4–5 · DiagV4CPackages'
+class: dense
+---
+
+# DiagV4CPackages
+
+<DiagV4CPackages />
+
+<!--
+v4, слайд 37: семантика пакетного менеджера. Сжатие слайдов «Скилл с командой», «Установка — это цепочка проверок»
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 4–5 · DiagV4CPlaybook'
+class: dense
+---
+
+# DiagV4CPlaybook
+
+<DiagV4CPlaybook />
+
+<!--
+v4, слайд 40: процесс разработки из первой половины — в Playbook.json; роли — это скиллы.
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 4–5 · DiagV4CProfile'
+class: dense
+---
+
+# DiagV4CProfile
+
+<DiagV4CProfile />
+
+<!--
+v4, слайд 36: профиль — новая единица контекста. Простая картинка вместо DiagP34Profile (та — в запасе).
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 4–5 · DiagV4CValidate'
+class: dense
+---
+
+# DiagV4CValidate
+
+<DiagV4CValidate />
+
+<!--
+v4, слайд 42: валидатор проверяет граф процесса до запуска.
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 6–7 · DiagV4DFuture'
+class: dense
+---
+
+# DiagV4DFuture
+
+<DiagV4DFuture />
+
+<!--
+v4, глава 6, слайд 52 «Картинка будущего». Видение. Замена DiagP67Future для основного потока.
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 6–7 · DiagV4DProblem'
+class: dense
+---
+
+# DiagV4DProblem
+
+<DiagV4DProblem />
+
+<!--
+v4, глава 6, слайд 47 «Проблема»: два оркестратора на разных машинах ведут пересекающиеся модули.
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 6–7 · DiagV4DRecap'
+class: dense
+---
+
+# DiagV4DRecap
+
+<DiagV4DRecap />
+
+<!--
+v4, глава 7, слайд 53 «Итог»: выводы доклада крупными строками, по главам 2–6 плана v4 (plan/slides-plan.ru.md).
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 6–7 · DiagV4DSecurity'
+class: dense
+---
+
+# DiagV4DSecurity
+
+<DiagV4DSecurity />
+
+<!--
+v4, глава 6, слайд 51 «Безопасность роя». Видение. Замена DiagP67SwarmSecurity для основного потока: угроза → защита.
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 6–7 · DiagV4DSigned'
+class: dense
+---
+
+# DiagV4DSigned
+
+<DiagV4DSigned />
+
+<!--
+v4, глава 6, слайд 48 «Подпись важнее канала». Упрощённая версия DiagP67Envelope: без мультиподписи и FIDO.
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВЫ 6–7 · DiagV4DSwarm'
+class: dense
+---
+
+# DiagV4DSwarm
+
+<DiagV4DSwarm />
+
+<!--
+v4, глава 6, слайд 50 «Рой над одной средой». Видение. Замена DiagP67WildBees для основного потока.
+-->

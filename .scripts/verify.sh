@@ -12,9 +12,6 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 DECK="${1:-slides/slides.md}"
 PORT="${VERIFY_PORT:-8093}"
-# Never measure someone else's build: skip ports that already have a listener
-# (a parallel verify in another worktree, a dev server).
-while lsof -nP -iTCP:"$PORT" -sTCP:LISTEN > /dev/null 2>&1; do PORT=$((PORT + 1)); done
 mkdir -p .temp
 
 python3 .scripts/check-frontmatter.py "$DECK"
@@ -24,10 +21,24 @@ if ! npx slidev build "$DECK" --base ./ --out "$PWD/.temp/dist-offline" > .temp/
   tail -30 .temp/verify.log; exit 1
 fi
 
-python3 .scripts/serve-static.py "$PORT" .temp/dist-offline > /dev/null 2>&1 &
-SERVER=$!
-trap 'kill $SERVER 2>/dev/null || true' EXIT
-for _ in $(seq 1 25); do curl -s -o /dev/null "http://127.0.0.1:$PORT/" && break; sleep 0.2; done
+# Never measure someone else's build. The port is chosen only now, after the
+# build, and the server must serve this build's token: a parallel verify in
+# another worktree may grab a port between the check and the bind.
+TOKEN="$(date +%s)-$$-$RANDOM"
+echo "$TOKEN" > .temp/dist-offline/.verify-token
+SERVER=""
+trap '[ -n "$SERVER" ] && kill $SERVER 2>/dev/null || true' EXIT
+for _ in $(seq 1 40); do
+  if ! lsof -nP -iTCP:"$PORT" -sTCP:LISTEN > /dev/null 2>&1; then
+    python3 .scripts/serve-static.py "$PORT" .temp/dist-offline > /dev/null 2>&1 &
+    SERVER=$!
+    for _ in $(seq 1 25); do curl -s -o /dev/null "http://127.0.0.1:$PORT/" && break; sleep 0.2; done
+    if [ "$(curl -s "http://127.0.0.1:$PORT/.verify-token")" = "$TOKEN" ]; then break; fi
+    kill $SERVER 2>/dev/null || true; SERVER=""
+  fi
+  PORT=$((PORT + 1))
+done
+if [ -z "$SERVER" ]; then echo "verify: could not serve this build on a free port" >&2; exit 1; fi
 
 rm -rf .temp/audit
 set +e

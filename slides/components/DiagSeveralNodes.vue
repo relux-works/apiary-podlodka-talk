@@ -4,7 +4,8 @@
 // домашний сервер того же владельца с умным домом, его Кипер отчитывается головному: координация, не командование;
 // способ 4 — чужой агент по аренде и подписям), §10.4, и waggle DRAFT v5.2 §9.3, §12. Способ 3 (несколько операторов) — только в заметках.
 // Обе точки принадлежат одному владельцу, поэтому человек один.
-// reveal: владелец и точка 1 сразу; по кликам — точка 2, waggle между Киперами, чужой агент.
+// v4 (29.09): на схеме технические термины — машина, главный оркестратор, оркестратор проекта; пасечные имена только в комментарии.
+// reveal: владелец и машина 1 сразу; по кликам — машина 2, waggle между главными оркестраторами, чужой агент.
 import { useId } from 'vue'
 defineProps<{ reveal?: boolean }>()
 const id = useId()
@@ -17,37 +18,37 @@ const id = useId()
     <text x="180" y="25" text-anchor="middle" class="t-big t-ink">Владелец</text>
     <!-- левая точка -->
     <rect x="0.75" y="54" width="358" height="310" rx="14" class="frame" />
-    <text x="16" y="76" class="t-head t-sec">ТОЧКА 1 · НОУТБУК</text>
+    <text x="16" y="76" class="t-head t-sec">МАШИНА 1 · НОУТБУК</text>
     <line x1="180" y1="38" x2="180" y2="85" class="e" :marker-end="`url(#${id})`" />
     <rect x="90" y="88" width="180" height="46" rx="10" class="n-lilac" />
-    <text x="180" y="109" text-anchor="middle" class="t-big t-ink">Головной Кипер</text>
+    <text x="180" y="109" text-anchor="middle" class="t-big t-ink">Главный оркестратор</text>
     <text x="180" y="126" text-anchor="middle" class="t-ink-sec">маршрутизирует</text>
     <rect x="16" y="160" width="170" height="190" rx="12" class="frame-hive" />
-    <text x="28" y="180" class="t-head t-lilac">ХОББИ · СВОЙ</text>
+    <text x="28" y="180" class="t-head t-lilac">ПРОЕКТ ХОББИ</text>
     <rect x="30" y="192" width="142" height="44" rx="10" class="n-purple" />
-    <text x="101" y="219" text-anchor="middle" class="t-big">Матка</text>
+    <text x="101" y="219" text-anchor="middle" class="t-big">Оркестратор</text>
     <rect x="30" y="286" width="142" height="48" rx="10" class="n-lime" />
     <text x="101" y="307" text-anchor="middle" class="t-big t-ink">Доска</text>
-    <text x="101" y="325" text-anchor="middle" class="t-ink-sec">одна на улей</text>
+    <text x="101" y="325" text-anchor="middle" class="t-ink-sec">одна на проект</text>
     <line x1="101" y1="236" x2="101" y2="283" class="e" :marker-end="`url(#${id})`" />
     <rect x="200" y="160" width="144" height="92" rx="12" class="frame-hive" />
     <text x="212" y="180" class="t-head t-lilac">КАЛЕНДАРЬ</text>
     <rect x="214" y="194" width="116" height="44" rx="10" class="n-purple" />
-    <text x="272" y="221" text-anchor="middle" class="t-big">Матка</text>
+    <text x="272" y="221" text-anchor="middle" class="t-big">Оркестратор</text>
     <path d="M150,134 L130,157" class="e" :marker-end="`url(#${id})`" />
     <path d="M210,134 L250,157" class="e" :marker-end="`url(#${id})`" />
     <!-- правая точка -->
     <Step :on="reveal">
-      <text x="728" y="24" text-anchor="middle" class="t-cap t-sec">вторая точка того же владельца</text>
+      <text x="728" y="24" text-anchor="middle" class="t-cap t-sec">вторая машина того же владельца</text>
       <rect x="548.75" y="54" width="358" height="310" rx="14" class="frame" />
-      <text x="564" y="76" class="t-head t-sec">ТОЧКА 2 · ДОМАШНИЙ СЕРВЕР</text>
+      <text x="564" y="76" class="t-head t-sec">МАШИНА 2 · ДОМАШНИЙ СЕРВЕР</text>
       <rect x="638" y="88" width="180" height="46" rx="10" class="n-lilac" />
-      <text x="728" y="109" text-anchor="middle" class="t-big t-ink">Кипер</text>
+      <text x="728" y="109" text-anchor="middle" class="t-big t-ink">Главный оркестратор</text>
       <text x="728" y="126" text-anchor="middle" class="t-ink-sec">отчитывается головному</text>
       <rect x="564" y="160" width="144" height="92" rx="12" class="frame-hive" />
       <text x="576" y="180" class="t-head t-lilac">УМНЫЙ ДОМ</text>
       <rect x="578" y="194" width="116" height="44" rx="10" class="n-purple" />
-      <text x="636" y="221" text-anchor="middle" class="t-big">Матка</text>
+      <text x="636" y="221" text-anchor="middle" class="t-big">Оркестратор</text>
       <rect x="722" y="160" width="170" height="190" rx="12" class="frame-hive" />
       <text x="734" y="180" class="t-head t-lilac">ХОББИ · ГОСТЬ</text>
       <rect x="736" y="192" width="142" height="62" rx="10" class="n" />

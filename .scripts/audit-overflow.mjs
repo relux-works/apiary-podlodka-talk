@@ -42,6 +42,8 @@ for (let n = 1; n <= total; n++) {
     const el = document.querySelector('.slidev-page.slidev-page-' + k + ' .slidev-layout')
     return !!el && el.offsetHeight > 0
   }, n, { timeout: 8000 }).catch(() => {})
+  // Measure with the real fonts: a fallback face is wider and moves every edge.
+  await page.evaluate(() => document.fonts.ready)
   await page.waitForTimeout(500)
   const r = await page.evaluate(() => {
     const lay = document.querySelector('.slidev-page.slidev-page-' + location.hash.replace('#/', '').split('?')[0] + ' .slidev-layout')

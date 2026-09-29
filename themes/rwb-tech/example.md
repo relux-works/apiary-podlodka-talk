@@ -141,7 +141,7 @@ tag: '04 · ГРАФ ЗАДАЧ'
 
 # Диаграмма: *узлы-заливки*
 
-<svg width="908" height="120" viewBox="0 0 908 120" aria-hidden="true">
+<svg width="908" height="136" viewBox="0 0 908 136" aria-hidden="true">
   <defs><marker id="arr-ex" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m" /></marker></defs>
   <rect x="0" y="20" width="200" height="56" rx="10" class="n-lilac" />
   <text x="100" y="44" text-anchor="middle" class="t-ink t-big">Контракт</text>
@@ -157,7 +157,8 @@ tag: '04 · ГРАФ ЗАДАЧ'
   <rect x="712" y="20" width="196" height="56" rx="10" class="n-orange" />
   <text x="810" y="44" text-anchor="middle" class="t-ink t-big">Красная зона</text>
   <text x="810" y="63" text-anchor="middle" class="t-ink-sec">внимание · цена</text>
-  <text x="0" y="110" class="t-dim">классы rect: n · n-lilac · n-lime · n-orange · n-purple · n-wait; текст: t-ink · t-sec · t-dim · t-big · t-lab · t-cap</text>
+  <text x="0" y="110" class="t-dim">классы rect: n · n-lilac · n-lime · n-orange · n-purple · n-wait</text>
+  <text x="0" y="128" class="t-dim">текст: t-ink · t-sec · t-dim · t-big · t-lab · t-cap</text>
 </svg>
 
 <p class="lead">Inline SVG без обводок: заливка узла задаёт роль, подписи — классами. Атрибуты font-size на text не ставить.</p>

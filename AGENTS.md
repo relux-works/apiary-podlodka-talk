@@ -36,6 +36,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run dev:flat` | rehearsal mode: every slide whole, arrows move by slides | http://localhost:3030 |
 | `npm run lint` | frontmatter traps (`: ` and ` #` in unquoted values) | stdout |
 | `npm run verify` | lint → offline build → every slide measured in Chromium → contact sheet | `.temp/audit/sheet.png`, `slide-NN.png`, `audit.json` |
+| `npm run timing` | spoken minutes per part from the speaker notes (130 wpm, demos at the plan's length; backup not summed) | stdout |
 | `npm run export` | PDF | `.temp/export/apiary-podlodka-talk.pdf` |
 | `npm run diagrams` | gallery of all stage diagrams | http://localhost:3030 |
 | `npm run theme:rwb-tech`, `theme:rwb-minimal` | theme showcases | http://localhost:3030 |

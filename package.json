@@ -14,6 +14,7 @@
     "diagrams": "slidev slides/diagrams.md --open",
     "lint": "python3 .scripts/check-frontmatter.py slides/slides.md slides/diagrams.md themes/rwb-tech/example.md themes/rwb-minimal/example.md",
     "verify": ".scripts/verify.sh slides/slides.md",
+    "timing": "python3 .scripts/timing.py slides/slides.md",
     "build": "slidev build slides/slides.md --out ../dist",
     "build:offline": "slidev build slides/slides.md --base ./ --out ../.temp/dist-offline",
     "export": "slidev export slides/slides.md --output .temp/export/apiary-podlodka-talk.pdf",

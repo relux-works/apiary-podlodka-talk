@@ -63,6 +63,7 @@ Node.js 20+ and Python 3. `npm install` brings Slidev and headless Chromium (Pla
 | `.scripts/audit-overflow.mjs` | measures every slide in Chromium: overflow, text outside frames, clipped code, console errors | called by `verify` | `.temp/audit/slide-NN.png`, `audit.json` |
 | `.scripts/contact-sheet.mjs` | the whole deck in one image | called by `verify` | `.temp/audit/sheet.png` |
 | `.scripts/serve-static.py` | static server for the audit; the stock `http.server` refuses parallel module requests | called by `verify` | — |
+| `.scripts/timing.py` | spoken minutes per part from the speaker notes; re-run after every notes change and after a rehearsal | `npm run timing` | stdout |
 | Slidev export | PDF | `npm run export` | `.temp/export/apiary-podlodka-talk.pdf` |
 | Diagram gallery | the stage versions of all diagrams, one per slide | `npm run diagrams` | http://localhost:3030 |
 | Theme showcases | every layout and component of a theme | `npm run theme:rwb-tech`, `npm run theme:rwb-minimal` | http://localhost:3030 |

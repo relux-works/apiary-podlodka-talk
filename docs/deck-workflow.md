@@ -67,6 +67,8 @@ Then look at `.temp/audit/sheet.png`: the whole deck in one image. Open `slide-N
 
 For a click-by-click check, run `npm run dev` and open `http://localhost:3030/#/N?clicks=K`.
 
+`npm run timing` estimates the spoken minutes per part from the notes (130 words per minute, demos at the plan's length, backup parts not summed). Compare it with the plan's timing table before landing a notes change; after a rehearsal, re-time from the transcript.
+
 ## 6. Rehearsal mode
 
 `npm run dev:flat` sets `VITE_FLAT_CLICKS=1`. `slides/setup/transformers.ts` strips every `v-click` before Slidev compiles the deck, `slides/setup/main.ts` makes arrows and space move by whole slides and shows a green «FLAT · no clicks» badge. Stop it and run `npm run dev` to get the clicks back; nothing in the deck changes.

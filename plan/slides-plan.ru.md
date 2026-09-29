@@ -262,7 +262,7 @@
 
 ## Источники
 
-- Блог-пост: [`text/`](../text/), копия relux-works/blog `posts/from-buckets-to-apiary.*.md` на 0070a5f.
+- Блог-пост: [`text/`](../text/), копия relux-works/blog `posts/from-buckets-to-apiary.*.md` на 4ecb7fa.
 - Разговоры о докладе: [`notes/discussions.ru.md`](../notes/discussions.ru.md).
 - Решения: wiki `decisions.md` (25.09, 27.09, 28.09, созвон 28.09). Имена: `naming.md`. Роадмап: `roadmap/ecosystem-roadmap.md`.
 - Спеки (ссылки, не копии; версии на 29.09):

@@ -38,7 +38,7 @@ Private working repository for the Podlodka talk by Alexey and Ivan (Relux Works
 
 Copied files name their source and commit at the top or in their folder's README:
 
-- the post comes from relux-works/blog at 0070a5f;
+- the post comes from relux-works/blog at 4ecb7fa;
 - the diagrams and the research synthesis come from relux-works/wiki at a4850ca;
 - the music-video case comes from relux-works/curator-playbook at e10436a.
 

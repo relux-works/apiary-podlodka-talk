@@ -32,7 +32,7 @@ In this repository already: the narrative spine [`text/from-buckets-to-apiary.ru
    | 14 где мы | part 7 |
    | 15 словарь | the terms |
 
-3. **Names on slides:** [naming.md](https://github.com/relux-works/wiki/blob/main/naming.md) (apiary, yard, keeper, hive, queen, comb, bee, wild bees, nuc, with their technical terms; the mapping approved 2026-09-25) and [glossary.ru.md](https://github.com/relux-works/wiki/blob/main/glossary.ru.md). The Russian [naming.ru.md](https://github.com/relux-works/wiki/blob/main/naming.ru.md) still shows the superseded mapping of 2026-09-24 (hive = one machine); do not use it until it is updated. The post's table in `text/` matches the current mapping.
+3. **Names on slides:** [naming.md](https://github.com/relux-works/wiki/blob/main/naming.md) (apiary, yard, keeper, hive, queen, comb, bee, wild bees, nuc, with their technical terms; the mapping approved 2026-09-25) and [glossary.ru.md](https://github.com/relux-works/wiki/blob/main/glossary.ru.md). The Russian [naming.ru.md](https://github.com/relux-works/wiki/blob/main/naming.ru.md) was re-translated from that mapping on 2026-09-29 (wiki 447cb2c).
 4. **What is decided and in which order:**
    - decisions: [decisions.md](https://github.com/relux-works/wiki/blob/main/decisions.md), sections by date, the newest 2026-09-28 and 2026-09-29;
    - roadmap: [roadmap/ecosystem-roadmap.ru.md](https://github.com/relux-works/wiki/blob/main/roadmap/ecosystem-roadmap.ru.md);

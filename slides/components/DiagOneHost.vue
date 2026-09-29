@@ -30,7 +30,7 @@ const id = useId()
     <text x="16" y="204" class="t-head t-lilac">УЛЕЙ A</text>
     <rect x="588.75" y="184" width="318" height="178" rx="14" class="frame-hive" />
     <text x="604" y="204" class="t-head t-lilac">УЛЕЙ Б</text>
-    <g v-for="c in [{ x: 20, s: 'Матка A' }, { x: 290, s: 'Саборкестратор' }, { x: 608, s: 'Матка Б' }]" :key="c.x">
+    <g v-for="c in [{ x: 20, s: 'Матка A' }, { x: 290, s: 'Под-оркестратор' }, { x: 608, s: 'Матка Б' }]" :key="c.x">
       <rect :x="c.x" y="214" width="250" height="40" rx="10" class="n" />
       <text :x="c.x + 125" y="239" text-anchor="middle" class="t-big">Держатель терминала</text>
       <rect :x="c.x" y="266" width="250" height="40" rx="10" class="n-purple" />

@@ -55,7 +55,7 @@ DiagDoorbell — сценическая версия diagrams/doorbell-delivery.
 
 ---
 layout: default
-tag: 'СЛАЙД 21 · ХОСТ СЕССИЙ'
+tag: 'ЗАПАС · ХОСТ СЕССИЙ'
 ---
 
 # Парковка и возобновление *через цель*
@@ -94,7 +94,7 @@ DiagRouting — сценическая версия diagrams/request-routing.png
 
 ---
 layout: default
-tag: 'СЛАЙД 32 · КИПЕР'
+tag: 'ЗАПАС · КИПЕР'
 ---
 
 # Установка и *первый запуск*
@@ -107,7 +107,7 @@ DiagInstall — сценическая версия diagrams/installation-and-fi
 
 ---
 layout: default
-tag: 'СЛАЙД 33 · ДОВЕРИЕ'
+tag: 'ЗАПАС · ДОВЕРИЕ'
 ---
 
 # Делегирование *действий человека*
@@ -133,7 +133,7 @@ DiagIsolation — сценическая версия diagrams/process-isolation
 
 ---
 layout: default
-tag: 'СЛАЙД 35 · WAGGLE'
+tag: 'ЗАПАС · WAGGLE'
 ---
 
 # Четыре уровня *связи*
@@ -558,4 +558,60 @@ class: dense
 
 <!--
 Слайд 37, рой над одной средой. Видение. Новая схема части 6.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34SkillAnatomy'
+class: dense
+---
+
+# DiagP34SkillAnatomy
+
+<DiagP34SkillAnatomy />
+
+<!--
+Слайд после плана 20, Curator: скилл с командой — что из пакета куда попадает на машине. Новая схема.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34InstallGates'
+class: dense
+---
+
+# DiagP34InstallGates
+
+<DiagP34InstallGates />
+
+<!--
+Слайд после плана 20, Curator: установка скилла как цепочка проверок. Новая схема в стиле DiagP12Landing.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34TrustChain'
+class: dense
+---
+
+# DiagP34TrustChain
+
+<DiagP34TrustChain />
+
+<!--
+Слайд после плана 20, Curator: кому мы доверяем, когда ставим скилл. Новая схема.
+-->
+
+---
+layout: default
+tag: 'ЧАСТИ 3–4 · DiagP34Layers'
+class: dense
+---
+
+# DiagP34Layers
+
+<DiagP34Layers />
+
+<!--
+Слайд плана 24, главный тезис: карта в три слоя — что строим поверх, наши контракты, среды вендоров. Новая схема.
 -->

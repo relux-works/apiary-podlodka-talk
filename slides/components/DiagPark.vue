@@ -1,9 +1,10 @@
 <script setup lang="ts">
-// Слайд 21, запуск и хост сессий. Сценическая версия park-and-resume (session host spec §8; board goal v2; аварийный стоп — §9).
+// Слайд 21 (запас), парковка через цель. Сценическая версия park-and-resume (session host spec DRAFT v0.3 §8: curator session park,
+// keeper park поверх — решено 27.09, task-board session park отозван; board goal v2; аварийный стоп — §9).
 defineProps<{ reveal?: boolean }>()
 const actors = [
   { id: 'p', label: 'Человек или Кипер', tone: 'lime' },
-  { id: 'h', label: 'Хост сессий', sub: 'task-board session' },
+  { id: 'h', label: 'Хост сессий', sub: 'curator session' },
   { id: 'o', label: 'Оркестратор', sub: 'сессия', tone: 'purple' },
   { id: 'b', label: 'Доска', sub: 'цели и заметки' },
 ]

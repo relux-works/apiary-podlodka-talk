@@ -4,6 +4,7 @@
 // agent-session-host spec/session-host.md DRAFT v0.3 §3.3 (операции контракта, адаптеры: Claude и Codex первыми,
 // Muse, agy, Pi, Qwen следом); skill-agents-management SKILL.md (плагин на каждую среду).
 // Лайм — работает сегодня в task-board (цели и дети в Claude и Codex); пунктир — адаптер в спеке хоста сессий.
+// Оркестратор на Qwen требует хоста целей Qwen: roadmap §1 «Pi and Qwen primary sessions are planned» — поэтому «в спеке».
 // reveal: оркестратор (1), слой (2), среды (3).
 import { useId } from 'vue'
 withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
@@ -27,7 +28,7 @@ const envs = [
     <g v-click="reveal ? 1 : false">
       <rect x="244" y="0" width="420" height="56" rx="10" class="n-purple" />
       <text x="454" y="23" text-anchor="middle" class="t-big">Оркестратор в любой среде</text>
-      <text x="454" y="43" text-anchor="middle" class="t-on">даже локальный Qwen рулит Claude и Codex</text>
+      <text x="454" y="43" text-anchor="middle" class="t-on">в спеке: даже локальный Qwen рулит Claude и Codex</text>
     </g>
     <g v-click="reveal ? 2 : false">
       <line x1="454" y1="56" x2="454" y2="83" class="e" :marker-end="`url(#${id})`" />

@@ -5,6 +5,7 @@
 // и «2026-09-28 call» (Opus 5.5 — оркестратор, Sonnet 5.5 — воркер, зарегистрирован как claude-sonnet-5-5 с алиасом
 // sonnet; Luna не оркестратор); research/call-digest-2026-09-28.md §2 (Muse 1.4 ждём через одну-две недели);
 // skill-agents-management SKILL.md (алиасы opus, sonnet, luna). Факты о моделях — на 29.09, обновить к дате доклада.
+// Muse 1.4 не зарегистрирован — пунктир и подпись «не в реестре» (call digest 28.09 §2).
 // reveal: потребности (1), привязка (2), реестр (3).
 import { useId } from 'vue'
 withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
@@ -17,7 +18,7 @@ const models = [
   { id: 'claude-opus-5-5', s: 'алиас opus · оркестратор', cls: 'n-purple', sub: 't-on' },
   { id: 'claude-sonnet-5-5', s: 'алиас sonnet · с 28.09', cls: 'n-lime', sub: 't-ink-sec', ink: true },
   { id: 'gpt-6-luna', s: 'воркер, не оркестратор', cls: 'n', sub: 't-sec' },
-  { id: 'Muse 1.4', s: 'ждём через 1–2 недели', cls: 'n-wait', sub: 't-sec' },
+  { id: 'Muse 1.4', s: 'не в реестре, ждём 1–2 недели', cls: 'n-wait', sub: 't-sec' },
 ]
 </script>
 <template>

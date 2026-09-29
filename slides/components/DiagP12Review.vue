@@ -1,5 +1,6 @@
 <script setup lang="ts">
-// Слайд 9, цикл продюсер → ревьюер → доработка. Оркестратор спавнит обоих; ревьюер — модель другой семьи;
+// Слайд 9, цикл продюсер → ревьюер → доработка. Оркестратор спавнит обоих; ревьюер обычно другой семьи (пост §2:
+// «обычно модель другого вендора»; not_same_publisher_as — решено, но не проверяется ядром, техзаписка гл. 04);
 // вердикт принимает ревизию или возвращает её на доработку новой ревизией.
 // Источник: skill-project-management SPEC.md Part 2 (статусы, возвраты из reviewing, Orchestrator Routing Invariant);
 // references/change-request-lifecycle.md (accept_cr — только ревьюер, которому выдана ревизия);
@@ -40,7 +41,7 @@ const bx = (i: number) => i * (BW + GAP)
       <line :x1="bx(1) + BW" :x2="bx(2) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e" :marker-end="`url(#${id}-a)`" />
       <rect :x="bx(2)" :y="Y" :width="BW" :height="BH" rx="10" class="n-lilac" />
       <text :x="bx(2) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big t-ink">Ревьюер</text>
-      <text :x="bx(2) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-ink-sec">модель семьи B</text>
+      <text :x="bx(2) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-ink-sec">обычно другая семья</text>
     </g>
     <g v-click="click">
       <line :x1="bx(2) + BW" :x2="bx(3) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e-lime" :marker-end="`url(#${id}-l)`" />

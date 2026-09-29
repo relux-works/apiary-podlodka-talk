@@ -4,6 +4,9 @@
 // оператор решил 23.09, wiki decisions.md); skill-agents-management SKILL.md («It builds plans; it does not execute»:
 // Plan{Binary, Argv, Env, Stdin}, плагин на каждую среду); wiki README «How the planes fit» (три владельца процесса);
 // text/from-buckets-to-apiary.ru.md гл. 4.2 (пример с --strict-mcp-config).
+// 0019 §2: хост сессий получает готовый план и фрагмент не читает — поэтому стрелки от хоста в модуль нет.
+// Статус (0019 «proposed — not adopted»; shipped-state: «the current LaunchRequest has no typed Curator context»):
+// модуль и план — сегодня; каналы MCP и промпта в модуле — решено 23.09, в работе (roadmap M2).
 // reveal: владельцы процессов (1), фрагмент и модуль (2), план (3), почему (4).
 import { useId } from 'vue'
 withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
@@ -11,7 +14,7 @@ const id = useId()
 const owners = [
   { y: 32, h: 'curator run', s: 'человек входит в сессию' },
   { y: 96, h: 'task-board spawn', s: 'отслеживаемые дети' },
-  { y: 160, h: 'Хост сессий', s: 'держит живые сессии' },
+  { y: 160, h: 'Хост сессий', s: 'получает готовый план' },
 ]
 </script>
 <template>
@@ -28,9 +31,8 @@ const owners = [
       <rect x="320" y="0" width="268" height="44" rx="10" class="n-lilac" />
       <text x="454" y="27" text-anchor="middle" class="t-big t-ink">Фрагмент профиля Curator</text>
       <line x1="454" y1="44" x2="454" y2="61" class="e" :marker-end="`url(#${id})`" />
-      <path d="M236,58 C282,58 280,112 317,114" class="e" :marker-end="`url(#${id})`" />
-      <line x1="236" y1="122" x2="317" y2="122" class="e" :marker-end="`url(#${id})`" />
-      <path d="M236,186 C282,186 280,132 317,130" class="e" :marker-end="`url(#${id})`" />
+      <path d="M236,58 C282,58 280,108 317,110" class="e" :marker-end="`url(#${id})`" />
+      <path d="M236,122 C282,122 280,132 317,134" class="e" :marker-end="`url(#${id})`" />
       <rect x="320" y="64" width="268" height="116" rx="10" class="n-purple" />
       <text x="454" y="90" text-anchor="middle" class="t-big">agents-management</text>
       <text x="454" y="112" text-anchor="middle" class="t-on">одна точка сборки</text>
@@ -51,7 +53,7 @@ const owners = [
       <rect x="0" y="230" width="908" height="84" rx="10" class="n-wait" />
       <text x="20" y="256" class="t-head t-orange">ПОЧЕМУ ТАК</text>
       <text x="20" y="280" class="t-cap">Когда лаунчер, task-board и хост сами пишут <tspan class="mono">claude … --mcp-config … --strict-mcp-config</tspan>,</text>
-      <text x="20" y="302" class="t-cap">копии разъезжаются: забыли один флаг — и MCP-серверы машины протекли в дочерний запуск.</text>
+      <text x="20" y="302" class="t-cap">копии разъезжаются: стоит забыть один флаг — и MCP-серверы машины протекут в дочерний запуск.</text>
     </g>
   </svg>
 </template>

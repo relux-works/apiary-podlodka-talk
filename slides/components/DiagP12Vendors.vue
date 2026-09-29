@@ -18,7 +18,7 @@ const KW = 76
 const kx = (fx: number, k: number) => fx + 16 + k * (KW + 13)
 </script>
 <template>
-  <svg width="908" height="252" viewBox="0 0 908 252" aria-hidden="true">
+  <svg width="908" height="236" viewBox="0 0 908 236" aria-hidden="true">
     <defs><marker :id="id" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m" /></marker></defs>
     <g v-for="v in vendors" :key="v.x" v-click="click">
       <rect :x="v.x + 0.75" y="0.75" :width="FW - 1.5" height="176" rx="14" class="frame" />
@@ -41,9 +41,8 @@ const kx = (fx: number, k: number) => fx + 16 + k * (KW + 13)
       <text :x="2 * (FW + GAP) + FW / 2" y="152" text-anchor="middle" class="t-cap t-sec">всё идёт одним потоком</text>
     </g>
     <g v-click="click">
-      <rect x="0" y="196" width="908" height="56" rx="10" class="n-wait" />
-      <text x="20" y="220" class="t-cap">Между средами ничего нет: оркестратор Codex не запустит Claude, и наоборот.</text>
-      <text x="20" y="240" class="t-cap t-sec">Ревью другой семьёй моделей — это вторая вкладка и человек, который носит дифф.</text>
+      <rect x="0" y="196" width="908" height="40" rx="10" class="n-wait" />
+      <text x="20" y="221" class="t-cap">Между средами ничего нет: оркестратор Codex не запустит Claude, и наоборот.</text>
     </g>
   </svg>
 </template>

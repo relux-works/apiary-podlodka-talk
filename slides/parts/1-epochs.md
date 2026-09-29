@@ -25,7 +25,7 @@ tag: '01 · ЭПОХИ'
 
 <DiagP12Epochs :at="0" />
 
-<DiagP12Loop :epoch="0" />
+<DiagP12Loop :epoch="0" reveal />
 
 <div class="cards cols-3">
 <div v-click class="card"><h2>Класс задач</h2><p>Отдельный сниппет под один конкретный вопрос.</p></div>
@@ -52,7 +52,7 @@ tag: '01 · ЭПОХИ'
 
 <DiagP12Epochs :at="1" />
 
-<DiagP12Loop :epoch="1" />
+<DiagP12Loop :epoch="1" reveal />
 
 <div class="cards cols-3">
 <div v-click class="card"><h2>Класс задач</h2><p>Кусок кода, который помещается в окно чата: функция, файл.</p></div>
@@ -79,7 +79,7 @@ tag: '01 · ЭПОХИ'
 
 <DiagP12Epochs :at="2" />
 
-<DiagP12Loop :epoch="2" />
+<DiagP12Loop :epoch="2" reveal />
 
 <div class="cards cols-3">
 <div v-click class="card"><h2>Класс задач</h2><p>Правка сразу в нескольких файлах, которые скрипт умеет собрать.</p></div>
@@ -104,7 +104,7 @@ tag: '01 · ЭПОХИ'
 
 <DiagP12Epochs :at="3" />
 
-<DiagP12Loop :epoch="3" />
+<DiagP12Loop :epoch="3" reveal />
 
 <div class="cards cols-3">
 <div v-click class="card"><h2>Класс задач</h2><p>Задача целиком: фича, баг, рефакторинг модуля.</p></div>

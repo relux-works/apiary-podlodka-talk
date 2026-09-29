@@ -194,15 +194,14 @@ layout: default
 tag: '04 · БЕЗ ПРИВЯЗКИ К ВЕНДОРУ'
 ---
 
-# Три входа: *keeper, curator, task-board*
+# Два входа: *curator и task-board*
 
-<div class="cards cols-3 doors">
-<div v-click="1" class="card"><h2>keeper <Status v="proposed" text="в спеке" /></h2><p>Человеку на пасеке: <code>keeper up</code>, <code>park</code>, <code>estop</code>. Пасечные слова живут только здесь.</p></div>
-<div v-click="2" class="card purple"><h2>curator <Status v="today" text="run — сегодня" /></h2><p>Ставит и настраивает машину. Незнакомое существительное передаёт провайдеру <code>curator-&lt;noun&gt;</code>: есть run, решены session, models, network.</p></div>
-<div v-click="3" class="card"><h2>task-board <Status v="today" text="сегодня" /></h2><p>Ядро: его вызывают агенты и демон сессий, дальше — таймер и keeper. Дети стартуют через <code>task-board spawn</code>.</p></div>
+<div class="cards cols-2 doors">
+<div v-click="1" class="card purple"><h2>curator <Status v="today" text="run — сегодня" /></h2><p>Ставит и настраивает машину. Незнакомое существительное передаёт провайдеру <code>curator-&lt;noun&gt;</code>: есть run, решены session, models, network.</p></div>
+<div v-click="2" class="card"><h2>task-board <Status v="today" text="сегодня" /></h2><p>Ядро: его вызывают агенты и демон сессий, дальше — таймер. Дети стартуют через <code>task-board spawn</code>.</p></div>
 </div>
 
-<div v-click="4">
+<div v-click="3">
 
 ```bash
 curator run claude                     # сессия в текущем профиле
@@ -211,18 +210,18 @@ curator run codex --profile reviewer   # или в профиле нужной �
 
 </div>
 
-<p class="lead" v-click="5">Скачал утилиту, запустил через неё любимого агента — и он уже в нужном профиле.</p>
+<p class="lead" v-click="4">Скачал утилиту, запустил через неё любимого агента — и он уже в нужном профиле.</p>
 
 <style>
 .doors code { white-space: nowrap; font-variant-ligatures: none; }
 </style>
 
 <!--
-Когда плоскостей столько, человеку нужна простая дверь. 27 сентября мы приняли одну форму командных строк, и входов три. keeper — для человека на пасеке, про пасеку расскажет Иван. curator — для машины: ставит и настраивает её, а незнакомое существительное передаёт провайдеру. Сегодня так работает curator run, остальные решены, но ещё не написаны. task-board — ядро: его вызывают агенты и демон сессий, а дети стартуют через task-board spawn.
+Когда плоскостей столько, человеку нужна простая дверь. 27 сентября мы приняли одну форму командных строк. Здесь два входа из трёх; третий, для человека на пасеке, Иван покажет, когда расскажет про саму пасеку. curator — для машины: ставит и настраивает её, а незнакомое существительное передаёт провайдеру. Сегодня так работает curator run, остальные решены, но ещё не написаны. task-board — ядро: его вызывают агенты и демон сессий, а дети стартуют через task-board spawn.
 
 Главное для человека: curator run claude или curator run codex. Лаунчер берёт профиль Curator, просит у модуля план и запускает среду в управляемом доме. Скачал одну утилиту, запустил через неё любимого агента — и он уже в нужном профиле.
 
-Источники: wiki decisions.md, 2026-09-27 «the command-line shape» (три входа, провайдеры curator-<noun>, --profile — всегда профиль Curator; «New task-board commands»: task-board tick и таймер — решено 27.09); curator-agent-launcher SPEC.md 0.5.0-draft, §2–§3 (curator-run <env-id> [--profile <name>], алиасы claude и codex; диспетчеризация существительных); curator-spec decision 0021 (человек входит через curator run — решено оператором, в файле proposed); agent-session-host spec §3.5 (фаза 1 не меняет команд — curator session ещё нет); техзаписка гл. 04 (команд curator models ещё нет); curator-network-profiles (M7, до реализации); text/from-buckets-to-apiary.ru.md, 4.2 «Три входа». Команды на слайде — пример формы по §3 спеки лаунчера. У лаунчера есть тег v0.1.0 (проверено 29.09). Статус: curator и curator run — работают сегодня (запуск без учёта сессий); session, models, network — решено 27.09, не написаны; task-board вызывают агенты и демон сессий — сегодня, таймер — решено; keeper — в спеке, предложено.
+Источники: wiki decisions.md, 2026-09-27 «the command-line shape» (три входа, провайдеры curator-<noun>, --profile — всегда профиль Curator; «New task-board commands»: task-board tick и таймер — решено 27.09); curator-agent-launcher SPEC.md 0.5.0-draft, §2–§3 (curator-run <env-id> [--profile <name>], алиасы claude и codex; диспетчеризация существительных); curator-spec decision 0021 (человек входит через curator run — решено оператором, в файле proposed); agent-session-host spec §3.5 (фаза 1 не меняет команд — curator session ещё нет); техзаписка гл. 04 (команд curator models ещё нет); curator-network-profiles (M7, до реализации); text/from-buckets-to-apiary.ru.md, 4.2 «Три входа». Команды на слайде — пример формы по §3 спеки лаунчера. У лаунчера есть тег v0.1.0 (проверено 29.09). Статус: curator и curator run — работают сегодня (запуск без учёта сессий); session, models, network — решено 27.09, не написаны; task-board вызывают агенты и демон сессий — сегодня, таймер — решено; третий вход, keeper, перенесён в часть 5 после «Снов» (решение оператора 29.09), чтобы не вводить Кипера до пасеки.
 -->
 
 ---

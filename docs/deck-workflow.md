@@ -41,7 +41,7 @@ The PNGs in `diagrams/` are documentation renders from the wiki: English, light,
 
 - Russian labels, rwb-tech tokens, nothing below 13 px, at most about 12 messages or 10 boxes;
 - drawn for the thesis of its slide in the plan; content checked against the original, nothing added;
-- `<DiagName />` on a slide, `<DiagName reveal />` for click-by-click where the component supports it.
+- `<DiagName />` on a slide, `<DiagName reveal />` for click-by-click. Every content slide builds step by step: a diagram that appears whole with only the lead on a click is a defect. To give a structural diagram steps, wrap each group in `<Step :on="reveal">…</Step>` (`as="div"` in HTML); groups reveal in document order, so write the SVG in reading order.
 
 Sequence diagrams are data for `<Seq>`: `actors` with `id`, `label`, optional `sub` and `tone`; `steps` as messages `{ from, to, text, dashed?, tone? }`, dividers `{ section }` and notes `{ note, at }`. Keep a message label shorter than the span it sits on. Structural diagrams are hand-placed SVG with the theme classes (`n`, `n-purple`, `n-lime`, `n-wait`, `frame`, `frame-hive`, `e`, `e-dash`, `t-big`, `t-cap`, `t-sec`). An arrow into a hive ends at the frame edge, not at a box behind the hive's label.
 

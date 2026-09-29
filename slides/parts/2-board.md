@@ -224,7 +224,7 @@ tag: '02 · ДОСКА И АВТОНОМИЯ'
 
 # Рестарт хоста: *сегодня и в спеке*
 
-<DiagRestart />
+<DiagRestart reveal />
 
 <p v-click class="lead">Работу держит доска: Claude возобновляется по --resume, Codex переподключается.</p>
 

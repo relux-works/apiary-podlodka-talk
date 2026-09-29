@@ -1,13 +1,17 @@
 <script setup lang="ts">
-// Слайд 32, Кипер. Сценическая версия curator-keeper installation-and-first-run.puml (main loop DRAFT v0.2 §6, §10.6, §11.3; curator-spec #92–#94).
+// Запасной слайд «Установка и первый улей» (план, слайд 32). Сценическая версия curator-keeper installation-and-first-run.puml;
+// содержание сверено с keeper.md DRAFT v0.5.1 §6.1–§6.4, §10.6, §11.3, §15.1 и curator-spec #92–#94.
+// Карточка «Телефон» — веха KP2 (§15.1), поэтому пунктиром с пометкой. «Пакеты только из реестра Curator» — §6.1 (решено);
+// установка по подписанной записи аудита — предложенный быстрый путь (#94), на карточку не вынесен: сегодняшний аудит Curator
+// по умолчанию только предупреждает (curator-spec profiles/manager.md §7.1).
 defineProps<{ reveal?: boolean }>()
 const steps = [
   { h: 'Установщик', t: 'подпись проверена; git и Go — системные или свои, не в PATH' },
-  { h: 'Curator', t: 'curator profile install …/curator-playbook-keeper' },
-  { h: 'Пакеты', t: 'по подписанным аудитам; команды собираются из исходников' },
+  { h: 'Curator', t: 'ставит профиль пакета Кипера одной командой curator profile install' },
+  { h: 'Пакеты', t: 'только из реестра Curator; команды собираются из исходников' },
   { h: 'keeper init', t: '~/apiary — репозиторий человека, без upstream; доска, первый коммит' },
   { h: 'Движок', t: 'железо тянет — локальная модель; нет — уже залогиненная среда', cls: 'lilac' },
-  { h: 'Телефон', t: 'QR-код в терминале, ключи обменяны и закреплены' },
+  { h: 'Телефон', t: 'вторая веха: QR-код в терминале, ключи обменяны и закреплены', cls: 'later' },
   { h: 'Первый улей', t: 'Кипер предлагает процесс, человек подтверждает, матка стартует' },
   { h: 'keeper up', t: 'агент входа поднимает точку при каждом входе', cls: 'purple' },
 ]
@@ -22,4 +26,6 @@ const steps = [
 .dg-install .card { font-size: 15px; padding: 14px 16px 34px 16px; }
 .dg-install .card h2 { font-size: 17px; margin-bottom: 6px; }
 .dg-install .card.num::after { font-size: 16px; bottom: 8px; }
+.dg-install .card.later { background: transparent; border: 1.5px dashed var(--rwb-dim); }
+.dg-install .card.later h2 { color: var(--rwb-sec); }
 </style>

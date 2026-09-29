@@ -1,5 +1,9 @@
 <script setup lang="ts">
-// Слайды 35–36, распределённая пасека. Видение: архитектура заложена, не реализовано. Сценическая версия several-nodes (main loop DRAFT v0.1 §4, §10.4; waggle §9.3, §12).
+// Слайд 36, распределённая пасека. Архитектура заложена, не реализовано. Сценическая версия several-nodes; содержание сверено с
+// keeper.md DRAFT v0.5.1 §4 (способ 1 — «Хобби» на двух машинах, под-оркестратор по аренде, никогда вторая матка; способ 2 —
+// домашний сервер того же владельца с умным домом, его Кипер отчитывается головному: координация, не командование;
+// способ 4 — чужой агент по аренде и подписям), §10.4, и waggle DRAFT v5.2 §9.3, §12. Способ 3 (несколько операторов) — только в заметках.
+// Обе точки принадлежат одному владельцу, поэтому человек один.
 import { useId } from 'vue'
 const id = useId()
 </script>
@@ -9,11 +13,10 @@ const id = useId()
     <!-- люди -->
     <rect x="100" y="0" width="160" height="38" rx="10" class="n-lime" />
     <text x="180" y="25" text-anchor="middle" class="t-big t-ink">Владелец</text>
-    <rect x="648" y="0" width="160" height="38" rx="10" class="n-lime" />
-    <text x="728" y="25" text-anchor="middle" class="t-big t-ink">Второй оператор</text>
+    <text x="728" y="24" text-anchor="middle" class="t-cap t-sec">вторая точка того же владельца</text>
     <!-- левая точка -->
     <rect x="0.75" y="54" width="358" height="310" rx="14" class="frame" />
-    <text x="16" y="76" class="t-head t-sec">ТОЧКА ВЛАДЕЛЬЦА</text>
+    <text x="16" y="76" class="t-head t-sec">ТОЧКА 1 · НОУТБУК</text>
     <line x1="180" y1="38" x2="180" y2="85" class="e" :marker-end="`url(#${id})`" />
     <rect x="90" y="88" width="180" height="46" rx="10" class="n-lilac" />
     <text x="180" y="109" text-anchor="middle" class="t-big t-ink">Головной Кипер</text>
@@ -34,10 +37,10 @@ const id = useId()
     <path d="M210,134 L250,157" class="e" :marker-end="`url(#${id})`" />
     <!-- правая точка -->
     <rect x="548.75" y="54" width="358" height="310" rx="14" class="frame" />
-    <text x="564" y="76" class="t-head t-sec">ДОМАШНИЙ СЕРВЕР</text>
-    <line x1="728" y1="38" x2="728" y2="85" class="e" :marker-end="`url(#${id})`" />
+    <text x="564" y="76" class="t-head t-sec">ТОЧКА 2 · ДОМАШНИЙ СЕРВЕР</text>
     <rect x="638" y="88" width="180" height="46" rx="10" class="n-lilac" />
-    <text x="728" y="117" text-anchor="middle" class="t-big t-ink">Кипер</text>
+    <text x="728" y="109" text-anchor="middle" class="t-big t-ink">Кипер</text>
+    <text x="728" y="126" text-anchor="middle" class="t-ink-sec">отчитывается головному</text>
     <rect x="564" y="160" width="144" height="92" rx="12" class="frame-hive" />
     <text x="576" y="180" class="t-head t-lilac">УМНЫЙ ДОМ</text>
     <rect x="578" y="194" width="116" height="44" rx="10" class="n-purple" />
@@ -45,11 +48,11 @@ const id = useId()
     <rect x="722" y="160" width="170" height="190" rx="12" class="frame-hive" />
     <text x="734" y="180" class="t-head t-lilac">ХОББИ · ГОСТЬ</text>
     <rect x="736" y="192" width="142" height="62" rx="10" class="n" />
-    <text x="807" y="215" text-anchor="middle" class="t-big">Саборкестр.</text>
+    <text x="807" y="215" text-anchor="middle" class="t-big">Под-оркестратор</text>
     <text x="807" y="235" text-anchor="middle" class="t-sec">под арендой</text>
     <text x="736" y="290" class="t-cap t-sec">ведёт арендованное</text>
-    <text x="736" y="310" class="t-cap t-sec">поддерево чужой</text>
-    <text x="736" y="330" class="t-cap t-sec">доски</text>
+    <text x="736" y="310" class="t-cap t-sec">поддерево доски</text>
+    <text x="736" y="330" class="t-cap t-sec">с ноутбука</text>
     <path d="M700,134 L660,157" class="e" :marker-end="`url(#${id})`" />
     <path d="M760,134 L800,157" class="e" :marker-end="`url(#${id})`" />
     <!-- транспорт -->

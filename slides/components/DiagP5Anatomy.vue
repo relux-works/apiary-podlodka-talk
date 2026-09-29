@@ -2,7 +2,8 @@
 // Слайд 25, процессы как конфигурация. Анатомия Playbook.json и опубликованного плейбука как набора скиллов.
 // Источник: curator-playbook spec/process-configuration.md DRAFT v4.8 — §2.1 (два файла), §3 (структура), §4.1–§4.2 (роли, владельцы),
 // §6.2 (переходы, limit), §7.3 (параметры), §8.1 (плейбук — набор скиллов), §10 (валидатор); examples/dev-cycle.playbook.json.
-// Показано подмножество dev-cycle: роли, типы и воркфлоу dev урезаны до того, что читается со сцены.
+// Показано подмножество dev-cycle: роли, типы и воркфлоу dev урезаны до того, что читается со сцены; на схеме это подписано
+// «упрощено» (полный воркфлоу open → development → review → accepted → done — на DiagP5Extends).
 import { useId } from 'vue'
 const id = useId()
 </script>
@@ -48,6 +49,7 @@ const id = useId()
     <line x1="420" y1="170" x2="453" y2="170" class="e" :marker-end="`url(#${id})`" />
     <path d="M340,192 C330,214 214,214 204,195" class="e" :marker-end="`url(#${id})`" />
     <text x="272" y="226" text-anchor="middle" class="t-cap t-sec">доработка · limit $rework_limit</text>
+    <text x="544" y="226" text-anchor="end" class="t-cap t-sec">упрощено</text>
     <!-- политика -->
     <text x="16" y="266" class="t-head t-lilac">ПОЛИТИКА</text>
     <rect x="124" y="242" width="80" height="34" rx="10" class="n-wait" />
@@ -60,7 +62,7 @@ const id = useId()
     <text x="501" y="264" text-anchor="middle">data</text>
     <!-- связь по имени скилла -->
     <line x1="544" y1="62" x2="597" y2="62" class="e" :marker-end="`url(#${id})`" />
-    <text x="572" y="54" text-anchor="middle" class="t-cap t-sec">имя</text>
+    <text x="570" y="52" text-anchor="middle" class="t-cap t-sec">имя</text>
     <!-- опубликованный плейбук -->
     <rect x="600.75" y="0.75" width="306.5" height="284.5" rx="14" class="frame-hive" />
     <text x="616" y="24" class="t-head t-lilac">CURATOR-PLAYBOOK-DEV-CYCLE</text>

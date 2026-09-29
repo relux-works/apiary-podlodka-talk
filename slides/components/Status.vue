@@ -13,5 +13,6 @@ const LABEL = { today: 'работает сегодня', decided: 'решено
 .slidev-layout .rwb-status.st-decided { background: var(--rwb-lilac); color: var(--rwb-ink); }
 .slidev-layout .rwb-status.st-proposed { background: transparent; color: var(--rwb-lilac); box-shadow: inset 0 0 0 1.5px var(--rwb-lilac); }
 .slidev-layout .rwb-status.st-vision { background: var(--rwb-purple); color: var(--rwb-txt); }
-.slidev-layout .rwb-status.st-open { background: var(--rwb-card); color: var(--rwb-sec); }
+.slidev-layout .rwb-status.st-open { background: transparent; color: var(--rwb-sec); box-shadow: inset 0 0 0 1.5px var(--rwb-dim); }
+.slidev-layout .card .rwb-status.st-open { color: var(--rwb-sec-card); box-shadow: inset 0 0 0 1.5px var(--rwb-sec-card); }
 </style>

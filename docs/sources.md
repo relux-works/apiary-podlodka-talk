@@ -32,7 +32,7 @@ In this repository already: the narrative spine [`text/from-buckets-to-apiary.ru
    | 14 где мы | part 7 |
    | 15 словарь | the terms |
 
-3. **Names on slides:** [naming.ru.md](https://github.com/relux-works/wiki/blob/main/naming.ru.md) (apiary, yard, keeper, hive, queen, comb, bee, wild bees, nuc, with their technical terms) and [glossary.ru.md](https://github.com/relux-works/wiki/blob/main/glossary.ru.md).
+3. **Names on slides:** [naming.md](https://github.com/relux-works/wiki/blob/main/naming.md) (apiary, yard, keeper, hive, queen, comb, bee, wild bees, nuc, with their technical terms; the mapping approved 2026-09-25) and [glossary.ru.md](https://github.com/relux-works/wiki/blob/main/glossary.ru.md). The Russian [naming.ru.md](https://github.com/relux-works/wiki/blob/main/naming.ru.md) still shows the superseded mapping of 2026-09-24 (hive = one machine); do not use it until it is updated. The post's table in `text/` matches the current mapping.
 4. **What is decided and in which order:**
    - decisions: [decisions.md](https://github.com/relux-works/wiki/blob/main/decisions.md), sections by date, the newest 2026-09-28 and 2026-09-29;
    - roadmap: [roadmap/ecosystem-roadmap.ru.md](https://github.com/relux-works/wiki/blob/main/roadmap/ecosystem-roadmap.ru.md);
@@ -60,8 +60,8 @@ Demo metrics: board events in `.task-board/.activity/<ID>/events.ndjson`, runs i
 
 ### Part 4 — no vendor lock-in
 
-- Curator **P**, v0.15.0-rc.1, profiles and managed homes: [README](https://github.com/relux-works/curator/blob/main/README.md), [docs/cli.md](https://github.com/relux-works/curator/blob/main/docs/cli.md), [docs/environment-config.md](https://github.com/relux-works/curator/blob/main/docs/environment-config.md).
-- The protocol, curator-spec **P**, v1.0.0-rc.12: [protocol/core.md](https://github.com/relux-works/curator-spec/blob/main/protocol/core.md), [protocol/environments.md](https://github.com/relux-works/curator-spec/blob/main/protocol/environments.md).
+- Curator **P**, v0.15.0-rc.2 (latest tag on 2026-09-29; the pack named rc.1), profiles and managed homes: [README](https://github.com/relux-works/curator/blob/main/README.md), [docs/cli.md](https://github.com/relux-works/curator/blob/main/docs/cli.md), [docs/environment-config.md](https://github.com/relux-works/curator/blob/main/docs/environment-config.md).
+- The protocol, curator-spec **P**, v1.0.0-rc.13 (latest tag on 2026-09-29; the pack named rc.12): [protocol/core.md](https://github.com/relux-works/curator-spec/blob/main/protocol/core.md), [protocol/environments.md](https://github.com/relux-works/curator-spec/blob/main/protocol/environments.md).
 - `curator run`, curator-agent-launcher **P**: [SPEC.md](https://github.com/relux-works/curator-agent-launcher/blob/main/SPEC.md).
 - Session host, DRAFT v0.3 (goals and the doorbell across Claude, Codex, Muse, agy, Pi, Qwen): [agent-session-host spec/session-host.md](https://github.com/relux-works/agent-session-host/blob/main/spec/session-host.md).
 - ax, the session manager across hosts **P**: [agent-session-manager](https://github.com/relux-works/agent-session-manager), spec **P**: [agent-session-manager-spec SPEC.md](https://github.com/relux-works/agent-session-manager-spec/blob/main/SPEC.md).

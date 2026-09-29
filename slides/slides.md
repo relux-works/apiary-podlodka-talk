@@ -52,3 +52,15 @@ src: ./parts/6-swarm.md
 ---
 src: ./parts/7-where-we-are.md
 ---
+
+---
+src: ./parts/8-backup.md
+---
+
+---
+src: ./parts/8a-backup-mechanics.md
+---
+
+---
+src: ./parts/8b-backup-apiary.md
+---

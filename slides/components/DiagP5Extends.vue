@@ -4,7 +4,9 @@
 // §7.2 (uses и слоты: scrum поверх dev-cycle, bind scrum.work-item → story), §7.3 (параметры: rework_limit по умолчанию none;
 // «the operator's direction, 2026-09-25; the form is proposed» — отсюда пилюля «форма — предложено» у параметра);
 // examples/dev-cycle.playbook.json (воркфлоу dev), examples/scrum/project.Playbook.json ("dev-cycle.rework_limit": 30).
+// reveal: рамка шаблона сразу; воркфлоу dev-cycle, iOS-проект, скрам-проект, затем параметры (форма и rework_limit: 30) — по клику.
 import { useId } from 'vue'
+defineProps<{ reveal?: boolean }>()
 const id = useId()
 const base = [
   { x: 16, w: 120, t: 'open' },
@@ -20,6 +22,7 @@ const base = [
     <!-- шаблон -->
     <rect x="0.75" y="0.75" width="906.5" height="118" rx="14" class="frame" />
     <text x="16" y="24" class="t-head t-sec">DEV-CYCLE · ОПУБЛИКОВАННЫЙ ШАБЛОН, ВОРКФЛОУ DEV</text>
+    <Step :on="reveal">
     <g v-for="b in base" :key="b.t">
       <rect :x="b.x" y="38" :width="b.w" height="44" rx="10" :class="b.cls || 'n'" />
       <text :x="b.x + b.w / 2" :y="b.s ? 57 : 65" text-anchor="middle" class="t-big" :class="{ 't-ink': b.cls }">{{ b.t }}</text>
@@ -31,15 +34,11 @@ const base = [
     <line x1="686" y1="60" x2="723" y2="60" class="e" :marker-end="`url(#${id})`" />
     <path d="M410,82 C400,104 262,104 252,85" class="e" :marker-end="`url(#${id})`" />
     <text x="430" y="106" class="t-cap t-sec">доработка · $rework_limit = none</text>
-    <!-- статус формы параметров: §7.3 «the form is proposed» — как пилюля Status proposed -->
-    <rect x="676.75" y="91.75" width="214" height="21.5" rx="10.75" class="st-prop" />
-    <text x="783.75" y="107" text-anchor="middle" class="st-prop-t">ФОРМА — ПРЕДЛОЖЕНО</text>
-    <!-- стрелки к проектам -->
+    </Step>
+    <Step :on="reveal">
+    <!-- iOS-проект -->
     <line x1="220" y1="119" x2="220" y2="147" class="e" :marker-end="`url(#${id})`" />
     <text x="232" y="138" class="t-cap t-sec">extends</text>
-    <line x1="688" y1="119" x2="688" y2="147" class="e" :marker-end="`url(#${id})`" />
-    <text x="700" y="138" class="t-cap t-sec">uses</text>
-    <!-- iOS-проект -->
     <rect x="0.75" y="150" width="440" height="149" rx="14" class="frame-hive" />
     <text x="16" y="172" class="t-head t-lilac">IOS-ПРОЕКТ · ОДИН ФАЙЛ ОТЛИЧИЙ</text>
     <rect x="16" y="186" width="136" height="44" rx="10" class="n" />
@@ -54,7 +53,11 @@ const base = [
     <line x1="284" y1="208" x2="317" y2="208" class="e" :marker-end="`url(#${id})`" />
     <text x="16" y="258" class="t-cap">Сменили скилл разработчика, вставили QA</text>
     <text x="16" y="278" class="t-cap t-sec">Остальное обновляется вместе с шаблоном</text>
+    </Step>
+    <Step :on="reveal">
     <!-- скрам -->
+    <line x1="688" y1="119" x2="688" y2="147" class="e" :marker-end="`url(#${id})`" />
+    <text x="700" y="138" class="t-cap t-sec">uses</text>
     <rect x="466.75" y="150" width="440.5" height="149" rx="14" class="frame-hive" />
     <text x="482" y="172" class="t-head t-lilac">СКРАМ-ПРОЕКТ · КОМПОЗИЦИЯ</text>
     <rect x="482" y="186" width="190" height="96" rx="10" class="n-wait" />
@@ -69,7 +72,14 @@ const base = [
     <text x="688" y="224">dev-cycle, scrum</text>
     <text x="688" y="248" class="t-sec">bind: work-item</text>
     <text x="688" y="266">→ story</text>
+    </Step>
+    <Step :on="reveal">
+    <!-- параметры -->
+    <!-- статус формы параметров: §7.3 «the form is proposed» — как пилюля Status proposed -->
+    <rect x="676.75" y="91.75" width="214" height="21.5" rx="10.75" class="st-prop" />
+    <text x="783.75" y="107" text-anchor="middle" class="st-prop-t">ФОРМА — ПРЕДЛОЖЕНО</text>
     <text x="688" y="290" class="t-lilac">rework_limit: 30</text>
+    </Step>
   </svg>
 </template>
 <style scoped>

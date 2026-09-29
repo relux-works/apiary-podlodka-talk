@@ -4,7 +4,9 @@
 // §6.2 (переходы, limit), §7.3 (параметры), §8.1 (плейбук — набор скиллов), §10 (валидатор); examples/dev-cycle.playbook.json.
 // Показано подмножество dev-cycle: роли, типы и воркфлоу dev урезаны до того, что читается со сцены; на схеме это подписано
 // «упрощено» (полный воркфлоу open → development → review → accepted → done — на DiagP5Extends).
+// reveal: рамка Playbook.json сразу; роли, типы, воркфлоу, политика, затем опубликованный плейбук справа — по клику.
 import { useId } from 'vue'
+defineProps<{ reveal?: boolean }>()
 const id = useId()
 </script>
 <template>
@@ -13,6 +15,7 @@ const id = useId()
     <!-- Playbook.json -->
     <rect x="0.75" y="0.75" width="560" height="284.5" rx="14" class="frame" />
     <text x="16" y="24" class="t-head t-sec">PLAYBOOK.JSON · В КОРНЕ ПРОЕКТА, В GIT</text>
+    <Step :on="reveal">
     <!-- роли -->
     <text x="16" y="66" class="t-head t-lilac">РОЛИ</text>
     <rect x="124" y="40" width="136" height="44" rx="10" class="n-lime" />
@@ -24,6 +27,8 @@ const id = useId()
     <rect x="414" y="40" width="130" height="44" rx="10" class="n" />
     <text x="479" y="59" text-anchor="middle" class="t-big">reviewer</text>
     <text x="479" y="76" text-anchor="middle" class="t-sec">скилл роли</text>
+    </Step>
+    <Step :on="reveal">
     <!-- типы -->
     <text x="16" y="120" class="t-head t-lilac">ТИПЫ</text>
     <rect x="124" y="98" width="100" height="36" rx="10" class="n" />
@@ -35,6 +40,8 @@ const id = useId()
     <rect x="372" y="98" width="110" height="36" rx="10" class="n" />
     <text x="427" y="121" text-anchor="middle" class="t-big">dev-task</text>
     <text x="494" y="121" class="t-cap t-sec">поля</text>
+    </Step>
+    <Step :on="reveal">
     <!-- воркфлоу -->
     <text x="16" y="174" class="t-head t-lilac">ВОРКФЛОУ</text>
     <rect x="124" y="148" width="140" height="44" rx="10" class="n" />
@@ -50,6 +57,8 @@ const id = useId()
     <path d="M340,192 C330,214 214,214 204,195" class="e" :marker-end="`url(#${id})`" />
     <text x="272" y="226" text-anchor="middle" class="t-cap t-sec">доработка · limit $rework_limit</text>
     <text x="544" y="226" text-anchor="end" class="t-cap t-sec">упрощено</text>
+    </Step>
+    <Step :on="reveal">
     <!-- политика -->
     <text x="16" y="266" class="t-head t-lilac">ПОЛИТИКА</text>
     <rect x="124" y="242" width="80" height="34" rx="10" class="n-wait" />
@@ -60,6 +69,8 @@ const id = useId()
     <text x="386" y="264" text-anchor="middle">delegation</text>
     <rect x="458" y="242" width="86" height="34" rx="10" class="n-wait" />
     <text x="501" y="264" text-anchor="middle">data</text>
+    </Step>
+    <Step :on="reveal">
     <!-- связь по имени скилла -->
     <line x1="544" y1="62" x2="597" y2="62" class="e" :marker-end="`url(#${id})`" />
     <text x="570" y="52" text-anchor="middle" class="t-cap t-sec">имя</text>
@@ -81,5 +92,6 @@ const id = useId()
     <text x="616" y="236" class="t-cap">Skillfile.json ставит всё</text>
     <text x="616" y="254" class="t-cap">одним селектором; скилл роли</text>
     <text x="616" y="272" class="t-cap">попадает только в её запуски</text>
+    </Step>
   </svg>
 </template>

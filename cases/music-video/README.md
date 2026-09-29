@@ -1,6 +1,6 @@
 # Music video: a generality check against a real production
 
-> Copied from [relux-works/curator-playbook](https://github.com/relux-works/curator-playbook/tree/main/examples/music-video) at 648dc54 (DRAFT v4.8) for the talk. The `$schema` paths in the JSON files point into that repository. Spec sections (§) refer to [`spec/process-configuration.md`](https://github.com/relux-works/curator-playbook/blob/main/spec/process-configuration.md).
+> Copied from [relux-works/curator-playbook](https://github.com/relux-works/curator-playbook/tree/main/examples/music-video) at e10436a (DRAFT v4.8) for the talk. The `$schema` paths in the JSON files point into that repository. Spec sections (§) refer to [`spec/process-configuration.md`](https://github.com/relux-works/curator-playbook/blob/main/spec/process-configuration.md).
 
 This example expresses a real, publicly documented production as a playbook: a five-minute lyric music video made in about nineteen hours of wall-clock time by one human director and an agent production team (September 2026). The author published the full record: the direction log, the orchestration prompts, every image, song and clip prompt, and the cost. It is the most complex non-software process we have tested the model against, and it went viral, so it doubles as a demonstration.
 
@@ -19,7 +19,7 @@ Both validate against [`../../schema/playbook-v1.schema.json`](https://github.co
 | Images | 188 prompts, 636 images, 130 plates used |
 | Clips | 47 clips plus 30 continuation takes, 91 submissions, about 93 USD |
 | Agents | one production-lead session plus fan-out workflows: 31 agents for research and lyrics, 7 for the storyboard, 40 runs for animation |
-| Tokens | 1.4 billion, about 626 USD at list prices; 96 % were cache re-reads of a ~565k-token main session |
+| Tokens | 1.4 billion, about 626 USD at list prices; 96 % were cache re-reads across all calls. By cost: the animation agents 48 %, the main session 30 % (its context sat around 565k tokens), storyboard 15 %, research and lyrics 7 % |
 | Director | about 50 messages: taste calls, checkpoints, a few decisive notes |
 
 ## How the process maps
@@ -43,7 +43,7 @@ Both validate against [`../../schema/playbook-v1.schema.json`](https://github.co
 
 ## What the model makes better
 
-- **Tools run outside the orchestrator's context.** In the original, the main session ran every generator, analysis and render script itself, and its context grew to about 565k tokens; 96 % of 1.4 billion tokens were re-reads. Here those steps are tool states run by the kernel's executor: the orchestrator reads a result, not a transcript.
+- **Tools run outside the orchestrator's context.** In the original, the main session ran every generator, analysis and render script itself, and its context grew to about 565k tokens. Every call re-reads its whole context from the cache, and such re-reads were 96 % of all 1.4 billion tokens; the main session alone was 30 % of the cost. Here those steps are tool states run by the kernel's executor: the orchestrator reads a result, not a transcript, so its context and every re-read stay smaller.
 - **The fan-outs are declared, visible and resumable.** The original ran them as throwaway scripts in one session. Here each draft, sweep, plate, clip and chapter is an element with its own state on the board, so a crash resumes at the element, not at the script.
 - **Spending is bounded by the kernel**, not by a sentence in a prompt: the ceiling per clip and the director's budget are checked before any generation starts.
 - **Every loop is a parameter** a project tunes, including an unbounded director review of the cut.

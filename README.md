@@ -40,7 +40,7 @@ Copied files name their source and commit at the top or in their folder's README
 
 - the post comes from relux-works/blog at 0070a5f;
 - the diagrams and the research synthesis come from relux-works/wiki at a4850ca;
-- the music-video case comes from relux-works/curator-playbook at 648dc54.
+- the music-video case comes from relux-works/curator-playbook at e10436a.
 
 The specifications are linked from the plan, not copied, with their versions as of 2026-09-29. Refresh a copy from its source rather than editing it here.
 

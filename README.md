@@ -23,6 +23,7 @@ Private working repository for the Podlodka talk by Alexey and Ivan (Relux Works
 | [`AGENTS.md`](AGENTS.md) | Start here when working with an agent: sources of truth, commands, definition of done |
 | [`slides/`](slides/) | The deck (`slides.md`), the diagram gallery (`diagrams.md`), stage diagrams in `components/`, rehearsal-mode setup, `public/` |
 | [`themes/`](themes/) | Two Slidev themes, `rwb-tech` and `rwb-minimal`, with their style guides |
+| [`docs/sources.md`](docs/sources.md) | Where every outside source lives, by part of the talk, and how to use them |
 | [`docs/deck-workflow.md`](docs/deck-workflow.md) | How we build the deck: conventions, known traps, verification, delivery |
 | [`plan/slides-plan.ru.md`](plan/slides-plan.ru.md) | The working plan: timing, every slide's theses, demos, what to prepare, sources |
 | [`open-questions.md`](open-questions.md) | Open questions for the organizers and for us, and what is decided |

@@ -2,12 +2,13 @@
 
 This repository is the working space for a paired Podlodka talk by Alexey Grigoryev and Ivan Oparin (Relux Works): «От чат-ботов к пасеке», 90 minutes, 41 slides in seven parts, three demos. Alexey presents parts 1–4 (the mechanics: board, autonomy, cross-harness, no vendor lock-in); Ivan presents parts 5–6 (the Apiary, the distributed Apiary and the swarm); part 7 and questions are joint.
 
-Read this file first, then [`docs/deck-workflow.md`](docs/deck-workflow.md) before touching slides.
+Read this file first, then [`docs/sources.md`](docs/sources.md) and [`docs/deck-workflow.md`](docs/deck-workflow.md) before touching slides.
 
 ## Where the truth lives
 
 | What | File | Rule |
 | --- | --- | --- |
+| Where every outside source lives | [`docs/sources.md`](docs/sources.md) | Read before filling slides. Truth order: a repository's spec or code, then the wiki, then the post. No links to private repositories on slides. |
 | Theses and wording | [`text/from-buckets-to-apiary.ru.md`](text/from-buckets-to-apiary.ru.md) | A copy of relux-works/blog. Change it at the source, then re-copy. Slides follow its chapters. |
 | Slide list, timing, demos | [`plan/slides-plan.ru.md`](plan/slides-plan.ru.md) | Slide numbers everywhere refer to this plan. |
 | Open items and decisions | [`open-questions.md`](open-questions.md) | Living list. Anything unverified, estimated or waiting on a person goes here. |

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Слайд 28, клип за 19 часов как плейбук. Схема процесса, без кадров и звука: кто владеет каким шагом.
 // Источник: curator-playbook examples/music-video/ (README «How the process maps», music-video.playbook.json, project.Playbook.json)
-// на 648dc54, DRAFT v4.8; копия в cases/music-video/. Числа агентов — README «The production in numbers».
+// на e10436a, DRAFT v4.8; копия в cases/music-video/. Числа агентов — README «The production in numbers».
 // Спека: §4.2 (владельцы, слепые помощники), §6.11 (инструменты запускает ядро), §6.11.1 (выходы инструментов, предложено), §4.2/§6.4 (делегирование трат).
 defineProps<{ reveal?: boolean }>()
 const stages = ['Текст', 'Песня и герой', 'Раскадровка', 'Кадры и клипы', 'Главы и монтаж']

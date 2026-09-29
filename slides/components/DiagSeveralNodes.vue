@@ -4,7 +4,9 @@
 // домашний сервер того же владельца с умным домом, его Кипер отчитывается головному: координация, не командование;
 // способ 4 — чужой агент по аренде и подписям), §10.4, и waggle DRAFT v5.2 §9.3, §12. Способ 3 (несколько операторов) — только в заметках.
 // Обе точки принадлежат одному владельцу, поэтому человек один.
+// reveal: владелец и точка 1 сразу; по кликам — точка 2, waggle между Киперами, чужой агент.
 import { useId } from 'vue'
+defineProps<{ reveal?: boolean }>()
 const id = useId()
 </script>
 <template>
@@ -13,7 +15,6 @@ const id = useId()
     <!-- люди -->
     <rect x="100" y="0" width="160" height="38" rx="10" class="n-lime" />
     <text x="180" y="25" text-anchor="middle" class="t-big t-ink">Владелец</text>
-    <text x="728" y="24" text-anchor="middle" class="t-cap t-sec">вторая точка того же владельца</text>
     <!-- левая точка -->
     <rect x="0.75" y="54" width="358" height="310" rx="14" class="frame" />
     <text x="16" y="76" class="t-head t-sec">ТОЧКА 1 · НОУТБУК</text>
@@ -36,38 +37,46 @@ const id = useId()
     <path d="M150,134 L130,157" class="e" :marker-end="`url(#${id})`" />
     <path d="M210,134 L250,157" class="e" :marker-end="`url(#${id})`" />
     <!-- правая точка -->
-    <rect x="548.75" y="54" width="358" height="310" rx="14" class="frame" />
-    <text x="564" y="76" class="t-head t-sec">ТОЧКА 2 · ДОМАШНИЙ СЕРВЕР</text>
-    <rect x="638" y="88" width="180" height="46" rx="10" class="n-lilac" />
-    <text x="728" y="109" text-anchor="middle" class="t-big t-ink">Кипер</text>
-    <text x="728" y="126" text-anchor="middle" class="t-ink-sec">отчитывается головному</text>
-    <rect x="564" y="160" width="144" height="92" rx="12" class="frame-hive" />
-    <text x="576" y="180" class="t-head t-lilac">УМНЫЙ ДОМ</text>
-    <rect x="578" y="194" width="116" height="44" rx="10" class="n-purple" />
-    <text x="636" y="221" text-anchor="middle" class="t-big">Матка</text>
-    <rect x="722" y="160" width="170" height="190" rx="12" class="frame-hive" />
-    <text x="734" y="180" class="t-head t-lilac">ХОББИ · ГОСТЬ</text>
-    <rect x="736" y="192" width="142" height="62" rx="10" class="n" />
-    <text x="807" y="215" text-anchor="middle" class="t-big">Под-оркестратор</text>
-    <text x="807" y="235" text-anchor="middle" class="t-sec">под арендой</text>
-    <text x="736" y="290" class="t-cap t-sec">ведёт арендованное</text>
-    <text x="736" y="310" class="t-cap t-sec">поддерево доски</text>
-    <text x="736" y="330" class="t-cap t-sec">с ноутбука</text>
-    <path d="M700,134 L660,157" class="e" :marker-end="`url(#${id})`" />
-    <path d="M760,134 L800,157" class="e" :marker-end="`url(#${id})`" />
-    <!-- транспорт -->
-    <rect x="376" y="84" width="156" height="58" rx="10" class="n-wait" />
-    <text x="454" y="107" text-anchor="middle" class="t-big">Чужой агент</text>
-    <text x="454" y="126" text-anchor="middle" class="t-sec">аренда, подписи</text>
-    <rect x="376" y="200" width="156" height="76" rx="10" class="n-purple" />
-    <text x="454" y="226" text-anchor="middle" class="t-big">waggle</text>
-    <text x="454" y="245" text-anchor="middle" class="t-on">NATS · tailnet</text>
-    <text x="454" y="263" text-anchor="middle" class="t-on">ящики, аренды</text>
-    <line x1="454" y1="142" x2="454" y2="197" class="e-dash" :marker-end="`url(#${id})`" />
-    <path d="M270,120 C330,130 360,180 373,214" class="e" :marker-end="`url(#${id})`" />
-    <path d="M638,120 C580,130 548,180 535,214" class="e" :marker-end="`url(#${id})`" />
-    <path d="M736,246 C640,300 560,300 535,262" class="e-dash" :marker-end="`url(#${id})`" />
-    <text x="376" y="306" class="t-cap t-sec">координация,</text>
-    <text x="376" y="326" class="t-cap t-sec">не команда</text>
+    <Step :on="reveal">
+      <text x="728" y="24" text-anchor="middle" class="t-cap t-sec">вторая точка того же владельца</text>
+      <rect x="548.75" y="54" width="358" height="310" rx="14" class="frame" />
+      <text x="564" y="76" class="t-head t-sec">ТОЧКА 2 · ДОМАШНИЙ СЕРВЕР</text>
+      <rect x="638" y="88" width="180" height="46" rx="10" class="n-lilac" />
+      <text x="728" y="109" text-anchor="middle" class="t-big t-ink">Кипер</text>
+      <text x="728" y="126" text-anchor="middle" class="t-ink-sec">отчитывается головному</text>
+      <rect x="564" y="160" width="144" height="92" rx="12" class="frame-hive" />
+      <text x="576" y="180" class="t-head t-lilac">УМНЫЙ ДОМ</text>
+      <rect x="578" y="194" width="116" height="44" rx="10" class="n-purple" />
+      <text x="636" y="221" text-anchor="middle" class="t-big">Матка</text>
+      <rect x="722" y="160" width="170" height="190" rx="12" class="frame-hive" />
+      <text x="734" y="180" class="t-head t-lilac">ХОББИ · ГОСТЬ</text>
+      <rect x="736" y="192" width="142" height="62" rx="10" class="n" />
+      <text x="807" y="215" text-anchor="middle" class="t-big">Под-оркестратор</text>
+      <text x="807" y="235" text-anchor="middle" class="t-sec">под арендой</text>
+      <text x="736" y="290" class="t-cap t-sec">ведёт арендованное</text>
+      <text x="736" y="310" class="t-cap t-sec">поддерево доски</text>
+      <text x="736" y="330" class="t-cap t-sec">с ноутбука</text>
+      <path d="M700,134 L660,157" class="e" :marker-end="`url(#${id})`" />
+      <path d="M760,134 L800,157" class="e" :marker-end="`url(#${id})`" />
+    </Step>
+    <!-- waggle между Киперами -->
+    <Step :on="reveal">
+      <rect x="376" y="200" width="156" height="76" rx="10" class="n-purple" />
+      <text x="454" y="226" text-anchor="middle" class="t-big">waggle</text>
+      <text x="454" y="245" text-anchor="middle" class="t-on">NATS · tailnet</text>
+      <text x="454" y="263" text-anchor="middle" class="t-on">ящики, аренды</text>
+      <path d="M270,120 C330,130 360,180 373,214" class="e" :marker-end="`url(#${id})`" />
+      <path d="M638,120 C580,130 548,180 535,214" class="e" :marker-end="`url(#${id})`" />
+      <path d="M736,246 C640,300 560,300 535,262" class="e-dash" :marker-end="`url(#${id})`" />
+      <text x="376" y="306" class="t-cap t-sec">координация,</text>
+      <text x="376" y="326" class="t-cap t-sec">не команда</text>
+    </Step>
+    <!-- чужой агент -->
+    <Step :on="reveal">
+      <rect x="376" y="84" width="156" height="58" rx="10" class="n-wait" />
+      <text x="454" y="107" text-anchor="middle" class="t-big">Чужой агент</text>
+      <text x="454" y="126" text-anchor="middle" class="t-sec">аренда, подписи</text>
+      <line x1="454" y1="142" x2="454" y2="197" class="e-dash" :marker-end="`url(#${id})`" />
+    </Step>
   </svg>
 </template>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-// Слайд 32, Кипер. Сценическая версия curator-keeper request-routing.puml (main loop DRAFT v0.1 §8, §10.4; waggle §10).
+// Слайд 32, Кипер. Сценическая версия curator-keeper request-routing.puml; содержание сверено с keeper.md DRAFT v0.5.1
+// (§8.2–§8.4 порядок маршрутизации и пример кафе 0,82 / дом 0,61, §10.4) и waggle DRAFT v5.2 §10 (звонок и забор).
+// Последний ответ человеку нейтральный: текста результата в спеке нет.
 defineProps<{ reveal?: boolean }>()
 const actors = [
   { id: 'p', label: 'Человек', sub: 'терминал', tone: 'lime' },
@@ -21,7 +23,7 @@ const steps = [
   { from: 'q', to: 'q', text: 'работает на своей доске' },
   { from: 'q', to: 'w', text: 'результат', tone: 'lime' },
   { from: 'w', to: 'k', text: 'звонок, результат', tone: 'lime' },
-  { from: 'k', to: 'p', text: '«Заказано: 12 л, придёт во вторник»', tone: 'lime' },
+  { from: 'k', to: 'p', text: 'результат', tone: 'lime' },
 ]
 </script>
 <template><Seq :actors="actors" :steps="steps" :reveal="reveal" /></template>

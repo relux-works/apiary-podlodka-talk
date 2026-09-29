@@ -1,9 +1,11 @@
 <script setup lang="ts">
-// Слайд 35, waggle. Сценическая версия communication-layers (process configuration draft v3.3 §6.5, §7.2; waggle §3, §5, §9.3, §10, §12, A1 §19.4).
+// Запасной слайд «Четыре уровня общения» (план, слайд 35). Сценическая версия communication-layers; содержание сверено с
+// process-configuration.md DRAFT v4.8 §6.5, §15 (передача между досками — PC3 и поправка waggle, то есть CM2 / PC3),
+// keeper.md DRAFT v0.5.1 §10.4 и waggle DRAFT v5.2 §3, §5, §9.3, §10, §12, A1 §19.4. Вехи на слайде названы словами, коды — в заметках.
 defineProps<{ reveal?: boolean }>()
 const rows = [
-  { h: 'Одна доска', chain: ['offer', 'accept', 'result'], note: 'записи доски, waggle не нужен · PC1' },
-  { h: 'Между досками и машинами', chain: ['coord.handoff-offer', 'accept', 'result'], note: 'подписанные сообщения waggle; результат подписан ключом хоста доски, а не словами модели · CM2' },
+  { h: 'Одна доска', chain: ['offer', 'accept', 'result'], note: 'записи доски, waggle не нужен · первая версия ядра процессов' },
+  { h: 'Между досками и машинами', chain: ['coord.handoff-offer', 'accept', 'result'], note: 'подписанные сообщения waggle; результат подписан ключом хоста принимающей доски · когда waggle заработает между операторами' },
   { h: 'Кипер и оркестраторы', chain: ['ящик', 'звонок в дверь', 'pull'], note: 'запрос приходит как недоверенные данные; ран-ребёнок пишет только report.v1' },
   { h: 'Между машинами', chain: ['NATS JetStream', 'аренда скоупа', 'кворум'], note: 'tailnet операторов; аренда — compare-and-set, второй получает scope_owned_by' },
 ]

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-// Слайд 31, имена. Сценическая версия curator-keeper one-node-system.puml (main loop DRAFT v0.2 §3, §5, §6.2, §10–§12; process configuration v3.5 §2.1, §2.3, §6.5).
+// Слайд 31, имена. Сценическая версия curator-keeper one-node-system.puml; содержание сверено с keeper.md DRAFT v0.5.1
+// (§3, §5, §6.2, §10–§12, §15.1: приложение-компаньон — KP2, поэтому пунктиром) и process-configuration.md DRAFT v4.8 (§2.1, §2.3, §6.5).
 import { useId } from 'vue'
 const id = useId()
 const hives = [{ x: 16, name: 'УЛЕЙ · СЕМЕЙНЫЙ КАЛЕНДАРЬ' }, { x: 464, name: 'УЛЕЙ · КАФЕ' }]
@@ -10,7 +11,7 @@ const hives = [{ x: 16, name: 'УЛЕЙ · СЕМЕЙНЫЙ КАЛЕНДАРЬ' 
     <!-- снаружи точки -->
     <rect x="150" y="0" width="150" height="40" rx="10" class="n-lime" />
     <text x="225" y="26" text-anchor="middle" class="t-big t-ink">Человек</text>
-    <rect x="660" y="0" width="248" height="40" rx="10" class="n" />
+    <rect x="660.75" y="0.75" width="246.5" height="38.5" rx="10" class="n-wait" />
     <text x="784" y="26" text-anchor="middle" class="t-big">Приложение-компаньон</text>
     <!-- точка -->
     <rect x="0.75" y="58" width="906.5" height="302" rx="14" class="frame" />

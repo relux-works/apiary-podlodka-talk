@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Слайд 26, только отличия. extends и uses поверх dev-cycle.
 // Источник: curator-playbook spec/process-configuration.md DRAFT v4.8 — §7.1 (extends: iOS-проект меняет скилл разработчика и ставит QA перед review),
-// §7.2 (uses и слоты: scrum поверх dev-cycle, bind scrum.work-item → story), §7.3 (параметры: rework_limit по умолчанию none);
+// §7.2 (uses и слоты: scrum поверх dev-cycle, bind scrum.work-item → story), §7.3 (параметры: rework_limit по умолчанию none;
+// «the operator's direction, 2026-09-25; the form is proposed» — отсюда пилюля «форма — предложено» у параметра);
 // examples/dev-cycle.playbook.json (воркфлоу dev), examples/scrum/project.Playbook.json ("dev-cycle.rework_limit": 30).
 import { useId } from 'vue'
 const id = useId()
@@ -30,6 +31,9 @@ const base = [
     <line x1="686" y1="60" x2="723" y2="60" class="e" :marker-end="`url(#${id})`" />
     <path d="M410,82 C400,104 262,104 252,85" class="e" :marker-end="`url(#${id})`" />
     <text x="430" y="106" class="t-cap t-sec">доработка · $rework_limit = none</text>
+    <!-- статус формы параметров: §7.3 «the form is proposed» — как пилюля Status proposed -->
+    <rect x="676.75" y="91.75" width="214" height="21.5" rx="10.75" class="st-prop" />
+    <text x="783.75" y="107" text-anchor="middle" class="st-prop-t">ФОРМА — ПРЕДЛОЖЕНО</text>
     <!-- стрелки к проектам -->
     <line x1="220" y1="119" x2="220" y2="147" class="e" :marker-end="`url(#${id})`" />
     <text x="232" y="138" class="t-cap t-sec">extends</text>
@@ -68,3 +72,7 @@ const base = [
     <text x="688" y="290" class="t-lilac">rework_limit: 30</text>
   </svg>
 </template>
+<style scoped>
+.st-prop { fill: none; stroke: var(--rwb-lilac); stroke-width: 1.5; }
+.st-prop-t { fill: var(--rwb-lilac); letter-spacing: 0.06em; }
+</style>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-// Слайд 33, доверие. Сценическая версия process-isolation-on-one-node.puml (process configuration draft v3.3 §2.1–§8.1; waggle §12).
+// Только галерея (план, слайд 33). Сценическая версия process-isolation-on-one-node.puml; содержание сверено с
+// process-configuration.md DRAFT v4.8 §2.1–§2.3, §6.5, §8.1 и waggle DRAFT v5.2 §12.
 import { useId } from 'vue'
 const id = useId()
 const hives = [{ x: 0, n: 'A' }, { x: 478, n: 'Б' }]
@@ -25,7 +26,7 @@ const hives = [{ x: 0, n: 'A' }, { x: 478, n: 'Б' }]
       <text :x="h.x + 124" y="137" text-anchor="middle" class="t-big">Матка</text>
       <text :x="h.x + 124" y="155" text-anchor="middle" class="t-on">ровно одна на улей</text>
       <rect :x="h.x + 24" y="200" width="200" height="48" rx="10" class="n" />
-      <text :x="h.x + 124" y="221" text-anchor="middle" class="t-big">Саборкестраторы</text>
+      <text :x="h.x + 124" y="221" text-anchor="middle" class="t-big">Под-оркестраторы</text>
       <text :x="h.x + 124" y="239" text-anchor="middle" class="t-sec">и раны</text>
       <rect :x="h.x + 264" y="200" width="148" height="48" rx="10" class="n-lime" />
       <text :x="h.x + 338" y="229" text-anchor="middle" class="t-big t-ink">Доска {{ h.n }}</text>

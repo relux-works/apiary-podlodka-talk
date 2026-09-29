@@ -7,7 +7,8 @@
 // 0019 §2: хост сессий получает готовый план и фрагмент не читает — поэтому стрелки от хоста в модуль нет.
 // Статус (0019 «proposed — not adopted»; shipped-state: «the current LaunchRequest has no typed Curator context»):
 // модуль и план — сегодня; каналы MCP и промпта в модуле — решено 23.09, в работе (roadmap M2).
-// reveal: владельцы процессов (1), фрагмент и модуль (2), план (3), почему (4).
+// reveal: владельцы процессов (1), фрагмент и модуль (2), план (3).
+// v4 (29.09): the «ПОЧЕМУ ТАК» box moved to the slide lead and the notes.
 import { useId } from 'vue'
 withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
 const id = useId()
@@ -18,7 +19,7 @@ const owners = [
 ]
 </script>
 <template>
-  <svg width="908" height="316" viewBox="0 0 908 316" aria-hidden="true">
+  <svg width="908" height="216" viewBox="0 0 908 216" aria-hidden="true">
     <defs><marker :id="id" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m" /></marker></defs>
     <g v-click="reveal ? 1 : false">
       <g v-for="o in owners" :key="o.y">
@@ -48,12 +49,6 @@ const owners = [
       <text x="788" y="130" text-anchor="middle" class="t-sec">env · stdin</text>
       <text x="788" y="154" text-anchor="middle" class="t-cap">значение, не процесс:</text>
       <text x="788" y="172" text-anchor="middle" class="t-cap">исполняет владелец</text>
-    </g>
-    <g v-click="reveal ? 4 : false">
-      <rect x="0" y="230" width="908" height="84" rx="10" class="n-wait" />
-      <text x="20" y="256" class="t-head t-orange">ПОЧЕМУ ТАК</text>
-      <text x="20" y="280" class="t-cap">Когда лаунчер, task-board и хост сами пишут <tspan class="mono">claude … --mcp-config … --strict-mcp-config</tspan>,</text>
-      <text x="20" y="302" class="t-cap">копии разъезжаются: стоит забыть один флаг — и MCP-серверы машины протекут в дочерний запуск.</text>
     </g>
   </svg>
 </template>

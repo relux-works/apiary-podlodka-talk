@@ -5,7 +5,7 @@
 // Источник: skill-project-management SPEC.md Part 2 (статусы, возвраты из reviewing, Orchestrator Routing Invariant);
 // references/change-request-lifecycle.md (accept_cr — только ревьюер, которому выдана ревизия);
 // README «Isolated Story delivery, end to end» п. 3; text/from-buckets-to-apiary.ru.md §2.
-//   reveal — продюсер, ревизия, ревьюер, принятие, возврат
+//   reveal — продюсер с ревизией, ревьюер, принятие с возвратом (v4: три шага вместо пяти)
 import { computed, useId } from 'vue'
 const props = withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
 const id = useId()
@@ -28,8 +28,6 @@ const bx = (i: number) => i * (BW + GAP)
       <rect :x="bx(0)" :y="Y" :width="BW" :height="BH" rx="10" class="n-purple" />
       <text :x="bx(0) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big">Продюсер</text>
       <text :x="bx(0) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-on">модель семьи A</text>
-    </g>
-    <g v-click="click">
       <line :x1="bx(0) + BW" :x2="bx(1) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e" :marker-end="`url(#${id}-a)`" />
       <rect :x="bx(1)" :y="Y" :width="BW" :height="BH" rx="10" class="n" />
       <text :x="bx(1) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big">Change Request</text>
@@ -47,9 +45,7 @@ const bx = (i: number) => i * (BW + GAP)
       <line :x1="bx(2) + BW" :x2="bx(3) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e-lime" :marker-end="`url(#${id}-l)`" />
       <rect :x="bx(3)" :y="Y" :width="BW" :height="BH" rx="10" class="n-lime" />
       <text :x="bx(3) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big t-ink">Принято</text>
-      <text :x="bx(3) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-ink-sec">accept_cr · integrating</text>
-    </g>
-    <g v-click="click">
+      <text :x="bx(3) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-ink-sec">в интеграцию</text>
       <path :d="`M${bx(2) + BW / 2},${Y + BH} V${Y + BH + 36} H${bx(0) + BW / 2} V${Y + BH + 3}`" class="e-dash" :marker-end="`url(#${id}-a)`" />
       <rect x="198" :y="Y + BH + 25" width="270" height="22" class="knock" />
       <text x="333" :y="Y + BH + 41" text-anchor="middle" class="t-cap">вернуть: to-dev, ревизия N+1</text>

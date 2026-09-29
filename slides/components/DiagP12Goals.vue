@@ -27,7 +27,7 @@ const kx = (i: number) => i * (KW + KG)
       <text x="150" y="22" class="t-cap t-sec">задача</text>
       <rect x="218" y="0" width="330" height="60" rx="10" class="n-purple" />
       <text x="383" y="26" text-anchor="middle" class="t-big">Оркестратор · цель доски</text>
-      <text x="383" y="45" text-anchor="middle" class="t-on">parent/primary · ревизия 3</text>
+      <text x="383" y="45" text-anchor="middle" class="t-on">одна на доску · ревизия 3</text>
       <line x1="548" y1="30" x2="605" y2="30" class="e-dash" :marker-end="`url(#${id}-a)`" />
       <rect x="608" y="12" width="92" height="36" rx="8" class="n-lime" />
       <text x="654" y="35" text-anchor="middle" class="t-cap t-ink">веха 1 ✓</text>

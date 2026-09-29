@@ -25,7 +25,7 @@ tag: '06 · РАСПРЕДЕЛЁННАЯ ПАСЕКА'
 
 # waggle: *подпись важнее канала* <Status v="proposed" />
 
-<DiagP67Envelope />
+<DiagP67Envelope reveal />
 
 <p v-click class="lead">Полномочия дают подпись, ростер и политика. Провайдер — только труба.</p>
 
@@ -50,7 +50,7 @@ tag: '06 · РАСПРЕДЕЛЁННАЯ ПАСЕКА'
 
 # Две точки, *одна пасека* <Status v="proposed" />
 
-<DiagSeveralNodes />
+<DiagSeveralNodes reveal />
 
 <!--
 [Иван] Как пасека выходит за одну машину. Спека Кипера называет четыре способа вырасти; под все заложена архитектура, но ничего не реализовано.
@@ -73,7 +73,7 @@ tag: '06 · РАСПРЕДЕЛЁННАЯ ПАСЕКА'
 
 # Аренда и *один писатель* <Status v="decided" text="решено, не реализовано" />
 
-<DiagP67Fencing />
+<DiagP67Fencing reveal />
 
 <p v-click class="lead">Эпоху проверяют при запуске агента, при последней записи и при интеграции.</p>
 
@@ -100,7 +100,7 @@ tag: '06 · РОЙ'
 
 # Рой над *одной средой* <Status v="vision" />
 
-<DiagP67WildBees />
+<DiagP67WildBees reveal />
 
 <p v-click class="lead">Среда и её секреты остаются у проекта. Ёмкость и ключи — у участников.</p>
 
@@ -123,7 +123,7 @@ tag: '06 · РОЙ'
 
 # Безопасность *роя* <Status v="vision" />
 
-<DiagP67SwarmSecurity />
+<DiagP67SwarmSecurity reveal />
 
 <p v-click class="lead">Цикл producer → reviewer из второй части становится механизмом безопасности.</p>
 
@@ -148,7 +148,7 @@ tag: '06 · РОЙ'
 
 # Картинка *будущего* <Status v="vision" />
 
-<DiagP67Future />
+<DiagP67Future reveal />
 
 <p v-click class="lead">Сегодня такое умеют единицы. Мы хотим, чтобы это могли сообщества — в том числе для защиты.</p>
 

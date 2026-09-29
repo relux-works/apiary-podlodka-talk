@@ -4,7 +4,9 @@
 // вычисления; десятки оркестраторов и со временем тысячи субагентов; ядро ОС с нуля как общее дело сообщества;
 // «в том числе для обороны»); plan/slides-plan.ru.md слайд 39; call-digest-2026-09-keeper-concept §3.1.
 // Квадраты — пиктограмма масштаба, а не подсчёт.
+// reveal: люди и сообщества сразу; по кликам — проект на протоколе с оркестраторами и субагентами, результат.
 import { useId } from 'vue'
+defineProps<{ reveal?: boolean }>()
 const id = useId()
 const orch = Array.from({ length: 10 }, (_, i) => i)
 const bees = Array.from({ length: 29 * 6 }, (_, i) => ({ x: 256 + (i % 29) * 14.5, y: 116 + Math.floor(i / 29) * 14 }))
@@ -22,23 +24,27 @@ const bees = Array.from({ length: 29 * 6 }, (_, i) => ({ x: 256 + (i % 29) * 14.
     <text x="0" y="222" class="t-cap t-sec">как когда-то отдавали</text>
     <text x="0" y="241" class="t-cap t-sec">процессорное время</text>
     <text x="0" y="260" class="t-cap t-sec">добровольным вычислениям</text>
-    <path d="M190,71 C214,71 214,120 235,120" class="e" :marker-end="`url(#${id})`" />
-    <path d="M190,157 C214,157 214,150 235,150" class="e" :marker-end="`url(#${id})`" />
     <!-- проект на нашем протоколе -->
-    <rect x="238.75" y="0.75" width="456" height="302" rx="14" class="frame-hive" />
-    <text x="256" y="24" class="t-head t-lilac">ОТКРЫТЫЙ ПРОЕКТ НА НАШЕМ ПРОТОКОЛЕ</text>
-    <rect v-for="i in orch" :key="'o' + i" :x="256 + i * 42" y="40" width="30" height="30" rx="6" class="n-purple" />
-    <text x="256" y="94" class="t-cap">десятки оркестраторов</text>
-    <rect v-for="(b, i) in bees" :key="'b' + i" :x="b.x" :y="b.y" width="10" height="10" rx="2" class="n" />
-    <text x="256" y="220" class="t-cap">тысячи субагентов</text>
-    <rect x="256" y="236" width="422" height="50" rx="10" class="n-wait" />
-    <text x="467" y="256" text-anchor="middle" class="t-cap">одна среда, одна доска,</text>
-    <text x="467" y="275" text-anchor="middle" class="t-cap">независимые ревьюеры</text>
+    <Step :on="reveal">
+      <path d="M190,71 C214,71 214,120 235,120" class="e" :marker-end="`url(#${id})`" />
+      <path d="M190,157 C214,157 214,150 235,150" class="e" :marker-end="`url(#${id})`" />
+      <rect x="238.75" y="0.75" width="456" height="302" rx="14" class="frame-hive" />
+      <text x="256" y="24" class="t-head t-lilac">ОТКРЫТЫЙ ПРОЕКТ НА НАШЕМ ПРОТОКОЛЕ</text>
+      <rect v-for="i in orch" :key="'o' + i" :x="256 + i * 42" y="40" width="30" height="30" rx="6" class="n-purple" />
+      <text x="256" y="94" class="t-cap">десятки оркестраторов</text>
+      <rect v-for="(b, i) in bees" :key="'b' + i" :x="b.x" :y="b.y" width="10" height="10" rx="2" class="n" />
+      <text x="256" y="220" class="t-cap">тысячи субагентов</text>
+      <rect x="256" y="236" width="422" height="50" rx="10" class="n-wait" />
+      <text x="467" y="256" text-anchor="middle" class="t-cap">одна среда, одна доска,</text>
+      <text x="467" y="275" text-anchor="middle" class="t-cap">независимые ревьюеры</text>
+    </Step>
     <!-- цель -->
-    <line x1="695" y1="150" x2="735" y2="150" class="e" :marker-end="`url(#${id})`" />
-    <rect x="738" y="104" width="170" height="92" rx="10" class="n-lime" />
-    <text x="823" y="130" text-anchor="middle" class="t-big t-ink">Ядро ОС с нуля</text>
-    <text x="823" y="152" text-anchor="middle" class="t-ink-sec">общее дело</text>
-    <text x="823" y="170" text-anchor="middle" class="t-ink-sec">сообщества</text>
+    <Step :on="reveal">
+      <line x1="695" y1="150" x2="735" y2="150" class="e" :marker-end="`url(#${id})`" />
+      <rect x="738" y="104" width="170" height="92" rx="10" class="n-lime" />
+      <text x="823" y="130" text-anchor="middle" class="t-big t-ink">Ядро ОС с нуля</text>
+      <text x="823" y="152" text-anchor="middle" class="t-ink-sec">общее дело</text>
+      <text x="823" y="170" text-anchor="middle" class="t-ink-sec">сообщества</text>
+    </Step>
   </svg>
 </template>

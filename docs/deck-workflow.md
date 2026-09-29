@@ -7,14 +7,17 @@ How we build a talk as code. The process and the traps below come from the iOS C
 - **The post first, the deck from the post.** Slides follow the chapters of `text/from-buckets-to-apiary.ru.md`; the plan maps chapters to slides. If a slide needs a thesis the post does not have, write it into the post at its source (relux-works/blog) and re-copy, or note it in the pull request for the post's owner.
 - **Speaker notes are the speech.** Each slide ends with an HTML comment holding full paragraphs of what is said, not bullets. Do not shorten them when editing a slide. After a rehearsal, rewrite the notes from the transcript.
 - **Numbers are researched, never invented.** Every figure gets a source; an estimate is labelled as an estimate in the notes and listed in `open-questions.md` with what would confirm it.
-- **Vision is labelled.** The plan's tone rule: what works today and what is vision are separated on the slide itself. Use `<Status v="today|decided|proposed|vision|open" />` — a pill after the title or next to an item («работает сегодня», «решено», «в спеке, предложено», «видение», «открыто»). The status comes from the source (`docs/sources.md`), not from how confident the slide sounds.
+- **Status lives in the notes (v4).** Every claim's status — работает сегодня, решено, в спеке, предложено, видение, открыто — is written in the speaker notes from the source (`docs/sources.md`), not shown as pills on slides: the speakers found the pills distracting. A whole vision chapter is marked once, on its opener. `<Status>` remains for backup slides and exceptional cases only.
 - **The deck is split by part.** `slides/slides.md` holds the title and imports `slides/parts/<n>-<name>.md` through `src:`; each part file starts with its opener. Lint and the audit follow the imports.
 
 ## 2. Slide conventions
 
 These are the author's standing corrections from the previous deck. Apply them without being asked.
 
-- **Titles:** one line, technical, calm. Statements or questions. No «не X, а Y». No pompous or marketing phrasing.
+- **Titles:** one line, a plain statement. No «X: Y» colon titles («Цели: у каждого агента своя» → «У каждого агента своя цель»), no «не X, а Y», no pompous or marketing phrasing.
+- **Terms (v4):** technical terms on slides — главный оркестратор, оркестратор проекта, суборкестраторы, воркеры, задачи, проекты, недоверенные внешние агенты. Beekeeping names (пасека, точка, улей, матка, соты, пчела) stay out of slide bodies; the Apiary brand may appear only in the title and the closing.
+- **Every chapter runs problem → solution → demo or example**, with the problem on its own slide and an explicit transition.
+- **No text walls; takeaway strips only when true and useful.**
 - **Typography:** «ёлочки» and long dashes — are intentional; keep them.
 - **One composition per slide.** A title, one anchor (table, code, diagram, cards), a takeaway strip at the bottom (`<p class="lead">`).
 - **Clicks reveal parts, in reading order:** the left column item by item, then the right column, then the bottom. A takeaway or summary strip appears last. Lists reveal one item per click.

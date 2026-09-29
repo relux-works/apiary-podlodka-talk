@@ -7,6 +7,9 @@ transition: fade
 # Slidev preloads slide images by their source path; for ../diagrams/… that
 # path 404s in the built deck. The images still load as bundled assets.
 preloadImages: false
+# v4: corporate logos only on the title slide (see logos below)
+themeConfig:
+  logo: false
 layout: cover
 event: 'PODLODKA · RELUX WORKS'
 speakers:
@@ -15,15 +18,34 @@ speakers:
   - name: 'Иван Опарин'
     role: "Старший программный инженер\nRWB"
 about: 'Вместе представляем проект нашей открытой агентской инфраструктуры Relux Works'
+logos:
+  - src: /brand/rwb.png
+    alt: RWB
+    height: 26
+  - alt: 'МТС · логотип'
+  - src: /brand/relux-works.svg
+    alt: Relux Works
+    height: 30
 ---
 
 # От чат-ботов к пасеке: оркестраторы поверх любых агентских сред
 
 <!--
+Название под вопросом (бриф v4, 29.09): текущее — плейсхолдер. Три альтернативы на выбор спикерам:
+1. «Оркестрация агентов без привязки к вендору».
+2. «Как мы вынесли процесс разработки в конфигурацию и отдали его агентам».
+3. «Один оркестратор, любые агенты — от одной машины до роя».
+
+Логотип МТС — место под файл: официальный логотип нужен от Алексея, правила стиля для спикеров из разных компаний — у ведущих.
+
 Представляемся оба: Алексей — технический руководитель RnD-разработки (Tech Lead) в МТС, Иван — старший программный инженер в RWB. Вместе мы делаем открытую агентскую инфраструктуру Relux Works, и сегодня показываем её проект.
 
 Тема — rwb-tech с логотипом RWB (решение 29.09), пока не пришёл шаблон Подлодки. Смена темы — одна строка theme: ../themes/rwb-minimal.
 -->
+
+---
+src: ./parts/0-opening.md
+---
 
 ---
 src: ./parts/1-epochs.md
@@ -34,11 +56,11 @@ src: ./parts/2-board.md
 ---
 
 ---
-src: ./parts/3-cross-harness.md
+src: ./parts/3-no-lock-in.md
 ---
 
 ---
-src: ./parts/4-no-lock-in.md
+src: ./parts/4-context.md
 ---
 
 ---
@@ -58,9 +80,17 @@ src: ./parts/8-backup.md
 ---
 
 ---
-src: ./parts/8a-backup-mechanics.md
+src: ./parts/8a-backup-board.md
 ---
 
 ---
-src: ./parts/8b-backup-apiary.md
+src: ./parts/8b-backup-mechanics.md
+---
+
+---
+src: ./parts/8c-backup-apiary.md
+---
+
+---
+src: ./parts/8d-backup-swarm.md
 ---

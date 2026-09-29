@@ -53,5 +53,6 @@ Then read `open-questions.md` and the part of the plan you are working on.
 
 - Russian for talk content, English for repository docs.
 - No personal data, credentials or business topics.
-- The active theme is `rwb-tech` with the RWB logo (decided 29.09). The Podlodka template may replace it; see `open-questions.md`.
-- Mark vision slides as vision («видение» or «в спеке, предложено»), as the plan's tone section requires.
+- The active theme is `rwb-tech`. Since v4 (29.09) corporate logos — RWB, MTS, Relux Works — appear only on the title slide (`logos:` in its frontmatter); every other slide is neutral (`themeConfig.logo: false`).
+- The v4 plan is ≈45 minutes, ceiling 50: `plan/slides-plan.ru.md`, brief `plan/deck-v4-brief.md`. `npm run timing` must land at 40–45 min.
+- Claim status goes in the speaker notes, not on slides; a vision chapter is marked once on its opener.

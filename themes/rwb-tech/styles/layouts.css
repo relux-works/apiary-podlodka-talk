@@ -14,6 +14,9 @@
 .slidev-layout.rwb-cover .about { margin-top: 22px; max-width: 600px; color: var(--rwb-lilac); font-size: 17px; line-height: 1.35; }
 .slidev-layout.rwb-cover .contacts { position: absolute; left: 36px; bottom: 30px; font-family: var(--rwb-mono); font-size: 14px; color: var(--rwb-sec); }
 .slidev-layout.rwb-cover .rwb-cover-logo { position: absolute; left: 36px; bottom: 30px; }
+.slidev-layout.rwb-cover .rwb-cover-logos { position: absolute; left: 36px; bottom: 30px; display: flex; align-items: center; gap: 36px; }
+.slidev-layout.rwb-cover .rwb-cover-logos img { width: auto; display: block; }
+.slidev-layout.rwb-cover .rwb-cover-logos .logo-slot { font-family: var(--rwb-mono); font-size: 13px; letter-spacing: 0.08em; color: var(--rwb-sec); border: 1.5px dashed var(--rwb-dim); border-radius: 8px; padding: 6px 12px; }
 .slidev-layout.rwb-cover .contacts.with-logo { left: 150px; bottom: 34px; }
 
 /* Открывашка части: фиолетовый фон, крупный заголовок, 3D-иконка шаблона справа, лесенка квадратов */

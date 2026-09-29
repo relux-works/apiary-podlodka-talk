@@ -2,8 +2,9 @@
 // Титул. image — карточка конференции на весь слайд (файл из public/); subline — строка, дорисованная поверх карточки под именем. Без image — текстовый титул темы.
 // Один спикер: who + role. Несколько: speakers — [{ name, role }], колонками; \n в role (в двойных кавычках YAML) — перенос, компания отдельной строкой;
 // about — строка под спикерами (чей проект, от чьего имени).
+// logos — ряд логотипов внизу слева вместо логотипа темы: [{ src (из public/), alt, height }]; без src — место под логотип с подписью alt.
 import { withBase } from '../utils/base'
-withDefaults(defineProps<{ event?: string, who?: string, role?: string | string[], contacts?: string, logo?: boolean, image?: string, subline?: string, motif?: string, speakers?: { name: string, role?: string }[], about?: string }>(), { logo: true })
+withDefaults(defineProps<{ event?: string, who?: string, role?: string | string[], contacts?: string, logo?: boolean, image?: string, subline?: string, motif?: string, speakers?: { name: string, role?: string }[], about?: string, logos?: { src?: string, alt: string, height?: number }[] }>(), { logo: true })
 </script>
 <template>
   <div class="slidev-layout rwb-cover" :class="{ 'has-image': !!image }">
@@ -25,6 +26,12 @@ withDefaults(defineProps<{ event?: string, who?: string, role?: string | string[
     <div v-if="contacts" class="contacts" :class="{ 'with-logo': logo !== false && !image }">{{ contacts }}</div>
     <Squares v-if="!image" set="statement" />
     <!-- после лесенки: справа вверху логотип перекрывал квадрат; на текстовом титуле он внизу слева -->
-    <RwbLogo v-if="logo !== false && !image" class="rwb-cover-logo" />
+    <div v-if="logos && logos.length && !image" class="rwb-cover-logos">
+      <template v-for="l in logos" :key="l.alt">
+        <img v-if="l.src" :src="withBase(l.src)" :alt="l.alt" :style="{ height: (l.height || 28) + 'px' }" />
+        <span v-else class="logo-slot">{{ l.alt }}</span>
+      </template>
+    </div>
+    <RwbLogo v-else-if="logo !== false && !image" class="rwb-cover-logo" />
   </div>
 </template>

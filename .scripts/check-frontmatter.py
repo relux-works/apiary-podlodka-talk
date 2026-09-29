@@ -11,7 +11,9 @@ import re
 import sys
 import pathlib
 
-KEY_RE = re.compile(r'^([A-Za-z_][A-Za-z0-9_-]*):[ \t]+(.+?)[ \t]*$')
+KEY_RE = re.compile(r'^[ \t]*([A-Za-z_][A-Za-z0-9_-]*):[ \t]+(.+?)[ \t]*$')
+# A list item that opens a mapping (`- name: value`): check the value, not the pair.
+ITEM_MAP_RE = re.compile(r'^([A-Za-z_][A-Za-z0-9_-]*):[ \t]+(.+?)$')
 ITEM_RE = re.compile(r'^[ \t]*-[ \t]+(.+?)[ \t]*$')
 BLOCK_START_RE = re.compile(r'^[A-Za-z_][A-Za-z0-9_-]*:')
 SPECIAL = set("'\"|>[{&*!%@")
@@ -38,8 +40,11 @@ def offenders(path):
             item = ITEM_RE.match(lines[k])
             if not m and not item:
                 continue
-            key = m.group(1) if m else '-'
-            value = m.group(2) if m else item.group(1)
+            if item:
+                inner = ITEM_MAP_RE.match(item.group(1))
+                key, value = ('- ' + inner.group(1), inner.group(2)) if inner else ('-', item.group(1))
+            else:
+                key, value = m.group(1), m.group(2)
             if value[0] in SPECIAL:
                 continue
             if ': ' in value:

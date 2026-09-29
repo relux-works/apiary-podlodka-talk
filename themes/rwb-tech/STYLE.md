@@ -57,7 +57,7 @@ CSS-переменные (`themes/rwb-tech/styles/base.css`):
 
 | layout | Свойства | Слоты | Для чего |
 |---|---|---|---|
-| `cover` | `image` (файл из `public/`, на весь слайд), `event`, `who`, `role`, `contacts` | default | титул: карточка конференции или текстовый вариант |
+| `cover` | `image` (файл из `public/`, на весь слайд), `event`, `who`, `role`, `contacts`; для нескольких спикеров — `speakers: [{ name, role }]` колонками (компания в `role` отдельной строкой через `\n` в двойных кавычках) и `about` — строка о проекте | default | титул: карточка конференции или текстовый вариант; логотип на текстовом — внизу слева |
 | `section` | `num`, `sub`, `icon` (`server` · `cubes` · `computer` · `notepad`) | default = заголовок | открывашка части: фиолетовый фон, лесенка, 3D-иконка |
 | `default` | `tag`, `source` | default | рабочий слайд: колонка «заголовок → содержимое → плашка» |
 | `two-cols` | `tag`, `source`, `left-tone`, `right-tone` | `::title::`, default (левая карточка), `::right::` (правая), `::bottom::` | сравнение: серая карточка против фиолетовой |

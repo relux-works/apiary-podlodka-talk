@@ -51,6 +51,10 @@ npm run lint && npm run verify && npm run timing && npm run export
 
 `verify` passing on the new host is the readiness check. Keep its log under `.temp/` (numbered, e.g. `.temp/verify-01.log`).
 
+**Mac mini host rules.** Ask macmini-infra before the first run.
+- The mini has a syspolicyd crash class. tb-R194: never create, execute and delete fresh binaries in bulk there. tb-R136: builds go one at a time through `~/.mini-build-lock`, and only after a check that syspolicyd is up.
+- `npm ci` downloads a Chromium binary, and `verify` and `export` launch it. Run them under the lock and respect macmini-infra's ramp guard: on HOLD, start nothing new. A Slidev build is light, but treat it as a build.
+
 ### Scripts (`.scripts/`)
 
 | Script | Does |
@@ -80,7 +84,12 @@ A click-by-click PDF is `slidev export … --with-clicks`. It runs to many more 
 ## 4. Delivery: how every change landed
 
 1. Start from current `main`: `git fetch origin && git switch main && git merge --ff-only origin/main`, then a short branch.
-2. **Signed commits as Ivan:** author `Ivan Oparin <ivan@relux.works>`, signed with Ivan's SSH key (`gpg.format ssh`). Check with `git log --format='%h %G? %an'`; every commit must show `G`. The Mac mini needs Ivan's signing key and the git identity set up. That is a human-only step (§7).
+2. **Signed commits.**
+   - On `ivmbp` the author is `Ivan Oparin <ivan@relux.works>` with Ivan's SSH key (`gpg.format ssh`).
+   - On the Mac mini, campaigns sign with the bot key in the mini's stable ssh-agent (`githubbot@relux.works`, `~/.ssh/relux-git-bot`).
+   - tb-R57: either identity is valid in relux-works repositories, as long as one task keeps one identity.
+   - Check with `git log --format='%h %G? %an'`. Every commit must show `G`.
+   - If the agent loses the key (`ssh-add -l` is empty), hold pushes and signing; re-adding it is Ivan's step. Never bypass signing.
 3. Push the branch. GitHub SSH from `ivmbp` sometimes fails with `Permission denied (publickey)`; a retry loop of up to 5 tries works.
 4. `gh pr create` with what changed and what is left. End the description with the Claude Code attribution line.
 5. **Local CI mirror.** Hosted CI is blocked by GitHub billing, so the checks run locally from the exact PR head: `npm run lint`, `verify` on the deck, `verify` on the gallery when diagrams changed, `npm run timing`, and `npm run export` when the release matters. Record the results in the review.
@@ -111,13 +120,20 @@ These are in the repository docs already. Listed here because each one was a cor
 ## 6. How the work was organised
 
 - Large batches (v4) ran as parallel chapter workers, each in its own worktree `.temp/wt-<name>` on its own branch. The orchestrator merged them, then ran lint, both verifies and timing, and checked the contact sheet by eye.
-- **Model rules are per host and set by Ivan through tb-keeper.** On `ivmbp` on 08.10 the rule was tb-R147: Muse max producers; `gpt-6.1-sol` medium reviewers, two in parallel plus a delta reviewer from round 2; `claude-sonnet-5-5` high once Codex limits run out. Ask tb-keeper or macmini-infra which rule applies on the Mac mini. Small slide edits are done inline by the orchestrator.
+- **Model rules are per host and set by Ivan.**
+  - On `ivmbp` on 08.10: tb-R147, i.e. Muse max producers and `gpt-6.1-sol` medium reviewers (two in parallel, plus a delta reviewer from round 2), with `claude-sonnet-5-5` high once Codex limits run out.
+  - On the Mac mini, the owner rule of 05.10 (posted in `#macmini-infra`) applies:
+    - producers: `muse-spark-1.3-contributor`, effort max;
+    - reviewers: codex `gpt-6.1-sol` medium (cross-provider);
+    - on a Muse refusal: sol medium, or sonnet-5-5 medium/high, with the reason recorded.
+  - Check `#macmini-infra` for anything newer, and for the Codex budget stop line.
+  - Small slide edits are done inline by the orchestrator.
 - **Research and decisions persist in files:** `open-questions.md` (with a «Решено» section), the plan, and the PR descriptions. Nothing lives only in a chat.
 
 ## 7. Human-only steps for the Mac mini (Ivan)
 
-- Git identity `Ivan Oparin <ivan@relux.works>` and Ivan's SSH signing key on the mini, so commits and tags verify as `G`.
-- GitHub access: SSH push to `relux-works/apiary-podlodka-talk` and `gh auth`.
+- Signing on the mini already works through the bot key in the stable agent. If it goes missing, Ivan re-adds it: `SSH_AUTH_SOCK=<the launchd Listeners socket> ssh-add ~/.ssh/relux-git-bot`, as in `#macmini-infra` on 05.10.
+- GitHub access from the mini: SSH push to `relux-works/apiary-podlodka-talk` (private) and `gh auth`, with access to this repository.
 - A Matrix identity for the new orchestrator (stable naming `<host>_<project>_<role>`, e.g. `macmini_apiary-podlodka-talk_orch`), invited to `#apiary-podlodka-talk`.
 
 ## 8. People, sessions and channels

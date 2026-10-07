@@ -4,6 +4,8 @@ This repository is the working space for a paired Podlodka talk by Alexey Grigor
 
 Read this file first, then [`docs/sources.md`](docs/sources.md) and [`docs/deck-workflow.md`](docs/deck-workflow.md) before touching slides.
 
+Taking over the repository? Start with [`docs/HANDOFF.md`](docs/HANDOFF.md): the state, the toolchain, the delivery steps, the speakers' standing rules and the open items with dates (08.10).
+
 ## Where the truth lives
 
 | What | File | Rule |

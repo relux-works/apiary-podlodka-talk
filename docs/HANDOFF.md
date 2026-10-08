@@ -105,6 +105,7 @@ Docs-only changes (`open-questions.md`, the plan) go the same way, with lint as 
 
 These are in the repository docs already. Listed here because each one was a correction from a rehearsal or a review.
 
+- **Talk to Ivan in Russian** (Ivan, 08.10). Repository docs stay in English, and slide content and speaker notes stay in Russian. Keep English technical terms as they are.
 - The visual style (rwb-tech: dark slides, purple leads, pixel squares) is approved. Do not restyle it.
 - **The agreed title is not changed** without both speakers. The three alternatives in the title notes (`[Для себя]`) are for them to choose from.
 - **Every content slide builds click by click**, especially toward the end. The only exceptions are demo bumpers and «Спасибо».

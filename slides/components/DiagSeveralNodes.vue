@@ -5,6 +5,8 @@
 // способ 4 — чужой агент по аренде и подписям), §10.4, и waggle DRAFT v5.2 §9.3, §12. Способ 3 (несколько операторов) — только в заметках.
 // Обе точки принадлежат одному владельцу, поэтому человек один.
 // v4 (29.09): на схеме технические термины — машина, главный оркестратор, оркестратор проекта; пасечные имена только в комментарии.
+// v4.2: носитель — Matrix (call-digest 2026-10-07 Q13; контракт trust-and-isolation v1.3 §6); чужой агент допускается
+// закреплением ключа и записью допуска от корня (контракт §2, §7; сиквенс external-agent-onboarding).
 // reveal: владелец и машина 1 сразу; по кликам — машина 2, waggle между главными оркестраторами, чужой агент.
 import { useId } from 'vue'
 defineProps<{ reveal?: boolean }>()
@@ -64,7 +66,7 @@ const id = useId()
     <Step :on="reveal">
       <rect x="376" y="200" width="156" height="76" rx="10" class="n-purple" />
       <text x="454" y="226" text-anchor="middle" class="t-big">waggle</text>
-      <text x="454" y="245" text-anchor="middle" class="t-on">NATS · tailnet</text>
+      <text x="454" y="245" text-anchor="middle" class="t-on">Matrix · подписи</text>
       <text x="454" y="263" text-anchor="middle" class="t-on">ящики, аренды</text>
       <path d="M270,120 C330,130 360,180 373,214" class="e" :marker-end="`url(#${id})`" />
       <path d="M638,120 C580,130 548,180 535,214" class="e" :marker-end="`url(#${id})`" />
@@ -76,7 +78,7 @@ const id = useId()
     <Step :on="reveal">
       <rect x="376" y="84" width="156" height="58" rx="10" class="n-wait" />
       <text x="454" y="107" text-anchor="middle" class="t-big">Чужой агент</text>
-      <text x="454" y="126" text-anchor="middle" class="t-sec">аренда, подписи</text>
+      <text x="454" y="126" text-anchor="middle" class="t-sec">ключ закреплён</text>
       <line x1="454" y1="142" x2="454" y2="197" class="e-dash" :marker-end="`url(#${id})`" />
     </Step>
   </svg>

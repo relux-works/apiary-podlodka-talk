@@ -30,14 +30,25 @@ jobs:
       # Offline build + every slide rendered in Chromium and measured:
       # content inside the layout box, text inside its frame, code not clipped,
       # console clean. Screenshots and a contact sheet land in .temp/audit.
+      # verify.sh clears .temp/audit on every run, so each audit is moved to its
+      # own folder (even on failure) to keep the deck's screenshots in the artifact.
       - name: Verify deck
-        run: npm run verify
+        run: |
+          rc=0; npm run verify || rc=$?
+          mv .temp/audit .temp/audit-deck || true
+          exit $rc
 
       - name: Verify diagram gallery and theme showcases
         run: |
-          VERIFY_PORT=8093 .scripts/verify.sh slides/diagrams.md
-          VERIFY_PORT=8094 .scripts/verify.sh themes/rwb-tech/example.md
-          VERIFY_PORT=8095 .scripts/verify.sh themes/rwb-minimal/example.md
+          check() {
+            local rc=0
+            VERIFY_PORT=$1 .scripts/verify.sh "$2" || rc=$?
+            mv .temp/audit ".temp/audit-$3" || true
+            return $rc
+          }
+          check 8093 slides/diagrams.md diagrams
+          check 8094 themes/rwb-tech/example.md rwb-tech
+          check 8095 themes/rwb-minimal/example.md rwb-minimal
 
       - name: Export PDF
         run: npm run export
@@ -53,6 +64,8 @@ jobs:
         if: always()
         with:
           name: slides-audit
-          path: .temp/audit/
+          path: |
+            .temp/audit-*/
+            .temp/audit/
           retention-days: 30
           if-no-files-found: ignore

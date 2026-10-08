@@ -55,9 +55,9 @@ const id = useId()
     </Step>
     <!-- 3. к донору — ничего -->
     <Step :on="reveal">
-      <path d="M600,251 L600,272 L110,272 L110,254" class="e-dash" :marker-end="`url(#${id})`" />
-      <rect x="250" y="259" width="360" height="26" rx="8" class="knock" />
-      <text x="430" y="277" text-anchor="middle" class="t-cap t-orange">✕ к донору — ни соединений, ни команд</text>
+      <path d="M481,217 L481,280 L110,280 L110,254" class="e-dash" :marker-end="`url(#${id})`" />
+      <rect x="512" y="265" width="380" height="26" rx="8" class="knock" />
+      <text x="702" y="283" text-anchor="middle" class="t-cap t-orange">✕ к донору — ни соединений, ни команд</text>
     </Step>
   </svg>
 </template>

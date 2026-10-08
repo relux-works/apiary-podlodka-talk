@@ -65,7 +65,12 @@ jobs:
         with:
           name: slides-audit
           path: |
-            .temp/audit-*/
+            .temp/audit-deck/
+            .temp/audit-diagrams/
+            .temp/audit-rwb-tech/
+            .temp/audit-rwb-minimal/
             .temp/audit/
+          # .temp is a dot folder, which upload-artifact drops by default.
+          include-hidden-files: true
           retention-days: 30
           if-no-files-found: ignore

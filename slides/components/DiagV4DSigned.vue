@@ -1,5 +1,7 @@
 <script setup lang="ts">
 // v4, глава 6, слайд 48 «Подпись важнее канала». Упрощённая версия DiagP67Envelope: без мультиподписи и FIDO.
+// v4.2: права — подпись и грант (контракт trust-and-isolation v1.3 §3, §6); ключ у ключника, не у модели (§1 п. 1, §2);
+// первыми — носители решения 07.10 (Matrix, XMPP), подпись едет в метаданных события (§6, решено).
 // Источники: waggle spec/waggle.md DRAFT v5.2 §2 (провайдеры: local, NATS JetStream, IRC, XMPP, Matrix, Slack, Telegram, email),
 // §3 (ключ сессии создаёт хост, заверяет ключ оператора), §4 (конверт: точные байты + подписи SSHSIG, реестр allowed_signers,
 // проверка офлайн через ssh-keygen), §5 (coord просит или сообщает, решает получатель), §9 (провайдеры — недоверенные трубы).
@@ -7,7 +9,7 @@
 import { useId } from 'vue'
 defineProps<{ reveal?: boolean }>()
 const id = useId()
-const pipes = ['Telegram', 'Slack', 'IRC', 'XMPP', 'Matrix']
+const pipes = ['Matrix', 'XMPP', 'Slack', 'Telegram', 'IRC']
 </script>
 <template>
   <svg width="908" height="262" viewBox="0 0 908 262" aria-hidden="true">
@@ -25,7 +27,7 @@ const pipes = ['Telegram', 'Slack', 'IRC', 'XMPP', 'Matrix']
     <text x="334" y="101" text-anchor="middle" class="t-sec">«отдай модуль мне»</text>
     <rect x="236" y="134" width="196" height="62" rx="10" class="n-lilac" />
     <text x="334" y="158" text-anchor="middle" class="t-big t-ink">подпись автора</text>
-    <text x="334" y="179" text-anchor="middle" class="t-ink-sec">обычный OpenSSH</text>
+    <text x="334" y="179" text-anchor="middle" class="t-ink-sec">ключ не у модели</text>
     <!-- любой транспорт -->
     <Step :on="reveal">
       <line x1="447" y1="121" x2="487" y2="121" class="e" :marker-end="`url(#${id})`" />
@@ -41,7 +43,7 @@ const pipes = ['Telegram', 'Slack', 'IRC', 'XMPP', 'Matrix']
       <text x="696" y="42" class="t-head t-sec">МАШИНА АЛЕКСЕЯ</text>
       <rect x="696" y="56" width="196" height="62" rx="10" class="n-lilac" />
       <text x="794" y="80" text-anchor="middle" class="t-big t-ink">проверка подписи</text>
-      <text x="794" y="101" text-anchor="middle" class="t-ink-sec">по списку ключей</text>
+      <text x="794" y="101" text-anchor="middle" class="t-ink-sec">ключ и грант</text>
       <line x1="794" y1="118" x2="794" y2="131" class="e" :marker-end="`url(#${id})`" />
       <rect x="696" y="134" width="196" height="62" rx="10" class="n-purple" />
       <text x="794" y="158" text-anchor="middle" class="t-big">Оркестратор Алексея</text>

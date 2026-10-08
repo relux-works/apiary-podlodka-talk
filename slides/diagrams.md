@@ -893,5 +893,33 @@ class: dense
 <DiagV4DSwarm />
 
 <!--
-v4, глава 6, слайд 50 «Рой над одной средой». Видение. Замена DiagP67WildBees для основного потока.
+v4.2, глава 6, «Рою нужны чужие агенты» (проблема; в v4 — «Рой над одной средой»). Видение. Замена DiagP67WildBees для основного потока.
+-->
+
+---
+layout: default
+tag: 'V4 · ГЛАВА 6 · DiagV4DWorkplace'
+class: dense
+---
+
+# DiagV4DWorkplace
+
+<DiagV4DWorkplace />
+
+<!--
+v4.2, глава 6, «Рабочее место — пользователь на нашей машине». Решено 07.10, не построено. Контракт trust-and-isolation v1.3 §5, §7.
+-->
+
+---
+layout: default
+tag: 'V4 · ЗАПАС К ГЛАВЕ 6 · DiagV4DOnboard'
+class: dense
+---
+
+# DiagV4DOnboard
+
+<DiagV4DOnboard />
+
+<!--
+v4.2, запас к главе 6, «Чужой агент входит в рой». Сиквенсы external-agent-onboarding и remote-workplace-attach, сокращено.
 -->

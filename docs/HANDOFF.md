@@ -29,10 +29,10 @@ Written 2026-10-08 by the outgoing deck session on Ivan's workstation (`ivmbp`, 
 
 | Tool | Version here | Used for |
 | --- | --- | --- |
-| Node.js | 25.6.1 locally, 24 in CI (24 or newer works) | Slidev, the audit, the contact sheet |
+| Node.js | 25.6.1 on ivmbp, 24.21 on the Mac mini, 24 in CI | Slidev, the audit, the contact sheet |
 | npm | 11.10.1 | `npm ci` from `package-lock.json` |
 | Slidev (`@slidev/cli`) | 52.19.1 | dev server, build, PDF export |
-| `playwright-chromium` | 1.63.0 (devDependency) | headless Chromium for `verify` and `export`; `npm ci` fetches the browser |
+| `playwright-chromium` | 1.63.0 (devDependency) | headless Chromium for `verify` and `export`. npm 11 gates install scripts, so approve it once (above) or the browser is never downloaded |
 | Python 3 | 3.14 | `.scripts/check-frontmatter.py`, `timing.py`, `serve-static.py` |
 | `lsof`, `curl` | system | `verify.sh` picks a free port and checks a per-run token, so parallel worktrees never measure each other's builds |
 | `gh` | 2.97 | pull requests, the comment review |
@@ -45,7 +45,8 @@ Written 2026-10-08 by the outgoing deck session on Ivan's workstation (`ivmbp`, 
 ```bash
 git clone git@github.com:relux-works/apiary-podlodka-talk.git
 cd apiary-podlodka-talk
-npm ci                       # also downloads headless Chromium
+npm ci                       # npm 11 does not run install scripts unless approved:
+npm install-scripts approve playwright-chromium   # or: npx playwright install chromium
 npm run lint && npm run verify && npm run timing && npm run export
 ```
 

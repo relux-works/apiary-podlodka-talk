@@ -6,7 +6,7 @@ const props = withDefaults(defineProps<{ items: string[], arrows?: boolean, reve
 const tone = (i: number) => 'tone-' + ((props.colors && props.colors[i]) || props.color)
 </script>
 <template>
-  <div class="rwb-boxes">
+  <div class="rwb-boxes" :class="{ reveal }">
     <template v-if="reveal">
       <div v-for="(it, i) in items" :key="i" v-click class="cell">
         <div v-if="arrows && i > 0" class="arr">→</div>
@@ -23,7 +23,9 @@ const tone = (i: number) => 'tone-' + ((props.colors && props.colors[i]) || prop
 </template>
 <style scoped>
 .rwb-boxes { display: flex; align-items: stretch; gap: 16px; margin: 0 0 16px 0; }
-.cell { flex: 1; display: flex; align-items: stretch; gap: 16px; }
+.rwb-boxes.reveal { gap: 30px; }
+.cell { flex: 1; display: flex; align-items: stretch; position: relative; }
+.cell .arr { position: absolute; left: -23px; top: 50%; transform: translateY(-50%); }
 .cell .box { flex: 1; }
 .box { flex: 1; min-width: 0; color: var(--rwb-txt); background: var(--rwb-card); border-radius: var(--rwb-radius); padding: 16px 18px; font-weight: 500; font-size: 17px; line-height: 1.3; min-height: 72px; box-sizing: border-box; }
 .box.tone-lilac { background: var(--rwb-lilac); color: var(--rwb-ink); }

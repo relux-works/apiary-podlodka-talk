@@ -26,14 +26,14 @@ const gates = [
       <text x="86" y="44" text-anchor="middle" class="t-sec">спека, критерии</text>
       <line x1="172" y1="29" x2="193" y2="29" class="e" :marker-end="`url(#${id})`" />
       <rect x="0" y="80" width="172" height="106" rx="10" class="n-wait" />
-      <text x="14" y="104" class="t-big t-lime">Сегодня</text>
+      <text x="14" y="104" class="t-big t-lime">Спавн</text>
       <text x="14" y="126" class="t-sec">spawn берёт</text>
       <text x="14" y="144" class="t-sec">реестр, класс</text>
       <text x="14" y="162" class="t-sec">работы и лимиты</text>
       <rect x="196.75" y="0.75" width="710.5" height="185" rx="14" class="frame" />
       <text x="212" y="24" class="t-head t-sec">РОУТЕР · ШАГ ПОДГОТОВКИ ЗАПУСКА, НЕ ПРОКСИ</text>
       <rect x="700" y="9" width="192" height="22" rx="11" class="n-lilac" />
-      <text x="796" y="24" text-anchor="middle" class="t-head t-ink">РЕШЕНО, НЕ ПОСТРОЕН</text>
+      <text x="796" y="24" text-anchor="middle" class="t-head t-ink">ЧИСТАЯ ФУНКЦИЯ</text>
     </g>
     <g v-for="(g, i) in gates" :key="g.x" v-click="reveal ? i + 2 : false">
       <line v-if="i > 0" :x1="g.x - 20" y1="78" :x2="g.x - 3" y2="78" class="e" :marker-end="`url(#${id})`" />

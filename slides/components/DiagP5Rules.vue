@@ -28,21 +28,17 @@ const RH = 32
         <text x="12" :y="Y0 + i * RH + 6" class="t-cap">{{ w.r }}</text>
         <line x1="296" :y1="Y0 + i * RH + 1" x2="329" :y2="Y0 + i * RH + 1" class="e" />
         <path :d="`M325,${Y0 + i * RH - 3} L333,${Y0 + i * RH + 1} L325,${Y0 + i * RH + 5} z`" class="m" />
-        <rect x="336" :y="Y0 + i * RH - 12" width="570" height="26" rx="8" :class="w.ok ? 'n-lilac' : 'n-wait'" />
-        <text x="348" :y="Y0 + i * RH + 6" class="t-cap" :class="{ 't-ink': w.ok }">{{ w.m }}</text>
+        <rect x="336" :y="Y0 + i * RH - 12" width="570" height="26" rx="8" class="n-lilac" />
+        <text x="348" :y="Y0 + i * RH + 6" class="t-cap t-ink">{{ w.m }}</text>
       </g>
       <g v-else>
         <rect x="0" :y="Y0 + i * RH - 12" width="292" height="26" rx="8" class="n" />
         <text x="12" :y="Y0 + i * RH + 6" class="t-cap">{{ w.r }}</text>
         <line x1="296" :y1="Y0 + i * RH + 1" x2="329" :y2="Y0 + i * RH + 1" class="e" />
         <path :d="`M325,${Y0 + i * RH - 3} L333,${Y0 + i * RH + 1} L325,${Y0 + i * RH + 5} z`" class="m" />
-        <rect x="336" :y="Y0 + i * RH - 12" width="570" height="26" rx="8" :class="w.ok ? 'n-lilac' : 'n-wait'" />
-        <text x="348" :y="Y0 + i * RH + 6" class="t-cap" :class="{ 't-ink': w.ok }">{{ w.m }}</text>
+        <rect x="336" :y="Y0 + i * RH - 12" width="570" height="26" rx="8" class="n-lilac" />
+        <text x="348" :y="Y0 + i * RH + 6" class="t-cap t-ink">{{ w.m }}</text>
       </g>
     </template>
-    <rect x="336" y="284" width="22" height="14" rx="4" class="n-lilac" />
-    <text x="366" y="296" class="t-cap t-sec">в спеке, решено</text>
-    <rect x="520" y="284" width="22" height="14" rx="4" class="n-wait" />
-    <text x="550" y="296" class="t-cap t-sec">в спеке, предложено 29.09</text>
   </svg>
 </template>

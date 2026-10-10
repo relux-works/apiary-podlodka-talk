@@ -48,7 +48,7 @@ const envs = [
         <text :x="e.x + 85" y="237" text-anchor="middle" class="t-big">{{ e.h }}</text>
         <text :x="e.x + 85" y="257" text-anchor="middle" class="t-sec">{{ e.s }}</text>
       </g>
-      <text x="908" y="294" text-anchor="end" class="t-cap t-sec">пунктир — в спеке</text>
+      <text x="908" y="294" text-anchor="end" class="t-cap t-sec">пунктир — следующие адаптеры</text>
     </Step>
   </svg>
 </template>

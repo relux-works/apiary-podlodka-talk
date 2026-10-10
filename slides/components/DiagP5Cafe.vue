@@ -58,7 +58,7 @@ const sub = (c: string) => ink(c) ? 't-ink-sec' : (c === 'n-purple' ? 't-on' : '
     <!-- следующий пример -->
     <Step :on="reveal">
       <rect x="0.75" y="250" width="906.5" height="53" rx="10" class="n-wait" />
-      <text x="16" y="272" class="t-head t-lilac">ВИДЕНИЕ · ВНЖ В ГРУЗИИ</text>
+      <text x="16" y="272" class="t-head t-lilac">СЛЕДУЮЩИЙ ПРИМЕР · ВНЖ В ГРУЗИИ</text>
       <text x="16" y="292" class="t-cap">Следующий пример не из разработки: документы, службы, записи на приём в Дом юстиции</text>
     </Step>
   </svg>

@@ -923,3 +923,29 @@ class: dense
 <!--
 v4.2, запас к главе 6, «Чужой агент входит в рой». Сиквенсы external-agent-onboarding и remote-workplace-attach, сокращено.
 -->
+
+---
+layout: default
+tag: 'V5 · ВСТУПЛЕНИЕ · DiagV5Parallel'
+---
+
+# DiagV5Parallel
+
+<DiagV5Parallel />
+
+<!--
+DiagV5Parallel — v5, вступление «Параллелизм в рантайме»: три ступени параллелизма и цена. Раскрытие по кликам: <DiagV5Parallel reveal />.
+-->
+
+---
+layout: default
+tag: 'V5 · ВСТУПЛЕНИЕ · DiagV5Map'
+---
+
+# DiagV5Map
+
+<DiagV5Map chapters />
+
+<!--
+DiagV5Map — v5, вступление «Те же задачи у агентов»: таблица рантайм ↔ агенты, по строке на главу; chapters — колонка глав и спикеров. Раскрытие по кликам: <DiagV5Map reveal chapters />.
+-->

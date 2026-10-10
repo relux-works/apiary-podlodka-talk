@@ -3,7 +3,7 @@
 // Источник: plan/slides-plan.ru.md, часть 1; text/from-buckets-to-apiary.ru.md §1–2; wiki posts/2026-09-24-agent-ecosystem.ru.md §1.
 //   at — номер текущей эпохи, 0…5
 const props = withDefaults(defineProps<{ at?: number }>(), { at: 0 })
-const names = ['Stack Overflow', 'Чат и вёдра', 'Скрипты', 'Агенты', 'Пробки', 'Оркестраторы']
+const names = ['Stack Overflow', 'Чат', 'Скрипты', 'Агенты', 'Один агент', 'Оркестраторы']
 const W = 908, GAP = 12, BW = (W - GAP * 5) / 6
 const tone = (i: number) => i < props.at ? 'n' : i === props.at ? 'n-lilac' : 'n-wait'
 </script>

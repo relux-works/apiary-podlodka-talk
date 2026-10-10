@@ -15,7 +15,7 @@ const id = useId()
     <rect x="0.75" y="0.75" width="438" height="298" rx="14" class="frame" />
     <text x="18" y="26" class="t-head t-orange">PTY ДЕРЖИТ ДЕМОН</text>
     <rect x="252" y="11" width="170" height="22" rx="11" class="n-lime" />
-    <text x="337" y="26" text-anchor="middle" class="t-head t-ink">РАБОТАЕТ СЕГОДНЯ</text>
+    <text x="337" y="26" text-anchor="middle" class="t-head t-ink">ДЕМОН В TASK-BOARD</text>
     <rect x="18" y="48" width="220" height="130" rx="12" class="n" />
     <text x="128" y="74" text-anchor="middle" class="t-big">tb-sessiond</text>
     <rect x="38" y="94" width="180" height="60" rx="10" class="n-purple" />
@@ -37,7 +37,7 @@ const id = useId()
     <rect x="468.75" y="0.75" width="438" height="298" rx="14" class="frame-hive" />
     <text x="486" y="26" class="t-head t-lime">ДЕРЖАТЕЛЬ НА СЕССИЮ</text>
     <rect x="690" y="11" width="200" height="22" rx="11" class="pill-prop" />
-    <text x="790" y="26" text-anchor="middle" class="t-head t-lilac">В СПЕКЕ, ПРЕДЛОЖЕНО</text>
+    <text x="790" y="26" text-anchor="middle" class="t-head t-lilac">ОТДЕЛЬНЫЙ ХОСТ СЕССИЙ</text>
     <rect x="486" y="94" width="130" height="60" rx="10" class="n" />
     <text x="551" y="129" text-anchor="middle" class="t-big">Хост сессий</text>
     <rect x="660" y="48" width="230" height="150" rx="12" class="n-wait" />

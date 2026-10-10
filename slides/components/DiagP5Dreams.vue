@@ -57,7 +57,7 @@ const night = [
     <!-- вход в сон -->
     <Step :on="reveal">
     <rect x="0.75" y="258" width="906.5" height="41" rx="10" class="n-wait" />
-    <text x="16" y="283" class="t-cap">Засыпают только по праву <tspan class="mono">dreams</tspan>, один раз на улей: окно, бюджет токенов и минут, простой, квота, питание от сети</text>
+    <text x="16" y="283" class="t-cap">Засыпают только по праву <tspan class="mono">dreams</tspan>, один раз на процесс: окно, бюджет токенов и минут, простой, квота, питание от сети</text>
     </Step>
   </svg>
 </template>

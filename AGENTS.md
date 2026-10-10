@@ -1,6 +1,6 @@
 # Agent guide
 
-This repository is the working space for a paired Podlodka talk by Alexey Grigoryev and Ivan Oparin (Relux Works), about 45 minutes (ceiling 50) since v4 of 29.09: an opening together, Alexey's half (epochs, the board and autonomy, no vendor lock-in with routing and one-machine communication), Ivan's half (the agent context manager, processes as configuration, across machines and the swarm), a recap together, questions at the end. The plan is `plan/slides-plan.ru.md`, the decisions behind it `plan/deck-v4-brief.md`.
+This repository is the working space for a paired Podlodka talk by Alexey Grigoryev and Ivan Oparin (Relux Works), about 45 minutes (ceiling 50) since v4 of 29.09: an opening together, Alexey's half (epochs, the board and autonomy, no vendor lock-in with routing and one-machine communication), Ivan's half (the agent context manager, processes as configuration, across machines and the swarm), a recap together, questions at the end. The plan is `plan/slides-plan.ru.md`, the decisions behind it `plan/deck-v4-brief.md` and, since v5 of 10.10, `plan/deck-v5-brief.md` (orchestration as parallelism).
 
 Read this file first, then [`docs/sources.md`](docs/sources.md) and [`docs/deck-workflow.md`](docs/deck-workflow.md) before touching slides.
 
@@ -57,4 +57,5 @@ Then read `open-questions.md` and the part of the plan you are working on.
 - No personal data, credentials or business topics.
 - The active theme is `rwb-tech`. Since v4 (29.09) corporate logos — RWB, MTS, Relux Works — appear only on the title slide (`logos:` in its frontmatter); every other slide is neutral (`themeConfig.logo: false`).
 - The v4 plan is ≈45 minutes, ceiling 50: `plan/slides-plan.ru.md`, brief `plan/deck-v4-brief.md`. `npm run timing` must land at 40–45 min.
-- Claim status goes in the speaker notes, not on slides; a vision chapter is marked once on its opener.
+- Claim status goes in the speaker notes only. Since v5 (10.10) no status pill or label anywhere, backup and diagrams included; the speakers say the status aloud.
+- Since v5 (10.10): titles are strict technical noun phrases, every chapter's problem slide is titled «Проблема — …», and beekeeping names and «Кипер» stay off slides and stage diagrams (главный оркестратор, оркестратор процесса, процесс).

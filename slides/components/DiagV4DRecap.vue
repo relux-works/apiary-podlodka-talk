@@ -20,7 +20,7 @@ const lines = [
 </template>
 <style scoped>
 .dg-recap { display: grid; margin-bottom: 16px; }
-.line { display: grid; grid-template-columns: 44px 410px 1fr; align-items: baseline; column-gap: 16px; padding: 13px 0; border-top: 1px solid var(--rwb-rule); }
+.line { display: grid; grid-template-columns: 44px 410px 1fr; align-items: baseline; column-gap: 16px; padding: 11px 0; border-top: 1px solid var(--rwb-rule); }
 .dg-recap > div:first-child .line { border-top: 0; padding-top: 0; }
 .n { font-family: var(--rwb-mono); font-size: 15px; color: var(--rwb-dim); }
 .h { font-size: 22px; font-weight: 500; line-height: 1.2; color: var(--rwb-txt); }

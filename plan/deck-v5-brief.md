@@ -34,3 +34,18 @@ For the deck orchestrator on the Mac mini (`macmini_apiary-podlodka-talk_orch`),
 ## 3. Still open after v5
 
 See `open-questions.md`: demos 1–3; oss-release's list of public repositories and the licence wording; the MTS logo; Alexey's pass over the opening and chapters 1–3. The whole opening is Alexey's (Ivan, 10.10: «у нас примерно пополам поделено, и вначале я ничего не говорю»).
+
+## 4. v5.2 (10.10): the platform-side review
+
+ivan-network-profiles reviewed v5.1 against the design book «Swarma» (wiki `book/swarma/ru`), the trust contract (swarm-platform-architecture PR #5) and Curator's CIP-0008/0009/0010; Ivan asked for one more iteration with that context loaded (relayed 10.10: «пускай сделает еще одну итерацию. но добавь ему ссылку на репо где у нас книга по дизайну»). Done:
+
+- backup «Вход внешнего агента в рой» and `DiagV4DOnboard` follow CIP-0009 revisions 2–3: invitation with pins and a one-use code, three role-separated keys on the donor's bridge, a server challenge, DNSSEC checked inside the client (the voice check was removed by the owners on 10.10), a package without carrier identity or tokens, the SSH key outside the workplace user's home;
+- «Рабочее место внешнего агента» notes: the donor's protection is designed (lockdown posture; deployment variants A/B/C of 10.10), not open;
+- `DiagV5Map` gains the row «изоляция процессов ↔ пользователь ОС на агента, ключи вне агента»; the lead strip goes, the chapter column carries the speakers;
+- the METR incident is told technically (isolation rested on an agreement; the shared cache became the channel);
+- «Шардирование»: independent reviewers confirm, the quorum certifies the record (judgment never enters consensus);
+- «Большой проект в одной сети»: the three benefit cards are replaced by the mechanism (lease, epoch, refusal of a stale writer); the expectation stays in the notes;
+- «тысячи» on the diagrams (the post's number), «по нашей оценке десятки тысяч» aloud;
+- «Управление живыми сессиями» notes: waiting is not the model's job, the host wakes and restarts a wedged session;
+- «Сообщение с двумя подписями» notes: the slide shows the waggle draft; questions are answered by the contract (key keeper, registry, grants);
+- «Состояние» notes: Curator v0.15.0-rc.5, the remote-worker CIPs; versions to re-check before the talk.

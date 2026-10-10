@@ -31,7 +31,7 @@ const rules = ['задача с условиями приёмки', 'незав�
       <rect x="246.75" y="0.75" width="360" height="288" rx="14" class="frame-hive" />
       <text x="262" y="24" class="t-head t-lilac">СТРОГИЙ ПРОТОКОЛ</text>
       <rect v-for="(c, i) in cells" :key="i" :x="c.x" :y="c.y" width="9" height="9" rx="2" class="n" />
-      <text x="262" y="142" class="t-cap">десятки тысяч агентов на одну цель</text>
+      <text x="262" y="142" class="t-cap">тысячи агентов на одну цель</text>
       <g v-for="(r, i) in rules" :key="r">
         <rect x="262" :y="156 + i * 42" width="329" height="34" rx="8" class="n-lilac" />
         <text x="426" :y="178 + i * 42" text-anchor="middle" class="t-cap t-ink">{{ r }}</text>

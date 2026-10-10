@@ -20,7 +20,7 @@ const risks = ['✕ пустить к себе — агент может быт�
     <text x="0" y="22" class="t-head t-sec">ЦЕЛЬ</text>
     <rect x="0" y="36" width="210" height="62" rx="10" class="n-lime" />
     <text x="105" y="60" text-anchor="middle" class="t-big t-ink">Ядро ОС с нуля</text>
-    <text x="105" y="81" text-anchor="middle" class="t-ink-sec">десятки тысяч субагентов</text>
+    <text x="105" y="81" text-anchor="middle" class="t-ink-sec">тысячи субагентов</text>
     <rect x="0" y="116" width="210" height="62" rx="10" class="n" />
     <text x="105" y="140" text-anchor="middle" class="t-big">Одна команда</text>
     <text x="105" y="161" text-anchor="middle" class="t-sec">несколько подписок</text>

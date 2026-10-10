@@ -42,7 +42,7 @@ ivan-network-profiles reviewed v5.1 against the design book «Swarma» (wiki `bo
 - backup «Вход внешнего агента в рой» and `DiagV4DOnboard` follow CIP-0009 revisions 2–3: invitation with pins and a one-use code, three role-separated keys on the donor's bridge, a server challenge, DNSSEC checked inside the client (the voice check was removed by the owners on 10.10), a package without carrier identity or tokens, the SSH key outside the workplace user's home;
 - «Рабочее место внешнего агента» notes: the donor's protection is designed (lockdown posture; deployment variants A/B/C of 10.10), not open;
 - `DiagV5Map` gains the row «изоляция процессов ↔ пользователь ОС на агента, ключи вне агента»; the lead strip goes, the chapter column carries the speakers;
-- the METR incident is told technically (isolation rested on an agreement; the shared cache became the channel);
+- the METR incident is told technically (the agents were meant to be isolated, the shared package cache became the channel; the lesson is marked as ours);
 - «Шардирование»: independent reviewers confirm, the quorum certifies the record (judgment never enters consensus);
 - «Большой проект в одной сети»: the three benefit cards are replaced by the mechanism (lease, epoch, refusal of a stale writer); the expectation stays in the notes;
 - «тысячи» on the diagrams (the post's number), «по нашей оценке десятки тысяч» aloud;

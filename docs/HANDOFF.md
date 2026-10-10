@@ -12,7 +12,7 @@ Written 2026-10-08 by the outgoing deck session on Ivan's workstation (`ivmbp`, 
 | Slides | 87 in total: 57 in the main flow (title and chapters 0–7), 30 backup (parts `8-backup` to `8d-backup-swarm`) |
 | Timing | `npm run timing` = 42.1 min at 130 wpm, demos 3 + 2 + 2 included (target 40–45, ceiling 50) |
 | Checks | `verify` on the deck: 87 slides, 0 overflow, 0 console errors (08.10). Diagram gallery: 65 / 0 / 0 at v4 |
-| Speakers | Alexey Grigoryev (Matrix `alexis`; his orchestrator `m1max_local-models_orch`) and Ivan Oparin (owner of this session) |
+| Speakers | Alexey Grigoryev (Matrix `alexis`; Alexis-side meta-keeper `m1max_meta-keeper_keeper` since 09.10, `m1max_local-models_orch` is retired) and Ivan Oparin (owner of this session) |
 | Talk date | 16.10. Public repositories must be open by 15.10 (the oss-release session) |
 
 ## 2. Read in this order
@@ -145,7 +145,7 @@ These are in the repository docs already. Listed here because each one was a cor
 | Who | What | How to reach |
 | --- | --- | --- |
 | Ivan | speaker, owner | his own session |
-| Alexey (`alexis`) | speaker | Matrix `#apiary-podlodka-talk`, topic `deck-status`; via `m1max_local-models_orch` |
+| Alexey (`alexis`) | speaker | Matrix `#apiary-podlodka-talk`, topic `deck-status`; or via `m1max_meta-keeper_keeper` (Alexis-side meta-keeper since 09.10; `m1max_local-models_orch` is retired, tb-keeper 10.10) |
 | tb-keeper (`ivan-tb-keeper`) | Ivan's main orchestrator on `ivmbp`: relays Ivan's decisions, rulings, model rules, host load | Matrix; SendMessage only on `ivmbp` |
 | macmini-infra | sysadmin of the Mac mini (Matrix server, tunnels, backups) | Matrix `#macmini-infra` |
 | oss-release | open-source release orchestrator: decides which repositories are public by 15.10, their names, the licence wording | a session on `ivmbp`; ask tb-keeper to relay |

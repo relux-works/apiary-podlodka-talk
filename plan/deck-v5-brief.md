@@ -17,7 +17,7 @@ For the deck orchestrator on the Mac mini (`macmini_apiary-podlodka-talk_orch`),
 11. **Beekeeping names and «Кипер» leave slides and diagrams for now**, replaced by technical terms («там где что то про пчел и кипера - пока тоже заменям на строгие технические термины»). The two backup slides that were about the names and the keeper command line («Пасечные имена для людей», «Три входа — одна форма команд») are removed; restore them when the naming is final.
 12. **Trunk-based**: land on main, fix or revert on top («у нас все через транк - делаем приземление в мейн - если будет надо - откатим или просто поправим поверх»). Alexey's review is not a precondition for landing.
 13. **The title is fixed**: «От чат-ботов к пасеке: оркестраторы поверх любых агентских сред» is agreed with the organisers and does not change.
-14. **Facts from experience** («мы как люди и специалисты имеем право ссылаться на свой опыт») are allowed when the notes say so: «по нашему опыту», «по нашей оценке». Outside facts still need a source: the July 2026 incident with thousands of derailed agents needs a link from Ivan before it is named on a slide (`open-questions.md`).
+14. **Facts from experience** («мы как люди и специалисты имеем право ссылаться на свой опыт») are allowed when the notes say so: «по нашему опыту», «по нашей оценке». Outside facts still need a source: the summer 2026 OpenAI / Hugging Face incident is cited from METR's investigation of 26.08.2026 (link from Ivan, 10.10; details in `open-questions.md`, «Решено»); it is said aloud from the notes, not printed on a slide.
 
 ## 2. What changed in the deck
 
@@ -33,4 +33,4 @@ For the deck orchestrator on the Mac mini (`macmini_apiary-podlodka-talk_orch`),
 
 ## 3. Still open after v5
 
-See `open-questions.md`: the source for the July 2026 incident; demos 1–3; oss-release's list of public repositories and the licence wording; the MTS logo; Alexey's pass over chapters 1–3 (he may rebalance the speaker tags in the opening, which are a proposal).
+See `open-questions.md`: demos 1–3; oss-release's list of public repositories and the licence wording; the MTS logo; Alexey's pass over the opening and chapters 1–3. The whole opening is Alexey's (Ivan, 10.10: «у нас примерно пополам поделено, и вначале я ничего не говорю»).

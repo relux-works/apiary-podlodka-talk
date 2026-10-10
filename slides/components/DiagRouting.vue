@@ -5,11 +5,11 @@
 defineProps<{ reveal?: boolean }>()
 const actors = [
   { id: 'p', label: 'Человек', sub: 'терминал', tone: 'lime' },
-  { id: 'k', label: 'Главный', sub: 'оркестратор машины', tone: 'lilac' },
+  { id: 'k', label: 'Главный', sub: 'оркестратор', tone: 'lilac' },
   { id: 'r', label: 'Классификатор', sub: 'малая модель' },
   { id: 'h', label: 'Хост сессий' },
   { id: 'w', label: 'waggle', sub: 'почтовые ящики' },
-  { id: 'q', label: 'Кафе', sub: 'оркестратор процесса', tone: 'purple' },
+  { id: 'q', label: 'Кафе', sub: 'оркестратор', tone: 'purple' },
 ]
 const steps = [
   { from: 'p', to: 'k', text: '«закажи овсяное молоко»' },

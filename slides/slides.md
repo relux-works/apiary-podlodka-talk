@@ -18,7 +18,7 @@ speakers:
     logo:
       src: /brand/mws.png
       alt: 'МТС Web Services'
-      height: 64
+      height: 52
   - name: 'Иван Опарин'
     role: "Старший программный инженер\nRWB"
 about: 'Вместе представляем проект нашей открытой агентской инфраструктуры Relux Works'

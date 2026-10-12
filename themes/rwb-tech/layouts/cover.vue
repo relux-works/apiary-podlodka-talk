@@ -2,9 +2,10 @@
 // Титул. image — карточка конференции на весь слайд (файл из public/); subline — строка, дорисованная поверх карточки под именем. Без image — текстовый титул темы.
 // Один спикер: who + role. Несколько: speakers — [{ name, role }], колонками; \n в role (в двойных кавычках YAML) — перенос, компания отдельной строкой;
 // about — строка под спикерами (чей проект, от чьего имени).
+// speakers[].logo — логотип компании спикера слева от имени: { src (из public/), alt, height } (v6, 12.10: логотип MWS у Алексея).
 // logos — ряд логотипов внизу слева вместо логотипа темы: [{ src (из public/), alt, height }]; без src — место под логотип с подписью alt.
 import { withBase } from '../utils/base'
-withDefaults(defineProps<{ event?: string, who?: string, role?: string | string[], contacts?: string, logo?: boolean, image?: string, subline?: string, motif?: string, speakers?: { name: string, role?: string }[], about?: string, logos?: { src?: string, alt: string, height?: number }[] }>(), { logo: true })
+withDefaults(defineProps<{ event?: string, who?: string, role?: string | string[], contacts?: string, logo?: boolean, image?: string, subline?: string, motif?: string, speakers?: { name: string, role?: string, logo?: { src: string, alt: string, height?: number } }[], about?: string, logos?: { src?: string, alt: string, height?: number }[] }>(), { logo: true })
 </script>
 <template>
   <div class="slidev-layout rwb-cover" :class="{ 'has-image': !!image }">
@@ -17,9 +18,12 @@ withDefaults(defineProps<{ event?: string, who?: string, role?: string | string[
       <div v-for="(line, i) in (Array.isArray(role) ? role : role ? [role] : [])" :key="i">{{ line }}</div>
     </div>
     <div v-if="speakers && speakers.length" class="speakers">
-      <div v-for="s in speakers" :key="s.name" class="sp">
-        <div class="name">{{ s.name }}</div>
-        <div v-if="s.role" class="role">{{ s.role }}</div>
+      <div v-for="s in speakers" :key="s.name" class="sp" :class="{ 'has-logo': !!s.logo }">
+        <img v-if="s.logo" class="sp-logo" :src="withBase(s.logo.src)" :alt="s.logo.alt" :style="{ height: (s.logo.height || 64) + 'px' }" />
+        <div class="sp-text">
+          <div class="name">{{ s.name }}</div>
+          <div v-if="s.role" class="role">{{ s.role }}</div>
+        </div>
       </div>
     </div>
     <p v-if="about" class="about">{{ about }}</p>

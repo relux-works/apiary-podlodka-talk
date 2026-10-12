@@ -11,6 +11,8 @@
 .slidev-layout.rwb-cover .speakers { margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 290px)); column-gap: 36px; row-gap: 14px; max-width: 640px; }
 .slidev-layout.rwb-cover .speakers .name { color: var(--rwb-txt); font-size: 19px; line-height: 1.35; }
 .slidev-layout.rwb-cover .speakers .role { color: var(--rwb-sec); font-size: 16px; line-height: 1.35; margin-top: 4px; white-space: pre-line; }
+.slidev-layout.rwb-cover .speakers .sp.has-logo { display: flex; align-items: flex-start; gap: 14px; }
+.slidev-layout.rwb-cover .speakers .sp-logo { width: auto; flex: none; display: block; border-radius: 6px; margin-top: 3px; }
 .slidev-layout.rwb-cover .about { margin-top: 22px; max-width: 600px; color: var(--rwb-lilac); font-size: 17px; line-height: 1.35; }
 .slidev-layout.rwb-cover .contacts { position: absolute; left: 36px; bottom: 30px; font-family: var(--rwb-mono); font-size: 14px; color: var(--rwb-sec); }
 .slidev-layout.rwb-cover .rwb-cover-logo { position: absolute; left: 36px; bottom: 30px; }

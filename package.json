@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "От чат-ботов к пасеке — Podlodka talk by Relux Works, slides as code (Slidev)",
+  "description": "Рой над одной средой — Podlodka talk by Relux Works, slides as code (Slidev)",
   "engines": {
     "node": ">=20"
   },

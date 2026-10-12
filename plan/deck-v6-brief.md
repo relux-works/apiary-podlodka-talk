@@ -23,6 +23,8 @@ For the deck orchestrator on the Mac mini (`macmini_apiary-podlodka-talk_orch`),
 17. **Statistics of autonomy** to be rebuilt: agent hours of orchestrators and main orchestrators (one cohort), worker hours, landings, over two weeks or a month, idle time excluded, on all three machines. Alexey: «Скрипт подготовь». Until then, no numbers on the autonomy slide.
 18. **A shared clicker:** the deck runs on a server, both speakers advance it, one shares the screen; access over SSH, no public address.
 19. **Two QR codes** to Ivan's talks on local models next to the router.
+20. **Title (Ivan, 13.10):** «Рой над одной средой» («название доклада у нас "Рой над одной средой"»). It replaces the title of 10.10 (`deck-v5-brief.md` §1 item 13) on the title slide and in the footer of every slide.
+21. **The MWS logo next to Alexey's name** on the title slide (Ivan, 13.10: «можешь это лого еще добавить там где алексей»); the bottom row of three logos stays.
 
 ## 2. What changed in the deck
 

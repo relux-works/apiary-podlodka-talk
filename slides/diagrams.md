@@ -1,7 +1,7 @@
 ---
 routerMode: hash
 theme: ../themes/rwb-tech
-title: 'От чат-ботов к пасеке · схемы'
+title: 'Рой над одной средой · схемы'
 info: 'Сценические версии схем из технической записки, по одной на слайд'
 preloadImages: false
 layout: cover

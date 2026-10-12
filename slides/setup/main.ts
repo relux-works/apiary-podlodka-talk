@@ -1,12 +1,17 @@
 import { defineAppSetup } from '@slidev/types'
 import { useNav } from '@slidev/client'
+import { joinLive } from './present'
 
+// Present mode (VITE_PRESENT, `npm run present`): a window that opens joins the
+// live slide instead of pulling the others to its own (setup/present.ts).
+//
 // Rehearsal mode: `npm run dev:flat` sets VITE_FLAT_CLICKS.
 // - style.css shows every v-click element at once
 // - →/Space/PageDown and ←/Shift+Space/PageUp move by whole slides
 // The key handler sits on window in the capture phase, ahead of Slidev's
 // own shortcuts, so it works even if a stale bundle still has the defaults.
-export default defineAppSetup(() => {
+export default defineAppSetup(({ router }) => {
+  joinLive(router)
   if (!import.meta.env.VITE_FLAT_CLICKS)
     return
   document.documentElement.classList.add('flat-clicks')

@@ -23,6 +23,8 @@
     "present": ".scripts/present.sh start",
     "present:status": ".scripts/present.sh status",
     "present:stop": ".scripts/present.sh stop",
+    "join": ".scripts/join.sh",
+    "check:sync": "node .scripts/sync-check.mjs --port 8096",
     "theme:rwb-tech": "slidev themes/rwb-tech/example.md --open",
     "theme:rwb-minimal": "slidev themes/rwb-minimal/example.md --open"
   },

@@ -2,7 +2,41 @@
 
 The speakers' call of 12.10 asked for this: the deck runs on one server, one speaker shares the screen, and both can move the slides with Space or the arrow keys. Access is over SSH only; nothing listens on a public address.
 
-Status: worked out from the Slidev 52.19.1 client source, **not yet tested end to end**. Test it on the presenting host before the run-through (open-questions.md, «Общий кликер»).
+Status (13.10): the sync, the join rule and the window titles below pass in headless Chromium on the Mac mini, both directly and through a TCP forward that stands in for the SSH tunnel, and in CI on every push (`npm run check:sync`, `.scripts/sync-check.mjs`). `join.sh` passed end to end on the mini with an SSH test double: it started the deck, held the tunnel, reconnected after a drop, and closed on Ctrl-C. **Not yet tested with two laptops and real SSH**: do that on the rehearsal (open-questions.md, «Общий кликер»).
+
+## One command per laptop
+
+Each speaker needs a checkout of this repository and SSH access to the presenting host (the Mac mini). The script needs bash, ssh and curl, not `npm install`.
+
+```bash
+npm run join -- --host <ssh alias of the mini>   # first time; the alias is kept in .temp/join/config
+npm run join                                     # the presenter window «ЗАМЕТКИ»
+npm run join -- --share                          # also the viewer window «ЭКРАН»: this speaker shares the screen
+```
+
+What it does:
+
+1. Starts the deck on the mini over SSH unless it already runs (`.scripts/present.sh start`). Two speakers starting at once is safe: one start runs at a time. If the SSH user cannot reach the repository there, the script says so and connects anyway.
+2. Holds `ssh -N -L 3030:localhost:3030 <mini>` with keepalives, so a dead link shows within about 15 seconds, and reconnects 3 seconds after any drop. The open windows reload on their own when the tunnel is back (Vite does that) and join the live slide.
+3. Opens the windows once the deck answers: «ЗАМЕТКИ» always, «ЭКРАН» with `--share`. `--browser chrome|firefox|safari|default|none` picks the browser and is remembered.
+4. Ctrl-C closes the tunnel; the deck keeps running on the mini.
+
+To take over the screen, for example when the sharing speaker's link fails, the other speaker runs `npm run join -- --share` in a second terminal. The tunnel stays, and a viewer window opens at the live slide. Share it, and close the old viewer once it is back.
+
+Other options: `--port` (the deck's port on the mini, 3030), `--local-port` (when a local deck already uses that port on the laptop), `--dir` (the repository on the mini, relative to the SSH user's home; `Developer/ReluxWorks/apiary-podlodka-talk`), `--no-start`.
+
+## Who shares the screen
+
+The role decides which windows open: the speaker who shares runs join with `--share`, the other without it. The deck itself needs no names. The shared window is the viewer, and every window knows whether it is one (`useNav().isPresenter` is false there), so a demo component can draw only on the shared screen and keep its controls in the presenter windows.
+
+The window titles mark the windows for the call's share dialog: «ЭКРАН · …» is the viewer, «ЗАМЕТКИ · …» a presenter window. Never share a «ЗАМЕТКИ» window: it shows the notes.
+
+## Present mode
+
+`npm run present` runs the dev server with `VITE_PRESENT=1`, which turns on two things in `slides/setup/present.ts`. `npm run dev`, the build and the PDF stay plain Slidev.
+
+- **A window that opens or reloads joins the live slide and click.** Plain Slidev sends a window's position after every route change, its first one included, so a window opened at its own URL pulls everyone to its slide. Probe on the mini, 13.10: a presenter window opened at `/presenter/1` sent the shared screen from slide 10 back to slide 1, and a reload that had missed moves and a second viewer window did the same. In present mode a new window sends nothing until it has taken the live position.
+- **Window titles** «ЭКРАН» and «ЗАМЕТКИ».
 
 ## How Slidev syncs
 
@@ -11,40 +45,14 @@ The dev server (`slidev`, not a static build) keeps one shared state: page, clic
 - A tab ignores updates sent by a tab of its own kind. Two presenter tabs (`/presenter`) do not follow each other directly, and neither do two viewer tabs.
 - A viewer tab may send only from a trusted origin, `localhost` or `127.0.0.1` (`@slidev/client/constants.ts`). Through an SSH tunnel the origin is `localhost`, so this holds.
 
-So the working shape is **exactly one viewer tab plus any number of presenter tabs**. A move in a presenter tab moves the viewer; the viewer then re-sends the new position as a viewer update, and every other presenter tab follows it. A move in the viewer tab moves all presenter tabs.
+So the working shape is **one viewer tab plus any number of presenter tabs**. A move in a presenter tab moves the viewer; the viewer then re-sends the new position as a viewer update, and every other presenter tab follows it. A move in the viewer tab moves all presenter tabs. With the viewer closed, the two presenter tabs stop following each other until a viewer is back.
 
-## Steps
+## By hand, without join.sh
 
-1. On the presenting host (the Mac mini), in this repository, start the dev server in the background, bound to localhost:
-
-   ```bash
-   npm run present                  # .scripts/present.sh start: pid file and log in .temp/present/
-   npm run present:status           # up or down, the commit, the tunnel command and the URLs
-   npm run present:stop             # stop it
-   .scripts/present.sh start --pull # fast-forward a clean main to origin/main first
-   .scripts/present.sh start --flat # rehearsal mode, whole slides
-   ```
-
-   The script refuses to start without `node_modules` (run `npm ci` once) and warns when the checkout is behind origin/main. Smoke-tested on the Mac mini on 13.10: the page and the presenter route answer, and stop leaves no process behind. `npm start` still runs the server in the foreground.
-
-2. On each speaker's laptop, open a tunnel to it, with your own SSH alias for the mini:
-
-   ```bash
-   ssh -N -L 3030:localhost:3030 <mini>
-   ```
-
-3. The speaker who shares the screen opens the viewer and shares that window:
-
-   ```text
-   http://localhost:3030/#/1
-   ```
-
-4. Each speaker opens the presenter view for notes, the next slide and the timer:
-
-   ```text
-   http://localhost:3030/#/presenter/1
-   ```
-
+1. On the mini, in this repository: `npm run present` (`.scripts/present.sh start`; pid file and log in `.temp/present/`). `npm run present:status` shows the commit, the tunnel command and the URLs; `npm run present:stop` stops it. `.scripts/present.sh start --pull` fast-forwards a clean main first; `--flat` is the rehearsal mode with whole slides. The script refuses to start without `node_modules` (run `npm ci` once) and warns when the checkout is behind origin/main.
+2. On each laptop: `ssh -N -L 3030:localhost:3030 <mini>`.
+3. The speaker who shares opens the viewer `http://localhost:3030/#/1` and shares that window.
+4. Each speaker opens the presenter view `http://localhost:3030/#/presenter/1` for notes, the next slide and the timer.
 5. Either speaker presses Space, ← or → in their own window; everyone follows. Two presses at the same moment: the last one wins.
 
 ## Laser pointer
@@ -57,11 +65,12 @@ Built in, nothing to set up. A presenter tab that has focus publishes its mouse 
 
 ## Rules on stage
 
-- Keep **one** viewer tab. A second viewer tab, for example the other speaker opening `/#/1` too, splits the sync.
+- Keep **one** viewer window «ЭКРАН» and share it, never a «ЗАМЕТКИ» window.
 - Do not use `--remote` or `--tunnel`: they listen on all interfaces or open a public URL. The SSH tunnel is the only door.
-- If the tunnel drops, the shared screen keeps working; reconnect the tunnel and reload the presenter tab.
-- Sync directions live in each browser's local storage (`syncDirections`: presenter and viewer, send and receive, all on by default). If a tab stops following, check the sync toggle in the presenter's navigation bar.
-- `npm run dev:flat` (rehearsal mode, whole slides) syncs the same way.
+- The dev server also serves Slidev's MCP endpoint `/__mcp`, which can move and edit slides. Like the deck, it is reachable only on the mini itself and through the tunnels.
+- If the tunnel drops, join.sh brings it back, and the windows reload and join the live slide on their own. Do not press keys in a window until it shows the current slide again.
+- Sync directions live in each browser's local storage (`syncDirections`: presenter and viewer, send and receive, all on by default). If a window stops following, check the sync toggle in the presenter's navigation bar.
+- A rehearsal with whole slides on the shared server: `.scripts/present.sh start --flat`; it syncs the same way.
 
 ## Alternatives considered (13.10)
 

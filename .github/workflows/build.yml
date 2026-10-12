@@ -27,6 +27,12 @@ jobs:
       - name: Lint frontmatter
         run: npm run lint
 
+      # The shared clicker (docs/shared-clicker.md): the deck's dev server in
+      # present mode with several windows in headless Chromium. Windows follow
+      # each other, and one that opens or reloads joins the live slide.
+      - name: Shared clicker sync
+        run: npm run check:sync
+
       # Offline build + every slide rendered in Chromium and measured:
       # content inside the layout box, text inside its frame, code not clipped,
       # console clean. Screenshots and a contact sheet land in .temp/audit.

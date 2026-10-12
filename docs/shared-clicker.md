@@ -48,3 +48,9 @@ So the working shape is **exactly one viewer tab plus any number of presenter ta
 - If the tunnel drops, the shared screen keeps working; reconnect the tunnel and reload the presenter tab.
 - Sync directions live in each browser's local storage (`syncDirections`: presenter and viewer, send and receive, all on by default). If a tab stops following, check the sync toggle in the presenter's navigation bar.
 - `npm run dev:flat` (rehearsal mode, whole slides) syncs the same way.
+
+## Alternatives considered (13.10)
+
+- **A subdomain of relux.works.** A static build keeps no shared state between two laptops, so it gives no shared clicker. The dev server behind a public name would sync the shared screen, but from a non-local origin the viewer tab may not send, so the two presenter tabs stop following each other and one speaker's notes drift. It also needs a WebSocket proxy, a password and a public endpoint. Not recommended.
+- **A SOCKS proxy (`ssh -D`) and Firefox.** Works only if the browser opens the deck as `localhost` or `127.0.0.1` through the proxy. Firefox never proxies localhost by default; it needs `network.proxy.allow_hijacking_localhost = true` in `about:config`. Opening the host by its own name instead makes the origin untrusted, with the drift above. A plain `ssh -L` port forward does the same with no browser setting.
+- **Where the dev server runs.** The Mac mini works: the deck is a light long-running Vite process; start it about half an hour before the run-through. Both speakers need SSH access to it.

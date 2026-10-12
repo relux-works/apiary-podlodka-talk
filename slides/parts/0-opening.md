@@ -25,7 +25,7 @@ tag: 'ВСТУПЛЕНИЕ'
 </ul>
 
 ::bottom::
-<p v-click class="lead">И там и там упираемся в одно: координацию держит человек.</p>
+<p v-click class="lead orange">Проблема — и там и там координацию держит человек.</p>
 
 <style>
 .v4a-big li { font-size: 30px; font-weight: 500; line-height: 1.25; margin-bottom: 22px !important; }

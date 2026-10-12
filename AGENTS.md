@@ -43,6 +43,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run diagrams` | gallery of all stage diagrams | http://localhost:3030 |
 | `npm run theme:rwb-tech`, `theme:rwb-minimal` | theme showcases | http://localhost:3030 |
 | `.scripts/check-recording.sh <file>` | a demo recording has video, an audio track, and the track is not silence | stdout |
+| `npm run present` · `present:status` · `present:stop` | the deck's dev server in the background, localhost only, for the shared clicker over SSH (`docs/shared-clicker.md`) | http://localhost:3030, `.temp/present/` |
 | `npm run agent-hours -- --days 14 --json <host>.json` | busy hours of orchestrators and workers, task-board runs and commits on main on this machine; `-- --merge a.json b.json` sums machines | stdout, JSON |
 
 ## Definition of done for a deck change
@@ -60,4 +61,4 @@ Then read `open-questions.md` and the part of the plan you are working on.
 - The v6 plan is 40–45 minutes, ceiling 50: `plan/slides-plan.ru.md`, brief `plan/deck-v6-brief.md`. `npm run timing` must land at 40–45 min (demos: 1 = 3 min, 2 = 2 min).
 - Claim status goes in the speaker notes only. Since v5 (10.10) no status pill or label anywhere, backup and diagrams included; the speakers say the status aloud.
 - Since v5 (10.10): titles are strict technical noun phrases, every chapter's problem slide is titled «Проблема — …», and beekeeping names and «Кипер» stay off slides and stage diagrams (главный оркестратор, мета-оркестратор, оркестратор проекта); «Кипер» is fine aloud.
-- Since v6 (12.10): a problem is orange (`card orange`, `lead orange` «Новая проблема — …»), a solution or achievement is lime (`card lime`, `lead lime`), everywhere. Each slide ends with the next problem; the next slide solves it. Demos use the black `demo` layout (a demo closes a chapter); purple is for chapter openers only. The backup holds only slides someone may ask about.
+- Since v6 (12.10): a problem is orange (`card orange`, `lead orange` «Новая проблема — …»), a solution or achievement is lime (`card lime`, `lead lime`), everywhere. Each slide ends with the next problem; the next slide solves it. The bottom plaque is only a problem or a success (Ivan, 13.10): no purple `lead` in the main flow; on a «Проблема — …» slide the orange plaque has no prefix. Demos use the black `demo` layout (a demo closes a chapter); purple is for chapter openers only. The backup holds only slides someone may ask about.

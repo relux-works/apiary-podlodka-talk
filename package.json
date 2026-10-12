@@ -20,6 +20,9 @@
     "export": "mkdir -p .temp/export && slidev export slides/slides.md --per-slide --output .temp/export/apiary-podlodka-talk.pdf",
     "notes": "mkdir -p .temp/export && slidev export-notes slides/slides.md --output .temp/export/notes.pdf",
     "agent-hours": "node .scripts/agent-hours.mjs",
+    "present": ".scripts/present.sh start",
+    "present:status": ".scripts/present.sh status",
+    "present:stop": ".scripts/present.sh stop",
     "theme:rwb-tech": "slidev themes/rwb-tech/example.md --open",
     "theme:rwb-minimal": "slidev themes/rwb-minimal/example.md --open"
   },

@@ -58,11 +58,24 @@ For the deck orchestrator on the Mac mini (`macmini_apiary-podlodka-talk_orch`),
 - **The second QR code** on the router slide is a placeholder: which talk it is, is open.
 - **The paper:** the Swarma book v0.9 exists, a published paper does not (ivan-network-profiles, 12.10). The slides keep a placeholder card and a conditional line in «Где мы сейчас».
 
-## 4. Still open after v6
+## 4. v6.2 (13.10): Ivan's review of v0.6.0
+
+Ivan reviewed the v0.6.0 PDF («в целом преза стала намного приличней выглядеть») and asked for edits and more consistency. Done:
+
+- **Plaques:** «здесь обычно проблематику или успех пишем — ломается юх презы». Every purple plaque in the main flow became orange (problem) or lime (success): «Кто мы», contexts, skills as packages, the process problem, Playbook.json, extends, validation, the scalability limit, two distrusting sides, «Где мы сейчас»; Curator's plaque now names the next problem (skills cannot be trusted blindly). On «Проблема — …» slides the plaque drops the prefix.
+- **Wording:** the process «должен стать… конфигурацией, а не кодом ядра» (not «данными»); Playbook.json and extends got plain plaques («какие еще отличия проекта остаются?»); the «Отвязка от вендора» cards («немного мутные карточки») say what changed in plain words.
+- **Session host is done** (Ivan: «хост сессий у нас сделан»): «Работает сегодня» on «Где мы сейчас», and the status in the notes.
+- **«Ссылки и контакты»:** the plaque about the post's chapters removed («какой-то артефакт?»).
+- **Backup slides 55–57 into Ivan's part:** «Состав скилла у агента» and «Установка скилла — цепочка проверок» after «Скиллы как пакеты»; «Кафе как плейбук» closes the processes chapter. The backup keeps «Вход внешнего агента в рой».
+- **Chapter 3 tags:** one tag, «03 · КООРДИНАЦИЯ».
+- **Presentation server on the mini:** `npm run present` (`.scripts/present.sh`), smoke-tested on the mini; the laser pointer is built into Slidev and shows on the shared screen (`docs/shared-clicker.md`).
+- **Timing:** 42.7 min.
+
+## 5. Still open after v6
 
 See `open-questions.md`: the licence wording of the board; oss-release's list of public repositories (overdue since 11.10); the paper's URL; Ivan's second talk for the QR; Alexey's pass over his part (13.10); demos 1 and 2 (Ivan); statistics from `.scripts/agent-hours.mjs` on all three machines; the module zones on «Пересечение проектов»; the status of the Curator project profile; the speakers' confirmation of «десятки тысяч» aloud.
 
-## 5. v5.2 slide numbers and what happened to them
+## 6. v5.2 slide numbers and what happened to them
 
 Numbers as in the release v0.5.1 PDF and main 8c40d65, which the call used.
 

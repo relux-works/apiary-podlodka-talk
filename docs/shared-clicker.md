@@ -15,16 +15,22 @@ So the working shape is **exactly one viewer tab plus any number of presenter ta
 
 ## Steps
 
-1. On the presenting host, in this repository, start the dev server bound to localhost (the default without `--remote`):
+1. On the presenting host (the Mac mini), in this repository, start the dev server in the background, bound to localhost:
 
    ```bash
-   npm start          # slidev slides/slides.md, http://localhost:3030
+   npm run present                  # .scripts/present.sh start: pid file and log in .temp/present/
+   npm run present:status           # up or down, the commit, the tunnel command and the URLs
+   npm run present:stop             # stop it
+   .scripts/present.sh start --pull # fast-forward a clean main to origin/main first
+   .scripts/present.sh start --flat # rehearsal mode, whole slides
    ```
 
-2. On each speaker's laptop, open a tunnel to it:
+   The script refuses to start without `node_modules` (run `npm ci` once) and warns when the checkout is behind origin/main. Smoke-tested on the Mac mini on 13.10: the page and the presenter route answer, and stop leaves no process behind. `npm start` still runs the server in the foreground.
+
+2. On each speaker's laptop, open a tunnel to it, with your own SSH alias for the mini:
 
    ```bash
-   ssh -N -L 3030:localhost:3030 <presenting-host>
+   ssh -N -L 3030:localhost:3030 <mini>
    ```
 
 3. The speaker who shares the screen opens the viewer and shares that window:
@@ -40,6 +46,14 @@ So the working shape is **exactly one viewer tab plus any number of presenter ta
    ```
 
 5. Either speaker presses Space, ← or → in their own window; everyone follows. Two presses at the same moment: the last one wins.
+
+## Laser pointer
+
+Built in, nothing to set up. A presenter tab that has focus publishes its mouse position into the shared state, with its style: cursor or laser (`@slidev/client/pages/presenter.vue`). The viewer tab draws it (`@slidev/client/internals/LaserPointer.vue`), so the audience sees the laser of whoever points in their own presenter tab.
+
+- Turn the laser on in the presenter tab's toolbar; «show presenter cursor» is on by default.
+- The laser shows on the viewer, the shared screen; the other speaker's presenter tab shows only its own mouse.
+- Point one at a time: two focused presenter tabs overwrite each other's pointer.
 
 ## Rules on stage
 

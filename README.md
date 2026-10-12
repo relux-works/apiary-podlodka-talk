@@ -66,7 +66,7 @@ Node.js 20+ and Python 3. `npm install` brings Slidev and headless Chromium (Pla
 | `.scripts/contact-sheet.mjs` | the whole deck in one image | called by `verify` | `.temp/audit/sheet.png` |
 | `.scripts/serve-static.py` | static server for the audit; the stock `http.server` refuses parallel module requests | called by `verify` | — |
 | `.scripts/timing.py` | spoken minutes per part from the speaker notes; re-run after every notes change and after a rehearsal | `npm run timing` | stdout |
-| Slidev export | PDF | `npm run export` | `.temp/export/apiary-podlodka-talk.pdf` |
+| Slidev export | PDF; waits 1s per page for transitions to settle | `npm run export` | `.temp/export/apiary-podlodka-talk.pdf` |
 | Diagram gallery | the stage versions of all diagrams, one per slide | `npm run diagrams` | http://localhost:3030 |
 | Theme showcases | every layout and component of a theme | `npm run theme:rwb-tech`, `npm run theme:rwb-minimal` | http://localhost:3030 |
 | `.scripts/check-recording.sh` | a demo recording has an audio track that is not silence | `.scripts/check-recording.sh <file>` | stdout |

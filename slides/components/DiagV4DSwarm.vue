@@ -6,25 +6,27 @@
 // call-digest 2026-10-07 Q2. «Десятки тысяч субагентов» — оценка спикеров (бриф v4).
 // v4.2: «Каталог задачи» (санбокс статьи) и стрелки «задачи» / «команды» убраны: ответ показывают два следующих слайда —
 // рабочее место (DiagV4DWorkplace) и письмо в ящик (Boxes на слайде).
-// reveal: цель и команда сразу; по кликам — среда проекта, чужие агенты с вопросом, два запрета.
+// v6 (12.10): слайд «Проблема — две недоверяющие стороны». Слева открытый проект и наши ресурсы вместо «ядра ОС», агенты — «агент
+// донора»; два запрета — «мы не доверяем агенту» и «донор не доверяет нам» (разговор спикеров 12.10).
+// reveal: проект и ресурсы сразу; по кликам — среда проекта, агенты доноров с вопросом, два запрета.
 import { useId } from 'vue'
 defineProps<{ reveal?: boolean }>()
 const id = useId()
-const agents = [['чужая подписка', 50], ['чужой ключ API', 120], ['чужая локальная модель', 190]] as const
-const risks = ['✕ пустить к себе — агент может быть взломан', '✕ командовать чужой машиной — риск для хозяина']
+const agents = [['своя подписка', 50], ['свой ключ API', 120], ['своя локальная модель', 190]] as const
+const risks = ['✕ пустить к себе — агент может сломать среду', '✕ донору опасны мы: наша среда для него чужая']
 </script>
 <template>
   <svg width="908" height="270" viewBox="0 0 908 270" aria-hidden="true">
     <defs><marker :id="id" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m" /></marker></defs>
     <!-- цель больше команды -->
-    <text x="0" y="22" class="t-head t-sec">ЦЕЛЬ</text>
+    <text x="0" y="22" class="t-head t-sec">ОТКРЫТЫЙ ПРОЕКТ</text>
     <rect x="0" y="36" width="210" height="62" rx="10" class="n-lime" />
-    <text x="105" y="60" text-anchor="middle" class="t-big t-ink">Ядро ОС с нуля</text>
-    <text x="105" y="81" text-anchor="middle" class="t-ink-sec">тысячи субагентов</text>
+    <text x="105" y="60" text-anchor="middle" class="t-big t-ink">Видение и доска</text>
+    <text x="105" y="81" text-anchor="middle" class="t-ink-sec">задачи для доноров</text>
     <rect x="0" y="116" width="210" height="62" rx="10" class="n" />
-    <text x="105" y="140" text-anchor="middle" class="t-big">Одна команда</text>
-    <text x="105" y="161" text-anchor="middle" class="t-sec">несколько подписок</text>
-    <text x="0" y="206" class="t-cap t-orange">ёмкости одной команды мало</text>
+    <text x="105" y="140" text-anchor="middle" class="t-big">Наши машины</text>
+    <text x="105" y="161" text-anchor="middle" class="t-sec">и наши подписки</text>
+    <text x="0" y="206" class="t-cap t-orange">своих ресурсов мало</text>
     <!-- одна среда -->
     <Step :on="reveal">
       <rect x="246.75" y="0.75" width="340" height="176" rx="14" class="frame-hive" />
@@ -42,7 +44,7 @@ const risks = ['✕ пустить к себе — агент может быт�
       <rect x="690.75" y="36.75" width="216.5" height="226" rx="14" class="frame" />
       <g v-for="a in agents" :key="a[0]">
         <rect x="702" :y="a[1]" width="194" height="54" rx="10" class="n-wait" />
-        <text x="799" :y="a[1] + 22" text-anchor="middle" class="t-big">Недоверенный агент</text>
+        <text x="799" :y="a[1] + 22" text-anchor="middle" class="t-big">Агент донора</text>
         <text x="799" :y="a[1] + 41" text-anchor="middle" class="t-sec">{{ a[0] }}</text>
       </g>
       <line x1="590" y1="63" x2="687" y2="63" class="e-dash" :marker-end="`url(#${id})`" />

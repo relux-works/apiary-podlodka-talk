@@ -3,6 +3,7 @@
 // Источник: curator-playbook spec/process-configuration.md DRAFT v4.8, вступление («A team's process is code today.
 // task-board's element types, statuses, gates and roles are compiled into its kernel, so a team that works differently —
 // or a cafe ordering supplies … — cannot describe its process without changing the board»), §14 (сегодняшняя доска).
+// v6 (12.10): пример «кафе, семейный календарь» заменён на «небольшой бизнес, CRM и чаты» (разговор спикеров 12.10: демо кафе убрано).
 // reveal: ядро с зашитым процессом (1), другая команда (2), процесс не про разработку (3).
 import { useId } from 'vue'
 defineProps<{ reveal?: boolean }>()
@@ -37,7 +38,7 @@ const chips = [
       <line x1="688" y1="137" x2="688" y2="183" class="e" :marker-end="`url(#${id})`" />
       <rect x="468.75" y="186" width="438.5" height="128" rx="12" class="n-wait" />
       <text x="492" y="236" class="t-lab t-orange">Процесс не про разработку</text>
-      <text x="492" y="270" class="t-cap">кафе, семейный календарь — машинка недоступна</text>
+      <text x="492" y="270" class="t-cap">небольшой бизнес, CRM и чаты — машинка недоступна</text>
     </Step>
   </svg>
 </template>

@@ -1,6 +1,6 @@
 # Handoff: the deck orchestrator moves to the Mac mini
 
-> v5 of 10.10 (orchestration as parallelism, strict titles, no status marks) is described in `plan/deck-v5-brief.md`; the state below is the 08.10 handoff.
+> v5 of 10.10 (strict titles, no status marks) is described in `plan/deck-v5-brief.md`; v6 of 12.10 (how projects grow, the speakers' slide-by-slide pass; parts renamed `0-opening` … `7-backup`) in `plan/deck-v6-brief.md`. The state below is the 08.10 handoff; part names and slide numbers in it are pre-v6.
 
 Written 2026-10-08 by the outgoing deck session on Ivan's workstation (`ivmbp`, Matrix `@ivan-apiary-podlodka:a2a.local`). It is for the orchestrator that takes over this repository on the dedicated Mac mini. It does not repeat the repository's rules. It states where they are, adds what only the outgoing session knew, and lists what is open, with dates.
 

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-// Слайд 6, эпоха 4 «пробки». Разные классы задач идут в одного агента на одной модели; заплатки — Ralph loop
-// и цель — держат его в работе, но он сам же оценивает свой код.
+// Эпоха 3, второй слайд «один агент на всё» (v6: эпохи 3 и 4 объединены). Разные роли — спека и архитектура, тесты и правки,
+// ревью — идут в одного агента на одной модели; заплатки — Ralph loop и цель — держат его в работе, но он сам же оценивает свой код.
 // Источник: text/from-buckets-to-apiary.ru.md §1 «Пробки»; wiki posts/2026-09-24-agent-ecosystem.ru.md §1, §3;
-// plan/slides-plan.ru.md, слайд 6.
+// разговор спикеров 12.10 («и архитектура, и проектирование, и ревью, и тестирование — все решает та же модель, которая спеку составляла»).
 //   reveal — классы задач, агент в заплатках, самопроверка — по кликам
 import { computed, useId } from 'vue'
 const props = withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
 const id = useId()
 const click = computed(() => props.reveal ? '+1' : false)
 const classes = [
-  { y: 22, name: 'Архитектура', need: 'нужна сильная модель' },
-  { y: 110, name: 'Шаблонная правка', need: 'хватит дешёвой' },
-  { y: 198, name: 'Секьюрити-ревью', need: 'нужен взгляд со стороны' },
+  { y: 22, name: 'Спека и архитектура', need: 'нужна сильная модель' },
+  { y: 110, name: 'Тесты и правки', need: 'хватит дешёвой' },
+  { y: 198, name: 'Ревью', need: 'нужен взгляд со стороны' },
 ]
 </script>
 <template>
@@ -19,7 +19,7 @@ const classes = [
     <defs><marker :id="id" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m" /></marker></defs>
     <!-- классы задач -->
     <g v-click="click">
-      <text x="0" y="14" class="t-head t-sec">ОДИН ПРОЕКТ · РАЗНЫЕ КЛАССЫ ЗАДАЧ</text>
+      <text x="0" y="14" class="t-head t-sec">ОДИН ПРОЕКТ · РАЗНЫЕ РОЛИ</text>
       <g v-for="c in classes" :key="c.y">
         <rect x="0" :y="c.y" width="232" height="58" rx="10" class="n" />
         <text x="116" :y="c.y + 25" text-anchor="middle" class="t-big">{{ c.name }}</text>

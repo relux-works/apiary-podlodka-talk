@@ -1,6 +1,6 @@
 # Agent guide
 
-This repository is the working space for a paired Podlodka talk by Alexey Grigoryev and Ivan Oparin (Relux Works), about 45 minutes (ceiling 50) since v4 of 29.09: an opening together, Alexey's half (epochs, the board and autonomy, no vendor lock-in with routing and one-machine communication), Ivan's half (the agent context manager, processes as configuration, across machines and the swarm), a recap together, questions at the end. The plan is `plan/slides-plan.ru.md`, the decisions behind it `plan/deck-v4-brief.md` and, since v5 of 10.10, `plan/deck-v5-brief.md` (orchestration as parallelism).
+This repository is the working space for a paired Podlodka talk by Alexey Grigoryev and Ivan Oparin (Relux Works), 40–45 minutes (ceiling 50). Since v6 of 12.10: Alexey's half (how projects grow, epochs, autonomy through orchestration with demo 1), Ivan's half (coordination of orchestrators with Curator and demo 2, processes as configuration, external agents in open projects), the closing together, questions at the end. The plan is `plan/slides-plan.ru.md`; the decisions behind it are `plan/deck-v4-brief.md` (29.09), `plan/deck-v5-brief.md` (10.10) and `plan/deck-v6-brief.md` (12.10, how projects grow — it supersedes v5's parallelism through-line).
 
 Read this file first, then [`docs/sources.md`](docs/sources.md) and [`docs/deck-workflow.md`](docs/deck-workflow.md) before touching slides.
 
@@ -43,6 +43,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run diagrams` | gallery of all stage diagrams | http://localhost:3030 |
 | `npm run theme:rwb-tech`, `theme:rwb-minimal` | theme showcases | http://localhost:3030 |
 | `.scripts/check-recording.sh <file>` | a demo recording has video, an audio track, and the track is not silence | stdout |
+| `npm run agent-hours -- --days 14 --json <host>.json` | busy hours of orchestrators and workers, task-board runs and commits on main on this machine; `-- --merge a.json b.json` sums machines | stdout, JSON |
 
 ## Definition of done for a deck change
 
@@ -56,6 +57,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 - Russian for talk content, English for repository docs.
 - No personal data, credentials or business topics.
 - The active theme is `rwb-tech`. Since v4 (29.09) corporate logos — RWB, MTS, Relux Works — appear only on the title slide (`logos:` in its frontmatter); every other slide is neutral (`themeConfig.logo: false`).
-- The v4 plan is ≈45 minutes, ceiling 50: `plan/slides-plan.ru.md`, brief `plan/deck-v4-brief.md`. `npm run timing` must land at 40–45 min.
+- The v6 plan is 40–45 minutes, ceiling 50: `plan/slides-plan.ru.md`, brief `plan/deck-v6-brief.md`. `npm run timing` must land at 40–45 min (demos: 1 = 3 min, 2 = 2 min).
 - Claim status goes in the speaker notes only. Since v5 (10.10) no status pill or label anywhere, backup and diagrams included; the speakers say the status aloud.
-- Since v5 (10.10): titles are strict technical noun phrases, every chapter's problem slide is titled «Проблема — …», and beekeeping names and «Кипер» stay off slides and stage diagrams (главный оркестратор, оркестратор процесса, процесс).
+- Since v5 (10.10): titles are strict technical noun phrases, every chapter's problem slide is titled «Проблема — …», and beekeeping names and «Кипер» stay off slides and stage diagrams (главный оркестратор, мета-оркестратор, оркестратор проекта); «Кипер» is fine aloud.
+- Since v6 (12.10): a problem is orange (`card orange`, `lead orange` «Новая проблема — …»), a solution or achievement is lime (`card lime`, `lead lime`), everywhere. Each slide ends with the next problem; the next slide solves it. Demos use the black `demo` layout (a demo closes a chapter); purple is for chapter openers only. The backup holds only slides someone may ask about.

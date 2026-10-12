@@ -11,7 +11,7 @@ preloadImages: false
 themeConfig:
   logo: false
 layout: cover
-event: 'PODLODKA · RELUX WORKS'
+event: 'PODLODKA'
 speakers:
   - name: 'Алексей Григорьев'
     role: "Технический руководитель RnD‑разработки (Tech Lead)\nМТС"
@@ -33,7 +33,7 @@ logos:
 # От чат-ботов к пасеке: оркестраторы поверх любых агентских сред
 
 <!--
-[Для себя] Название согласовано с организаторами и не меняется (Иван, 10.10). Внутри доклада заголовок «Оркестрация как параллелизм» — на слайде вступления.
+[Для себя] Название согласовано с организаторами и не меняется (Иван, 10.10). С v6 (12.10) «Relux Works» над названием убрано: «сверху точно лишнее»; три логотипа без подписей (разговор спикеров 12.10).
 
 [Для себя] Логотип МТС Web Services предоставлен Алексеем 12.10. Правила стиля для спикеров из разных компаний — у ведущих.
 
@@ -51,45 +51,25 @@ src: ./parts/1-epochs.md
 ---
 
 ---
-src: ./parts/2-board.md
+src: ./parts/2-orchestration.md
 ---
 
 ---
-src: ./parts/3-no-lock-in.md
+src: ./parts/3-coordination.md
 ---
 
 ---
-src: ./parts/4-context.md
+src: ./parts/4-processes.md
 ---
 
 ---
-src: ./parts/5-apiary.md
+src: ./parts/5-external-agents.md
 ---
 
 ---
-src: ./parts/6-swarm.md
+src: ./parts/6-where-we-are.md
 ---
 
 ---
-src: ./parts/7-where-we-are.md
----
-
----
-src: ./parts/8-backup.md
----
-
----
-src: ./parts/8a-backup-board.md
----
-
----
-src: ./parts/8b-backup-mechanics.md
----
-
----
-src: ./parts/8c-backup-apiary.md
----
-
----
-src: ./parts/8d-backup-swarm.md
+src: ./parts/7-backup.md
 ---

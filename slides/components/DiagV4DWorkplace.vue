@@ -5,7 +5,9 @@
 // и принудительной командой исполнителя инструментов; соединение только к нашему хосту и только для инструментов; задачи —
 // подписанными письмами через брокера и ящик; к донору ни соединений, ни команд); wiki session-host/architecture.ru.md §7.9;
 // call-digest 2026-10-07 C3, C9, C19, Q2; сиквенс remote-workplace-attach.
-// Защита машины донора (выключить родные инструменты его среды) — открыто, только в заметках.
+// Защита машины донора: v6 (12.10) — подпись «без локальных инструментов» (Curator CIP-0008, поза lockdown, вариант A — первая веха;
+// граница ОС у донора — варианты B и C, только в заметках). «Отдаёт квоту» → «отдаёт время агента»: условия провайдеров привязывают
+// подписку к одному человеку, донор запускает своего агента на своей подписке (ревью ivan-network-profiles 12.10).
 // reveal: две машины и рабочее место сразу; по кликам — SSH к нам, файрвол к брокеру и прокси, запрет обратного направления.
 import { useId } from 'vue'
 defineProps<{ reveal?: boolean }>()
@@ -19,11 +21,11 @@ const id = useId()
     <text x="16" y="22" class="t-head t-sec">МАШИНА ДОНОРА</text>
     <rect x="16" y="68" width="189" height="62" rx="10" class="n" />
     <text x="110.5" y="92" text-anchor="middle" class="t-big">Хозяин машины</text>
-    <text x="110.5" y="113" text-anchor="middle" class="t-sec">отдаёт квоту</text>
+    <text x="110.5" y="113" text-anchor="middle" class="t-sec">время своего агента</text>
     <rect x="16" y="142" width="189" height="62" rx="10" class="n-wait" />
     <text x="110.5" y="166" text-anchor="middle" class="t-big">Среда агента</text>
     <text x="110.5" y="187" text-anchor="middle" class="t-sec">модель думает здесь</text>
-    <text x="16" y="232" class="t-cap t-orange">недоверенная</text>
+    <text x="16" y="232" class="t-cap t-orange">без локальных инструментов</text>
     <!-- наша машина и рабочее место -->
     <rect x="330.75" y="0.75" width="576.5" height="250" rx="14" class="frame-hive" />
     <text x="346" y="22" class="t-head t-lilac">НАША МАШИНА</text>

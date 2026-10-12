@@ -7,8 +7,10 @@
 // .specs/validation-binding.md; README «Isolated Story delivery», «Cross-repository landing flow»;
 // wiki research/call-digest-2026-09-28.md §1; text/from-buckets-to-apiary.ru.md §2.
 //   reveal — ряд доставки, возврат, интеграция и публикация, машина
+//   brief — v6 (12.10), основной поток «Изоляция и приземление»: без блока машины, публикация — «PR и CI, потом main»
+//   (разговор спикеров 12.10: перегрузку CI и fast-forward обсуждаем вне доклада)
 import { computed, useId } from 'vue'
-const props = withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
+const props = withDefaults(defineProps<{ reveal?: boolean, brief?: boolean }>(), { reveal: false, brief: false })
 const id = useId()
 const click = computed(() => props.reveal ? '+1' : false)
 const BW = 200, GAP = 36, Y = 40, BH = 60, Y2 = 176
@@ -50,11 +52,11 @@ const row = [
       <line x1="260" x2="293" :y1="Y2 + BH / 2" :y2="Y2 + BH / 2" class="e" :marker-end="`url(#${id}-a)`" />
       <rect x="296" :y="Y2" width="260" :height="BH" rx="10" class="n" />
       <text x="426" :y="Y2 + 26" text-anchor="middle" class="t-big">Публикация</text>
-      <text x="426" :y="Y2 + 45" text-anchor="middle" class="t-sec">PR, ревью, fast-forward</text>
+      <text x="426" :y="Y2 + 45" text-anchor="middle" class="t-sec">{{ brief ? 'PR и CI, потом main' : 'PR, ревью, fast-forward' }}</text>
       <text x="0" :y="Y2 + BH + 26" class="t-cap t-sec">в trunk попадает только целая принятая story</text>
     </g>
     <!-- машина -->
-    <g v-click="click">
+    <g v-if="!brief" v-click="click">
       <rect x="592.75" :y="Y2 - 14" width="314.5" height="112" rx="14" class="frame" />
       <text x="608" :y="Y2 + 8" class="t-head t-orange">МАШИНА · ТЯЖЁЛЫЕ ПРОГОНЫ</text>
       <rect x="608" :y="Y2 + 22" width="64" height="34" rx="8" class="n-lime" />

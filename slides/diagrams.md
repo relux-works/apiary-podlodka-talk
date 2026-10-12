@@ -949,3 +949,133 @@ tag: 'V5 · ВСТУПЛЕНИЕ · DiagV5Map'
 <!--
 DiagV5Map — v5, вступление «Те же задачи у агентов»: таблица рантайм ↔ агенты, по строке на главу; chapters — колонка глав и спикеров. Раскрытие по кликам: <DiagV5Map reveal chapters />.
 -->
+
+---
+layout: default
+tag: 'V6 · ВСТУПЛЕНИЕ · DiagV6Growth'
+---
+
+# DiagV6Growth
+
+<DiagV6Growth :stage="2" />
+
+<!--
+v6, вступление: как растут проекты у людей — stage 0 один человек, 1 команда и модули, 2 продукт из проектов с проджект-менеджером, 3 распределённые команды. Раскрытие по кликам: <DiagV6Growth :stage="N" reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 2 · DiagV6Router'
+---
+
+# DiagV6Router
+
+<DiagV6Router />
+
+<!--
+v6, глава 2 «Роутер моделей»: бюджет, лимиты, часы вне пика, скидки → роутер → трудное сильной модели, мелочь дешёвой. Раскрытие: <DiagV6Router reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 2 · DiagV6Autonomy'
+---
+
+# DiagV6Autonomy
+
+<DiagV6Autonomy />
+
+<!--
+v6, глава 2 «Автономная разработка»: было — человек на каждом такте; стало — проекты A, B, C со смещением, как диаграмма Ганта. Раскрытие: <DiagV6Autonomy reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 2 · DiagV6Handoff'
+---
+
+# DiagV6Handoff
+
+<DiagV6Handoff />
+
+<!--
+v6, глава 2 «Передача работы между средами»: Claude → доска (цель, состояние, заметка) → Codex. Раскрытие: <DiagV6Handoff reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 2 · DiagV6Overload'
+---
+
+# DiagV6Overload
+
+<DiagV6Overload />
+
+<!--
+v6, конец части Алексея: человек над продуктом A, по кликам продукты B, C, D и перегрузка. Раскрытие: <DiagV6Overload reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 3 · DiagV6Coord'
+---
+
+# DiagV6Coord
+
+<DiagV6Coord :stage="2" />
+
+<!--
+v6, глава 3: stage 1 — канал между оркестраторами, человек читает всех; stage 2 — главный оркестратор, человеку только критичное. Раскрытие: <DiagV6Coord :stage="1" reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 3 · DiagV6Shared'
+---
+
+# DiagV6Shared
+
+<DiagV6Shared />
+
+<!--
+v6, глава 3 «Пересечение проектов»: два человека со своими главными оркестраторами, личные проекты оранжевые, общий проект — лаймовые модули. Раскрытие: <DiagV6Shared reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 3 · DiagV6Link'
+---
+
+# DiagV6Link
+
+<DiagV6Link />
+
+<!--
+v6, глава 3 «Связь между машинами»: главные оркестраторы двух машин и комната проекта в Matrix с видами сообщений. Раскрытие: <DiagV6Link reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 3 · DiagV6ProfileFlow'
+---
+
+# DiagV6ProfileFlow
+
+<DiagV6ProfileFlow />
+
+<!--
+v6, глава 3 «Curator — профиль проекта»: профиль компании и манифест проекта → проверки Curator → управляемый дом → запуск из любого каталога; каталоги репозитория не читаем. Раскрытие: <DiagV6ProfileFlow reveal />.
+-->
+
+---
+layout: default
+tag: 'V6 · ГЛАВА 3 · DiagV6Meta'
+---
+
+# DiagV6Meta
+
+<DiagV6Meta />
+
+<!--
+v6, глава 3 «Одна точка входа»: человек → мета-оркестратор → главные оркестраторы → оркестраторы и воркеры; можно спросить любого. Раскрытие: <DiagV6Meta reveal />.
+-->

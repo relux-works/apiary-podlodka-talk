@@ -115,6 +115,8 @@
 .slidev-layout.rwb-content p.lead ~ p.lead { margin-top: 12px; }
 .slidev-layout.rwb-content p.lead + p, .slidev-layout.rwb-content p.lead + .note { margin: 12px 0 0 0; }
 .slidev-layout.rwb-content p.lead.lilac { background: var(--rwb-lilac); color: var(--rwb-ink); }
+.slidev-layout.rwb-content p.lead.orange { background: var(--rwb-orange); color: var(--rwb-ink); } /* новая проблема */
+.slidev-layout.rwb-content p.lead.lime { background: var(--rwb-lime); color: var(--rwb-ink); }     /* решение, итог */
 .slidev-layout.rwb-content p.lead strong { font-weight: 600; }
 .slidev-layout.rwb-content p.lead .lilac, .slidev-layout.rwb-content p.lead .lime, .slidev-layout.rwb-content p.lead .orange { color: inherit; font-weight: 600; }
 .slidev-layout.rwb-content p.lead code:not(pre code) { background: rgba(0, 0, 0, 0.22); color: inherit; }

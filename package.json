@@ -17,7 +17,7 @@
     "timing": "python3 .scripts/timing.py slides/slides.md --demo 'Демо 1=3,Демо 2=2,Демо 3=2'",
     "build": "slidev build slides/slides.md --out ../dist",
     "build:offline": "slidev build slides/slides.md --base ./ --out ../.temp/dist-offline",
-    "export": "mkdir -p .temp/export && slidev export slides/slides.md --per-slide --output .temp/export/apiary-podlodka-talk.pdf",
+    "export": "mkdir -p .temp/export && slidev export slides/slides.md --per-slide --wait 1000 --output .temp/export/apiary-podlodka-talk.pdf",
     "notes": "mkdir -p .temp/export && slidev export-notes slides/slides.md --output .temp/export/notes.pdf",
     "theme:rwb-tech": "slidev themes/rwb-tech/example.md --open",
     "theme:rwb-minimal": "slidev themes/rwb-minimal/example.md --open"

@@ -12,7 +12,7 @@ withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
 const id = useId()
 </script>
 <template>
-  <svg width="908" height="222" viewBox="0 0 908 222" aria-hidden="true">
+  <svg width="908" height="190" viewBox="0 0 908 190" aria-hidden="true">
     <defs>
       <marker :id="`${id}-a`" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m" /></marker>
       <marker :id="`${id}-l`" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m-lime" /></marker>
@@ -29,7 +29,7 @@ const id = useId()
     </Step>
     <Step :on="reveal">
       <line x1="252" y1="94" x2="317" y2="94" class="e" :marker-end="`url(#${id}-a)`" />
-      <text x="285" y="84" text-anchor="middle" class="t-cap t-sec">записать</text>
+      <text x="285" y="84" text-anchor="middle" class="t-cap t-sec">запись</text>
       <rect x="320" y="20" width="268" height="148" rx="12" class="n-lime" />
       <text x="454" y="54" text-anchor="middle" class="t-lab t-ink">Доска</text>
       <text x="454" y="84" text-anchor="middle" class="t-cap t-ink">цель и её ревизия</text>
@@ -38,7 +38,7 @@ const id = useId()
     </Step>
     <Step :on="reveal">
       <line x1="588" y1="94" x2="653" y2="94" class="e-lime" :marker-end="`url(#${id}-l)`" />
-      <text x="621" y="84" text-anchor="middle" class="t-cap t-lime">прочитать</text>
+      <text x="621" y="84" text-anchor="middle" class="t-cap t-lime">чтение</text>
       <rect x="656.75" y="0.75" width="250.5" height="186" rx="14" class="frame-hive" />
       <text x="672" y="24" class="t-head t-lilac">СРЕДА 2 · CODEX</text>
       <rect x="672" y="40" width="219" height="62" rx="10" class="n-purple" />
@@ -47,7 +47,6 @@ const id = useId()
       <rect x="672" y="116" width="219" height="54" rx="10" class="n" />
       <text x="781.5" y="139" text-anchor="middle" class="t-cap">субагенты — так же,</text>
       <text x="781.5" y="158" text-anchor="middle" class="t-cap">со своими целями</text>
-      <text x="454" y="212" text-anchor="middle" class="t-cap t-sec">меняется только среда: цели и состояние остаются на доске</text>
     </Step>
   </svg>
 </template>

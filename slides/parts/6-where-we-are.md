@@ -53,7 +53,7 @@ tag: '06 · ИТОГ'
 
 # Ссылки *и контакты*
 
-<div class="cards cols-3 grow">
+<div class="cards cols-3">
 <div v-click="1" class="card v7-wide">
 <h2>Пост, из которого вырос доклад</h2>
 <p><code>relux.works/ru/blog/from-buckets-to-apiary</code></p>

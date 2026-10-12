@@ -21,7 +21,7 @@ tag: '02 · АВТОНОМИЯ'
 
 # Память *в заметках*
 
-<div class="cards cols-3 grow">
+<div class="cards cols-3">
 <div v-click class="card"><h2>Правила проекта</h2><p>AGENTS.md и CLAUDE.md: как здесь принято работать.</p></div>
 <div v-click class="card"><h2>Заметки о прогрессе</h2><p>Что сделано, что дальше, на чём остановились.</p></div>
 <div v-click class="card"><h2>Журнал решений</h2><p>Что решили и почему — чтобы не спорить заново.</p></div>
@@ -51,9 +51,9 @@ tag: '02 · АВТОНОМИЯ'
 
 <Boxes reveal :items="['открыта', 'анализ', 'разработка', 'ревью', 'готово']" :colors="['neutral', 'neutral', 'purple', 'lilac', 'lime']" />
 
-<div class="cards cols-2 grow">
-<div v-click class="card lime"><h2>Решение</h2><p>Спека режется на задачи, у каждой статус и зависимости. Доска — папка в репозитории, она коммитится вместе с кодом.</p></div>
-<div v-click class="card orange"><h2>Новая проблема</h2><p>Один оркестратор вендора ведёт граф либо по очереди — мало выхлопа, либо параллельно как попало — конфликты при приземлении.</p></div>
+<div class="cards cols-2">
+<div v-click class="card lime big"><h2>Решение</h2><p>Спека режется на задачи, у каждой статус и зависимости. Доска — папка в репозитории, она коммитится вместе с кодом.</p></div>
+<div v-click class="card orange big"><h2>Новая проблема</h2><p>Один оркестратор вендора ведёт граф либо по очереди — мало выхлопа, либо параллельно как попало — конфликты при приземлении.</p></div>
 </div>
 
 <!--
@@ -186,18 +186,19 @@ tag: '02 · АВТОНОМИЯ'
 
 <DiagV6Router reveal />
 
-<div class="cards cols-3 v6-route">
-<div v-click class="card lilac"><h2>Пример — ревью безопасности</h2><p>Ищут сильные модели разных семейств, исправления уходят дешёвым.</p></div>
-<div v-click class="card v6-qr"><div class="v6-qr-box">QR</div><p>Иван про локальные модели · Podlodka iOS Crew</p></div>
-<div v-click class="card v6-qr"><div class="v6-qr-box">QR</div><p><Ph>⟨второй доклад Ивана⟩</Ph></p></div>
+<div class="cards v6-route">
+<div v-click class="card lilac"><p><strong>Пример — ревью безопасности:</strong> ищут сильные модели разных семейств, исправления уходят дешёвым.</p></div>
+<div v-click class="card v6-qr"><div class="v6-qr-box">QR</div><p>Иван: локальные модели, Podlodka iOS Crew</p></div>
+<div v-click class="card v6-qr"><div class="v6-qr-box">QR</div><p><Ph>⟨второй доклад⟩</Ph></p></div>
 </div>
 
 <style>
-.v6-route { grid-template-columns: 1.6fr 1fr 1fr; }
-.v6-route .card p { font-size: 15px; line-height: 1.3; }
+.v6-route { grid-template-columns: 1.7fr 1fr 1fr; }
+.v6-route .card { padding: 12px 16px; }
+.v6-route .card p { font-size: 15px; line-height: 1.3; margin: 0; }
 .v6-qr { display: flex; align-items: center; gap: 12px; }
-.v6-qr-box { width: 64px; height: 64px; flex: none; border: 1.5px dashed var(--rwb-dim); border-radius: 8px; display: grid; place-items: center; font-family: var(--rwb-mono); font-size: 13px; letter-spacing: 0.08em; color: var(--rwb-sec); }
-.v6-qr p { margin: 0; color: var(--rwb-sec-card); }
+.v6-qr-box { width: 48px; height: 48px; flex: none; border: 1.5px dashed var(--rwb-dim); border-radius: 8px; display: grid; place-items: center; font-family: var(--rwb-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--rwb-sec); }
+.v6-qr p { color: var(--rwb-sec-card); }
 </style>
 
 <!--
@@ -349,7 +350,7 @@ layout: default
 tag: '02 · АВТОНОМИЯ'
 ---
 
-# Проблема — *человек между оркестраторами*
+# Проблема — *человек-диспетчер*
 
 <DiagV6Overload reveal />
 

@@ -33,7 +33,7 @@ const more = [
         <path :d="`M454,58 C454,74 ${o.x + 92},70 ${o.x + 92},83`" class="e-dash" :marker-start="`url(#${id})`" :marker-end="`url(#${id})`" />
         <rect :x="o.x" y="86" width="184" height="58" rx="10" class="n-purple" />
         <text :x="o.x + 92" y="110" text-anchor="middle" class="t-big">{{ o.h }}</text>
-        <text :x="o.x + 92" y="130" text-anchor="middle" class="t-on">оркестратор · {{ o.s }}</text>
+        <text :x="o.x + 92" y="130" text-anchor="middle" class="t-cap t-on">оркестратор · {{ o.s }}</text>
       </g>
     </Step>
     <Step v-for="m in more" :key="m.y" :on="reveal">

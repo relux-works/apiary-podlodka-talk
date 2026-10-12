@@ -18,8 +18,8 @@ const tone = (i: number) => i + props.start < props.at ? 'n' : i + props.start =
   <svg :width="W" height="38" :viewBox="`0 0 ${W} 38`" aria-hidden="true" class="p12-epochs">
     <g v-for="(n, i) in names" :key="n">
       <rect :x="i * (BW + GAP)" y="1" :width="BW" height="36" rx="10" :class="tone(i)" />
-      <text :x="i * (BW + GAP) + 12" y="24" class="t-dim" :class="{ 't-ink-sec': i + start === at }">{{ i + start }}</text>
-      <text :x="i * (BW + GAP) + BW / 2 + 6" y="24" text-anchor="middle" class="t-cap" :class="{ 't-ink': i + start === at, 't-sec': i + start > at }">{{ n }}</text>
+      <text :x="i * (BW + GAP) + 10" y="24" class="t-dim" :class="{ 't-ink-sec': i + start === at }">{{ i + start }}</text>
+      <text :x="i * (BW + GAP) + BW / 2 + 9" y="24" text-anchor="middle" class="t-cap" :class="{ 't-ink': i + start === at, 't-sec': i + start > at }">{{ n }}</text>
     </g>
   </svg>
 </template>

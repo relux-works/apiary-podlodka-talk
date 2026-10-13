@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // The in-slide demos in the static build, as the release HTML plays them (docs/run-the-deck.md, «Without Node»):
 // there is no dev server, so a demo runs in each browser on its own and the tabs of one browser follow each other
-// through a BroadcastChannel (slides/demo/clock.ts). For every slide with `live: true`, in two tabs:
-// → starts the demo in tab A and tab B follows; → pauses both on the same moment; ← goes back to a beat;
-// → resumes; R restarts; the slide never changes under these keys. The demo's moment is its svg's data-demo-t.
+// through a BroadcastChannel (slides/demo/clock.ts). For every slide with `live: true`, in a viewer tab and a presenter
+// tab: → in the viewer starts the demo and the presenter follows; → pauses both on the same moment; ← goes back to a
+// beat; → resumes; R restarts; the slide never changes under these keys. The demo's moment is its svg's data-demo-t.
 // A build has no window.__slidev__, so the demo slides come from the deck source and the slide from the URL hash.
 //
 //   node .scripts/static-demos.mjs <base-url of a served static build> [deck.md]   e.g. http://127.0.0.1:8096/
@@ -68,9 +68,9 @@ try {
     await page.bringToFront()
     await page.keyboard.press(key)
   }
-  const slideNo = (page) => page.evaluate(() => Number(location.hash.match(/^#\/(\d+)/)?.[1]))
-  const open = async (page, n) => {
-    await page.goto(`${base}#/${n}`)
+  const slideNo = (page) => page.evaluate(() => Number(location.hash.match(/^#\/(?:presenter\/)?(\d+)/)?.[1]))
+  const open = async (page, route) => {
+    await page.goto(`${base}#/${route}`)
     await page.locator('svg.demo-live:visible').first().waitFor({ timeout: 60000 })
     await sleep(800) // the slide transition
   }
@@ -78,7 +78,7 @@ try {
   for (const n of live) {
     await open(a, n)
     const b = await tab()
-    await open(b, n)
+    await open(b, `presenter/${n}`)
 
     expect((await moment(a)) === 0, `slide ${n}: waits for the start`)
     await press(a, 'ArrowRight')
@@ -86,18 +86,18 @@ try {
     const played = await moment(a)
     expect(played >= 1500 && played <= 5000, `slide ${n}: → starts it, ${played} ms after 2.5 s`)
     const follower = await moment(b)
-    expect(follower >= 1000, `slide ${n}: the second tab follows, ${follower} ms`)
+    expect(follower >= 1000, `slide ${n}: the presenter tab follows, ${follower} ms`)
 
     await press(a, 'ArrowRight')
     const held = await moment(a)
     await sleep(1200)
     expect((await moment(a)) === held, `slide ${n}: → pauses it at ${held} ms`)
-    expect((await moment(b)) === held, `slide ${n}: the second tab pauses on the same moment`)
+    expect((await moment(b)) === held, `slide ${n}: the presenter tab pauses on the same moment`)
 
     await press(a, 'ArrowLeft')
     const beat = await moment(a)
     expect(beat <= held, `slide ${n}: ← goes back to a beat, ${beat} ms`)
-    expect((await moment(b)) === beat, `slide ${n}: the second tab goes back too`)
+    expect((await moment(b)) === beat, `slide ${n}: the presenter tab goes back too`)
 
     await press(a, 'ArrowRight')
     await sleep(1000)

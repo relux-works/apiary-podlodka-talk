@@ -3,7 +3,6 @@ layout: section
 num: '01'
 sub: 'Алексей Григорьев'
 icon: notepad
-transition: slide-left
 ---
 
 # Эпохи

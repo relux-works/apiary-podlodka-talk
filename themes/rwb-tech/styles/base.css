@@ -8,6 +8,7 @@
   --rwb-lilac: #BF97F1;         /* акцент в заголовке, подписи, светлая заливка */
   --rwb-lime: #94E330;          /* проверка, готово, успех */
   --rwb-orange: #FE5F00;        /* внимание, цена, красная зона */
+  --rwb-yellow: #FFD43B;        /* цель: «хотим, чтобы так было», ещё не сделано (Иван, 13.10) */
   --rwb-txt: #FFFFFF;
   --rwb-ink: #161616;           /* текст на светлых заливках: сирень, лайм, оранжевый */
   --rwb-sec: #A2A7B0;           /* вторичный текст на фоне */
@@ -91,8 +92,9 @@
 .slidev-layout .card.lilac { background: var(--rwb-lilac); color: var(--rwb-ink); }
 .slidev-layout .card.lime { background: var(--rwb-lime); color: var(--rwb-ink); }
 .slidev-layout .card.orange { background: var(--rwb-orange); color: var(--rwb-ink); }
-.slidev-layout .card.lilac h2, .slidev-layout .card.lime h2, .slidev-layout .card.orange h2 { color: var(--rwb-ink); }
-.slidev-layout .card.lilac .sec, .slidev-layout .card.lime .sec, .slidev-layout .card.orange .sec { color: rgba(22, 22, 22, 0.72); }
+.slidev-layout .card.yellow { background: var(--rwb-yellow); color: var(--rwb-ink); }
+.slidev-layout .card.lilac h2, .slidev-layout .card.lime h2, .slidev-layout .card.orange h2, .slidev-layout .card.yellow h2 { color: var(--rwb-ink); }
+.slidev-layout .card.lilac .sec, .slidev-layout .card.lime .sec, .slidev-layout .card.orange .sec, .slidev-layout .card.yellow .sec { color: rgba(22, 22, 22, 0.72); }
 /* Нумерованная карточка: номер в правом нижнем углу, как в шаблоне */
 .slidev-layout .card.num { padding-bottom: 42px; }
 .slidev-layout .card.num::after { content: attr(data-num); position: absolute; right: 18px; bottom: 12px; font-size: 20px; color: var(--rwb-dim); }
@@ -117,6 +119,7 @@
 .slidev-layout.rwb-content p.lead.lilac { background: var(--rwb-lilac); color: var(--rwb-ink); }
 .slidev-layout.rwb-content p.lead.orange { background: var(--rwb-orange); color: var(--rwb-ink); } /* новая проблема */
 .slidev-layout.rwb-content p.lead.lime { background: var(--rwb-lime); color: var(--rwb-ink); }     /* решение, итог */
+.slidev-layout.rwb-content p.lead.yellow { background: var(--rwb-yellow); color: var(--rwb-ink); } /* цель: хотим, чтобы так было */
 .slidev-layout.rwb-content p.lead strong { font-weight: 600; }
 .slidev-layout.rwb-content p.lead .lilac, .slidev-layout.rwb-content p.lead .lime, .slidev-layout.rwb-content p.lead .orange { color: inherit; font-weight: 600; }
 .slidev-layout.rwb-content p.lead code:not(pre code) { background: rgba(0, 0, 0, 0.22); color: inherit; }

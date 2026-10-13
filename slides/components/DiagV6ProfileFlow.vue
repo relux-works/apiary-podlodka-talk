@@ -8,11 +8,14 @@
 // Источники: curator-spec v1.0.0-rc.13 protocol/environments.md §1, §1.3, §7.1, §9.4, §10.1 (профиль, lock, дома CLAUDE_CONFIG_DIR и
 // CODEX_HOME, проверка дома перед запуском); curator README; бывшие DiagV4CProfile и DiagP34Profile.
 // Сборка профиля проекта из манифеста и запуск без чтения каталогов репозитория — новый дизайн Ивана 12.10, статус в заметках слайда.
+// 13.10, сверка с ivan-curator и curator-spec CIP-0002 (черновик): Skillfile объявляет только скиллы; результат — слой проекта поверх
+// профиля в записи менеджера, а не новый «смердженный» профиль и не «hybrid» (это другое в Curator); файлы репозитория читаются
+// только как кандидаты, в запуск идёт проверенная и одобренная копия, родное обнаружение агента выключено.
 // reveal: входы (1), Curator (2), дом и запуск (3), каталоги репозитория не читаем (4).
 import { useId } from 'vue'
 withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
 const id = useId()
-const checks = ['lock: коммит и хэш', 'аудит и реестр', 'мердж профилей']
+const checks = ['lock: коммит и хэш', 'аудит и реестр', 'дифф и одобрение слоя']
 </script>
 <template>
   <svg width="908" height="288" viewBox="0 0 908 288" aria-hidden="true">
@@ -23,8 +26,8 @@ const checks = ['lock: коммит и хэш', 'аудит и реестр', '�
       <text x="125" y="54" text-anchor="middle" class="t-big">Профиль компании</text>
       <text x="125" y="75" text-anchor="middle" class="t-sec">стандарты, общие скиллы</text>
       <rect x="0" y="108" width="250" height="64" rx="10" class="n" />
-      <text x="125" y="134" text-anchor="middle" class="t-big">Манифест проекта</text>
-      <text x="125" y="155" text-anchor="middle" class="t-sec">скиллы, MCP, роли</text>
+      <text x="125" y="134" text-anchor="middle" class="t-big">Контексты проекта</text>
+      <text x="125" y="155" text-anchor="middle" class="t-sec">Skillfile, AGENTS.md, MCP</text>
     </Step>
     <Step :on="reveal">
       <path d="M250,60 C276,60 274,96 297,100" class="e" :marker-end="`url(#${id})`" />
@@ -35,7 +38,7 @@ const checks = ['lock: коммит и хэш', 'аудит и реестр', '�
         <rect x="316" :y="38 + i * 50" width="259" height="40" rx="8" class="n-lilac" />
         <text x="445.5" :y="63 + i * 50" text-anchor="middle" class="t-cap t-ink">{{ c }}</text>
       </g>
-      <text x="316" y="200" class="t-cap t-sec">профиль проекта собран</text>
+      <text x="316" y="200" class="t-cap t-sec">слой проекта поверх профиля</text>
     </Step>
     <Step :on="reveal">
       <line x1="591" y1="108" x2="625" y2="108" class="e" :marker-end="`url(#${id})`" />
@@ -52,7 +55,7 @@ const checks = ['lock: коммит и хэш', 'аудит и реестр', '�
       <text x="125" y="226" text-anchor="middle" class="t-big">Каталоги репозитория</text>
       <text x="125" y="247" text-anchor="middle" class="t-sec">.claude, .agents, skills/</text>
       <rect x="0" y="270" width="590" height="18" class="knock" />
-      <text x="0" y="282" class="t-cap t-orange">✕ не читаем: подложенный в обход манифеста скилл не попадёт в запуск</text>
+      <text x="0" y="282" class="t-cap t-orange">✕ в запуск напрямую не идут: только проверенная и одобренная копия</text>
     </Step>
   </svg>
 </template>

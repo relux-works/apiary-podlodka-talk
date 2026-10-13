@@ -97,6 +97,8 @@ const days: { x: number, label: string }[] = []
 for (let m = Math.floor((T0 + MSK) / DAY) * DAY - MSK + DAY; m < T1; m += DAY) days.push({ x: xOf(toPlay(m)), label: dayLabel(m) })
 
 // ---- words ----------------------------------------------------------------------------------------------------
+// a growing count keeps the text after it in place: tabular figures plus an invisible head as wide as the largest value's
+const pad = (n: number, max: number) => { const s = n.toLocaleString('ru-RU'), m = Math.max(n, max).toLocaleString('ru-RU'); return m.slice(0, m.length - s.length) }
 const plural = (n: number, f: [string, string, string]) => f[n % 10 === 1 && n % 100 !== 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2]
 const c = data.counts
 const hours = Math.round((T1 - T0) / 3600e3)
@@ -165,7 +167,7 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
   <svg class="demo-run demo-live" :class="{ final: frame.final }" :data-demo-t="Math.round(t)" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="908" y="17" text-anchor="end" class="clock">{{ frame.clock }}</text>
-    <text x="0" y="36" class="t-sec small">запусков <tspan class="v">{{ frame.runsStarted }}</tspan> из {{ runs.length }} · возвратов с ревью <tspan class="v">{{ frame.returns }}</tspan></text>
+    <text x="0" y="36" class="t-sec small status">запусков <tspan class="pad">{{ pad(frame.runsStarted, runs.length) }}</tspan><tspan class="v">{{ frame.runsStarted }}</tspan> из {{ runs.length }} · возвратов с ревью <tspan class="pad">{{ pad(frame.returns, returnsAt.length) }}</tspan><tspan class="v">{{ frame.returns }}</tspan></text>
     <text x="908" y="36" text-anchor="end" class="t-dim small">{{ frame.skip }}</text>
 
     <g class="board">
@@ -206,6 +208,8 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 </template>
 
 <style scoped>
+.demo-run text { font-variant-numeric: tabular-nums; }
+.demo-run tspan.pad { fill: transparent; }
 .demo-run text.cap { font-size: 18px; }
 .demo-run text.clock { font-size: 15px; fill: var(--rwb-lilac); }
 .demo-run text.small { font-size: 12px; }
@@ -214,7 +218,7 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 .demo-run text.lane-n { font-size: 13px; fill: var(--rwb-txt); }
 .demo-run .col { fill: rgba(255, 255, 255, 0.045); }
 .demo-run .col-done { fill: rgba(148, 227, 48, 0.08); }
-.demo-run .tok { fill: var(--rwb-card); transition: transform 0.45s ease, fill 0.3s ease, opacity 0.3s ease; }
+.demo-run .tok { fill: var(--rwb-card); transition: transform 0.45s ease; }
 .demo-run .tok.hidden { opacity: 0; }
 .demo-run .tok.working { fill: var(--rwb-txt); stroke: var(--rwb-purple); stroke-width: 3; animation: pulse 1.2s ease-in-out infinite; }
 .demo-run .tok.blocked { stroke: var(--rwb-orange); stroke-width: 2; }
@@ -232,7 +236,6 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 .demo-run .cut { fill: var(--rwb-orange); }
 .demo-run .human { fill: var(--rwb-lime); }
 .demo-run .head { stroke: var(--rwb-lilac); stroke-width: 1.5; }
-.demo-run .board, .demo-run .lane { transition: opacity 0.6s ease; }
 .demo-run.final .board, .demo-run.final .lane.analyst, .demo-run.final .lane.implementer, .demo-run.final .lane.reviewer { opacity: 0.35; }
 .demo-run.final .bar { opacity: 0.35; }
 </style>

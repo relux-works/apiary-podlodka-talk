@@ -4,6 +4,8 @@
 // through a BroadcastChannel (slides/demo/clock.ts). For every slide with `live: true`, in a viewer tab and a presenter
 // tab: → in the viewer starts the demo and the presenter follows; → pauses both on the same moment; ← goes back to a
 // beat; → resumes; R restarts; the slide never changes under these keys. The demo's moment is its svg's data-demo-t.
+// And the status lines (text.status) keep their width from the first moment to the last, so a count that gains a digit
+// does not push the words after it (Ivan, 13.10: «чтобы при смене кол-ва порядков у числа строка не скакала»).
 // A build has no window.__slidev__, so the demo slides come from the deck source and the slide from the URL hash.
 //
 //   node .scripts/static-demos.mjs <base-url of a served static build> [deck.md]   e.g. http://127.0.0.1:8096/
@@ -107,6 +109,19 @@ try {
     expect((await moment(a)) < 1000, `slide ${n}: R restarts it`)
     expect((await slideNo(a)) === n && (await slideNo(b)) === n, `slide ${n}: the keys stay on the demo's slide`)
     await b.close()
+
+    // the status line at an early and at the last moment, held through ?demo-t
+    const widths = []
+    for (const at of [5000, 99999999]) {
+      const p = await tab()
+      await p.goto(`${base}?demo-t=${at}#/${n}`)
+      await p.locator('svg.demo-live:visible').first().waitFor({ timeout: 60000 })
+      await sleep(800)
+      widths.push(await p.evaluate(() => [...document.querySelectorAll('svg.demo-live text.status')].filter((t) => t.getBoundingClientRect().width > 0).map((t) => Math.round(t.getComputedTextLength() * 10) / 10)))
+      await p.close()
+    }
+    const [early, late] = widths
+    expect(early.length > 0 && early.join() === late.join(), `slide ${n}: status lines keep their width (${early.join(', ')} px early, ${late.join(', ')} px at the end)`)
   }
   expect(errors.length === 0, `no page errors${errors.length ? `: ${errors.slice(0, 3).join(' | ')}` : ''}`)
 }

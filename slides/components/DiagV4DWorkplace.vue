@@ -8,7 +8,11 @@
 // Защита машины донора: v6 (12.10) — подпись «без своих инструментов» (Curator CIP-0008, поза lockdown, вариант A — первая веха;
 // граница ОС у донора — варианты B и C, только в заметках). «Отдаёт квоту» → «отдаёт время агента»: условия провайдеров привязывают
 // подписку к одному человеку, донор запускает своего агента на своей подписке (ревью ivan-network-profiles 12.10).
-// reveal: две машины и рабочее место сразу; по кликам — SSH к нам, файрвол к брокеру и прокси, запрет обратного направления.
+// 13.10, сверка с ivan-curator по принятому дизайну (TRU 6b3f983 §5, §7; N15; CIP-0009 D5a–D5c): у рабочего места ноль исходящих,
+// даже loopback, — только объявленные сокеты платформы (R-SOCKETS); прокси и аренды учётных данных у него нет; команды — по списку
+// разрешённых (R-EXEC), без сборок и тестов; задачи и результаты — подписанными письмами через мост и ящик; код уходит только
+// выгрузкой после раунда: импорт на доску, ревью, подписанное приземление (R-TRANSFER).
+// reveal: две машины и рабочее место сразу; по кликам — SSH к нам, мост и выгрузка без исходящих, запрет обратного направления.
 import { useId } from 'vue'
 defineProps<{ reveal?: boolean }>()
 const id = useId()
@@ -36,24 +40,24 @@ const id = useId()
     <text x="481" y="113" text-anchor="middle" class="t-on">свой дом и свои права</text>
     <rect x="362" y="142" width="238" height="62" rx="10" class="n" />
     <text x="481" y="166" text-anchor="middle" class="t-big">Исполнитель</text>
-    <text x="481" y="187" text-anchor="middle" class="t-sec">bash, git, файлы задачи</text>
+    <text x="481" y="187" text-anchor="middle" class="t-sec">только разрешённые команды</text>
     <!-- 1. SSH только к нам, только инструменты -->
     <Step :on="reveal">
       <line x1="205" y1="173" x2="343" y2="173" class="e" :marker-end="`url(#${id})`" />
       <text x="275" y="164" text-anchor="middle" class="t-cap">SSH</text>
       <text x="275" y="192" text-anchor="middle" class="t-cap t-sec">инструменты</text>
     </Step>
-    <!-- 2. файрвол по пользователю: только брокер и прокси -->
+    <!-- 2. наружу — ничего: мост и ящик, выгрузка после раунда -->
     <Step :on="reveal">
       <line x1="617" y1="99" x2="647" y2="99" class="e" :marker-end="`url(#${id})`" />
       <line x1="617" y1="173" x2="647" y2="173" class="e" :marker-end="`url(#${id})`" />
       <rect x="650" y="68" width="242" height="62" rx="10" class="n-lilac" />
-      <text x="771" y="92" text-anchor="middle" class="t-big t-ink">Брокер и ящик</text>
-      <text x="771" y="113" text-anchor="middle" class="t-ink-sec">задачи — письмами</text>
+      <text x="771" y="92" text-anchor="middle" class="t-big t-ink">Мост и ящик</text>
+      <text x="771" y="113" text-anchor="middle" class="t-ink-sec">подписанные письма</text>
       <rect x="650" y="142" width="242" height="62" rx="10" class="n" />
-      <text x="771" y="166" text-anchor="middle" class="t-big">Прокси сети</text>
-      <text x="771" y="187" text-anchor="middle" class="t-sec">только разрешённое</text>
-      <text x="346" y="240" class="t-cap t-sec">файрвол по пользователю: наружу только брокер и прокси</text>
+      <text x="771" y="166" text-anchor="middle" class="t-big">Выгрузка кода</text>
+      <text x="771" y="187" text-anchor="middle" class="t-sec">ревью, подписанное приземление</text>
+      <text x="346" y="240" class="t-cap t-sec">наружу ничего, даже loopback: только сокеты платформы</text>
     </Step>
     <!-- 3. к донору — ничего -->
     <Step :on="reveal">

@@ -13,10 +13,10 @@ import { useId } from 'vue'
 withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
 const id = useId()
 const pkg = [
-  { y: 34, a: 'SKILL.md · references/', b: 'инструкции и примеры', cls: 'n', sub: 't-sec' },
+  { y: 34, a: 'SKILL.md · references/', b: 'инструкции и материалы', cls: 'n', sub: 't-sec' },
   { y: 90, a: 'scripts/', b: 'runtime_roots', cls: 'n', sub: 't-sec' },
   { y: 146, a: 'src/ · vendor/', b: 'build_roots, Go', cls: 'n', sub: 't-sec' },
-  { y: 202, a: 'tests/ · package.json', b: '✕ отброшено', cls: 'n-wait', sub: 't-cap t-orange' },
+  { y: 202, a: 'tests/ · README · Makefile', b: '✕ отброшено на любой глубине', cls: 'n-wait', sub: 't-cap t-orange' },
 ]
 const kinds = [
   { y: 106, k: 'script', s: 'файл из scripts/' },

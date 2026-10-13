@@ -57,6 +57,8 @@ const days = Array.from({ length: Math.round(SPAN / 86400) }, (_, d) => ({
 // ---- words ----------------------------------------------------------------------------------------------------------
 const plural = (n: number, f: [string, string, string]) => f[n % 10 === 1 && n % 100 !== 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2]
 const num = (n: number) => n.toLocaleString('ru-RU')
+// a growing count keeps the text after it in place: tabular figures plus an invisible head as wide as the largest value's
+const pad = (n: number, max: number) => { const s = num(n), m = num(Math.max(n, max)); return m.slice(0, m.length - s.length) }
 const ORCH: [string, string, string] = ['оркестратор', 'оркестратора', 'оркестраторов']
 const machines = { 1: 'одной машине', 2: 'двух машинах', 3: 'трёх машинах' }[data.hosts.length as 1 | 2 | 3] ?? `${data.hosts.length} машинах`
 const agents = mx ? mx.agents[0] + mx.agents[1] : 0
@@ -87,6 +89,8 @@ const rowOf = (key: string) => MX_ROWS.find((r) => r.key === key)!
 const peopleMax = people ? Math.max(1, ...people.series) : 1
 const mxMax = mx ? Math.max(1, ...mx.sides.flatMap((s) => s[0].map((_, k) => s[0][k] + s[1][k] + s[2][k]))) : 1
 const crossMax = mx ? Math.max(1, ...mx.cross) : 1
+// the largest values of the status line's counters, for their slots
+const MAX = { work: Math.max(0, ...data.work), msgs: mx ? mx.sides.flat(2).reduce((a, b) => a + b, 0) : 0 }
 
 // ---- one frame ------------------------------------------------------------------------------------------------------
 const rect = (x0: number, x1: number, y: number, h: number) => `M${x0.toFixed(1)},${y.toFixed(1)}h${(x1 - x0).toFixed(1)}v${h.toFixed(1)}h${(x0 - x1).toFixed(1)}z`
@@ -163,7 +167,6 @@ const frame = computed(() => {
     now,
     clock: `${new Date(W0 + now * 1000).toLocaleString('ru-RU', { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} мск`,
     beat: [...BEATS].reverse().find((b) => b.at <= time)!.text,
-    shown: Math.min(1, time / INTRO),
     orch,
     sub,
     liveO,
@@ -190,9 +193,9 @@ const frame = computed(() => {
   <svg class="demo-swarm demo-live" :data-demo-t="Math.round(t)" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="908" y="17" text-anchor="end" class="clock">{{ frame.clock }}</text>
-    <text x="0" y="36" class="t-sec small">сейчас заняты: оркестраторов <tspan class="v">{{ frame.liveO.length }}</tspan> · субагентов <tspan class="v">{{ frame.workNow }}</tspan> · запусков доски <tspan class="v">{{ num(frame.runsN) }}</tspan><tspan v-if="mx"> · сообщений агентов <tspan class="v">{{ num(frame.msgs) }}</tspan></tspan><tspan v-if="people"> · человек написал <tspan class="t-lime">{{ num(frame.humanN) }}</tspan></tspan></text>
+    <text x="0" y="36" class="t-sec small status">сейчас заняты: оркестраторов <tspan class="pad">{{ pad(frame.liveO.length, Math.max(data.lanes.length, c.peakOrch.n)) }}</tspan><tspan class="v">{{ frame.liveO.length }}</tspan> · субагентов <tspan class="pad">{{ pad(frame.workNow, MAX.work) }}</tspan><tspan class="v">{{ frame.workNow }}</tspan> · запусков доски <tspan class="pad">{{ pad(frame.runsN, data.runs.length) }}</tspan><tspan class="v">{{ num(frame.runsN) }}</tspan><tspan v-if="mx"> · сообщений агентов <tspan class="pad">{{ pad(frame.msgs, MAX.msgs) }}</tspan><tspan class="v">{{ num(frame.msgs) }}</tspan></tspan><tspan v-if="people"> · человек написал <tspan class="pad">{{ pad(frame.humanN, people.total) }}</tspan><tspan class="t-lime">{{ num(frame.humanN) }}</tspan></tspan></text>
 
-    <g class="lanes" :style="{ opacity: frame.shown }">
+    <g class="lanes">
       <line v-for="d in days" :key="d.label" :x1="d.x" :y1="TOP" :x2="d.x" :y2="RIVER_Y + RIVER_H" class="day" />
       <g v-for="(f, k) in frames" :key="f.name">
         <text :x="AX" :y="f.y + 11" class="t-head t-sec">{{ f.name }} · {{ f.n }} ИЗ {{ f.of }} {{ plural(f.of, ['ОРКЕСТРАТОРА', 'ОРКЕСТРАТОРОВ', 'ОРКЕСТРАТОРОВ']) }}</text>
@@ -253,6 +256,8 @@ const frame = computed(() => {
 </template>
 
 <style scoped>
+.demo-swarm text { font-variant-numeric: tabular-nums; }
+.demo-swarm tspan.pad { fill: transparent; }
 .demo-swarm text.cap { font-size: 18px; }
 .demo-swarm text.clock { font-size: 15px; fill: var(--rwb-lilac); }
 .demo-swarm text.small { font-size: 12px; }
@@ -278,5 +283,4 @@ const frame = computed(() => {
 .demo-swarm .river-work { fill: var(--rwb-lilac); opacity: 0.55; }
 .demo-swarm .peak { fill: var(--rwb-lime); }
 .demo-swarm .head { stroke: var(--rwb-lilac); stroke-width: 1.5; }
-.demo-swarm .lanes { transition: opacity 0.6s ease; }
 </style>

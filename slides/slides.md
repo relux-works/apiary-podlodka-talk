@@ -3,7 +3,6 @@ routerMode: hash
 theme: ../themes/rwb-tech
 title: 'Рой над одной средой'
 info: 'Podlodka · Relux Works · Алексей Григорьев и Иван Опарин'
-transition: fade
 # Slidev preloads slide images by their source path; for ../diagrams/… that
 # path 404s in the built deck. The images still load as bundled assets.
 preloadImages: false

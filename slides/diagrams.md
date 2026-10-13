@@ -1069,6 +1069,19 @@ v6, глава 3 «Curator — профиль проекта»: профиль �
 
 ---
 layout: default
+tag: 'V6 · ГЛАВА 3 · DiagV6SwarmHosts'
+---
+
+# DiagV6SwarmHosts
+
+<DiagV6SwarmHosts />
+
+<!--
+v6, глава 3 «Рой на трёх машинах» (13.10, вместо «Одной точки входа» на слайде): Mac mini, MacBook Ивана, MacBook Алексея — главный оркестратор, оркестраторы проектов и их субагенты; Matrix между машинами; люди и мета-оркестратор; можно спросить любого. Раскрытие: <DiagV6SwarmHosts reveal />.
+-->
+
+---
+layout: default
 tag: 'V6 · ГЛАВА 3 · DiagV6Meta'
 ---
 

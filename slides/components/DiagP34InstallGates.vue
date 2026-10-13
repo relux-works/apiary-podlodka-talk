@@ -43,7 +43,7 @@ const light = (f: string) => f === 'n-orange' || f === 'n-lime'
       <line :x1="bx(5) + BW / 2" :y1="Y2 + BH" :x2="bx(5) + BW / 2" y2="199" class="e-dash" :marker-end="`url(#${id})`" />
       <rect :x="bx(5)" y="202" :width="BW" height="44" rx="10" class="n" />
       <text :x="bx(5) + 16" y="220">curator status --check</text>
-      <text :x="bx(5) + 16" y="237" class="t-sec">ловит дрейф и сдвинутый тег</text>
+      <text :x="bx(5) + 16" y="237" class="t-sec">ловит дрейф установки</text>
     </g>
     <!-- отказ и инвариант -->
     <g v-click="reveal ? 3 : false">

@@ -3,7 +3,6 @@ layout: section
 num: '02'
 sub: 'Алексей Григорьев · демо 1'
 icon: cubes
-transition: slide-left
 ---
 
 # Автономия через оркестрацию

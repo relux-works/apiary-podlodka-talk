@@ -3,9 +3,13 @@
 // Источник: curator-playbook examples/cafe/cafe.playbook.json (воркфлоу purchase: draft → approval → sending → awaiting-confirmation
 // → confirmed → receiving → invoiced → paid; таймер PT15M → escalated; handoff в accounting) и spec/process-configuration.md DRAFT v4.8
 // §4.2 (виды владельцев), §6.5 (передача между процессами), §6.9 (таймеры, подписанные события), §11 (векторы общности).
-// reveal: заголовок сразу; состояния по порядку — черновик, одобрение, отправка, ожидание и подтверждение, приёмка со счётом и оплатой;
-// затем легенда владельцев и рамка видения — по клику.
-// ВНЖ в Грузии — следующий пример, которого в examples/ ещё нет (пост, раздел 5.1; wiki call-digest-2026-09-keeper-concept §3.8).
+// Ниже — зависимости плейбука (Иван, 13.10: «отдельные агенты устанавливаются как зависимости плейбука — по сути скиллы со своим
+// тулчейном вроде mcp/cli доступа в crm / внутренние чаты малого бизнеса»): роли cafe-ops — скиллы cafe-orchestrator, cafe-buyer,
+// cafe-stock-keeper, инструмент supplier.send-order — команда cafe-send-order пакета cafe-supplier-portal (cafe.playbook.json roles,
+// tools); проект включает только проверенные скиллы (project.Playbook.json policy.enable.skills: "audited"). MCP к CRM, CLI учёта и
+// чат с менеджерами — иллюстрация к примеру, в спеке их нет. ВНЖ убран 13.10 (Иван).
+// reveal: заголовок сразу; состояния по порядку — черновик, одобрение, отправка, ожидание и подтверждение; приёмка, счёт и оплата;
+// затем зависимости плейбука.
 import { useId } from 'vue'
 defineProps<{ reveal?: boolean }>()
 const id = useId()
@@ -22,12 +26,14 @@ const states = [
 ]
 // клики по речи: черновик · одобрение · отправка · ответ поставщика · приёмка, счёт и оплата
 const groups = [[0, 1, 2, 3, 4], [5, 6, 7]] // the order and the wait, then acceptance, invoice and payment (13.10: per state was too small)
-const legend = [
-  { x: 0, cls: 'n', t: 'агент' },
-  { x: 150, cls: 'n-lime', t: 'человек' },
-  { x: 316, cls: 'n-wait', t: 'инструмент' },
-  { x: 506, cls: 'n-purple', t: 'другой процесс' },
-]
+// зависимости плейбука: роль, пакет, её инструменты
+const DW = 218, DG = 12
+const deps = [
+  { t: 'Оркестратор кафе', pkg: 'cafe-orchestrator', tool: 'MCP: чат с менеджерами', cls: 'n' },
+  { t: 'Закупщик', pkg: 'cafe-buyer', tool: 'MCP: CRM поставщиков', cls: 'n' },
+  { t: 'Кладовщик', pkg: 'cafe-stock-keeper', tool: 'CLI: учёт остатков', cls: 'n' },
+  { t: 'Портал поставщика', pkg: 'cafe-supplier-portal', tool: 'CLI: отправка заказа', cls: 'n-wait' },
+].map((d, i) => ({ ...d, x: i * (DW + DG) + 0.75 }))
 const ink = (c: string) => c === 'n-lime'
 const sub = (c: string) => ink(c) ? 't-ink-sec' : (c === 'n-purple' ? 't-on' : 't-sec')
 </script>
@@ -47,19 +53,19 @@ const sub = (c: string) => ink(c) ? 't-ink-sec' : (c === 'n-purple' ? 't-on' : '
         <text x="796" y="115" text-anchor="end" class="t-cap t-sec">иначе через 15 минут — эскалация менеджеру</text>
       </template>
     </Step>
-    <!-- легенда: вид владельца состояния -->
+    <!-- зависимости плейбука: агенты — скиллы со своими инструментами -->
     <Step :on="reveal">
-      <text x="0" y="206" class="t-head t-sec">ВЛАДЕЛЕЦ СОСТОЯНИЯ</text>
-      <g v-for="l in legend" :key="l.t">
-        <rect :x="l.x" y="216" width="22" height="18" rx="5" :class="l.cls" />
-        <text :x="l.x + 32" y="230" class="t-cap">{{ l.t }}</text>
+      <text x="0" y="206" class="t-head t-sec">ЗАВИСИМОСТИ ПЛЕЙБУКА CAFE-OPS · СКИЛЛЫ СО СВОИМИ ИНСТРУМЕНТАМИ · СТАВИТ И ПРОВЕРЯЕТ CURATOR</text>
+      <g v-for="d in deps" :key="d.pkg">
+        <rect :x="d.x" y="218" :width="DW - 1.5" height="84" rx="10" :class="d.cls" />
+        <text :x="d.x + 14" y="243" class="t-big">{{ d.t }}</text>
+        <text :x="d.x + 14" y="264" class="pkg t-sec">{{ d.pkg }}</text>
+        <text :x="d.x + 14" y="287" class="t-cap">{{ d.tool }}</text>
       </g>
-    
-    <!-- следующий пример -->
-
-      <rect x="0.75" y="250" width="906.5" height="53" rx="10" class="n-wait" />
-      <text x="16" y="272" class="t-head t-lilac">СЛЕДУЮЩИЙ ПРИМЕР · ВНЖ В ГРУЗИИ</text>
-      <text x="16" y="292" class="t-cap">Следующий пример не из разработки: документы, службы, записи на приём в Дом юстиции</text>
     </Step>
   </svg>
 </template>
+
+<style scoped>
+.pkg { font-family: var(--rwb-mono); font-size: 12px; }
+</style>

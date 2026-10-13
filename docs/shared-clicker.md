@@ -9,16 +9,16 @@ Status (13.10): the sync, the join rule and the window titles below pass in head
 Each speaker needs a checkout of this repository and SSH access to the presenting host (the Mac mini). The script needs bash, ssh and curl, not `npm install`.
 
 ```bash
-npm run join -- --host <ssh alias of the mini>   # first time; the alias is kept in .temp/join/config
-npm run join                                     # the presenter window «ЗАМЕТКИ»
-npm run join -- --share                          # also the viewer window «ЭКРАН»: this speaker shares the screen
+npm run join                                     # Alexey: «ЗАМЕТКИ»; always through the mini (administrator@relux-macmini)
+npm run join -- --ivan                           # Ivan, the host who shares the screen: «ЭКРАН» and «ЗАМЕТКИ»
+npm run join -- --host <ssh alias of the mini>   # only if your SSH config names the mini differently; kept in .temp/join/config
 ```
 
 What it does:
 
 1. Starts the deck on the mini over SSH unless it already runs (`.scripts/present.sh start`). Two speakers starting at once is safe: one start runs at a time. If the SSH user cannot reach the repository there, the script says so and connects anyway.
 2. Holds `ssh -N -L 3030:localhost:3030 <mini>` with keepalives, so a dead link shows within about 15 seconds, and reconnects 3 seconds after any drop. The open windows reload on their own when the tunnel is back (Vite does that) and join the live slide.
-3. Opens the windows once the deck answers: «ЗАМЕТКИ» always, «ЭКРАН» with `--share`. `--browser chrome|firefox|safari|default|none` picks the browser and is remembered.
+3. Opens the windows once the deck answers: «ЗАМЕТКИ» always, «ЭКРАН» with `--ivan` or `--share`. `--browser chrome|firefox|safari|default|none` picks the browser and is remembered.
 4. Ctrl-C closes the tunnel; the deck keeps running on the mini.
 
 To take over the screen, for example when the sharing speaker's link fails, the other speaker runs `npm run join -- --share` in a second terminal. The tunnel stays, and a viewer window opens at the live slide. Share it, and close the old viewer once it is back.

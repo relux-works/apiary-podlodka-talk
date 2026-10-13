@@ -33,6 +33,19 @@ jobs:
       - name: Shared clicker sync
         run: npm run check:sync
 
+      # present.sh starts the shared server in a session of its own: a harness that kills the caller's whole
+      # process group when its command returns (Codex exec on Alexey's M1 Max, 13.10) must not take the deck along.
+      - name: Shared server outlives its caller
+        run: |
+          mkdir -p .temp
+          setsid bash -c 'echo $$ > .temp/caller.pgid; .scripts/present.sh start --port 8091 > .temp/present-start.log 2>&1'
+          kill -TERM -- "-$(cat .temp/caller.pgid)" 2>/dev/null || true
+          sleep 3
+          rc=0; .scripts/present.sh status --port 8091 | head -1 | grep -q '^up' && curl -fsS -o /dev/null http://localhost:8091/ || rc=$?
+          [ $rc = 0 ] && echo "ok   the server outlived its caller's process group" || { echo "FAIL the server died with its caller"; cat .temp/present-start.log; .scripts/present.sh logs; }
+          .scripts/present.sh stop || true
+          exit $rc
+
       # Offline build + every slide rendered in Chromium and measured:
       # content inside the layout box, text inside its frame, code not clipped,
       # console clean. Screenshots and a contact sheet land in .temp/audit.

@@ -46,7 +46,7 @@ answers() { curl -fsS -o /dev/null --max-time 3 "http://localhost:$PORT/" 2>/dev
 print_access() {
   cat <<EOF
 deck:     $(git rev-parse --short HEAD) on $(git rev-parse --abbrev-ref HEAD), port $PORT, localhost only, present mode
-laptops:  npm run join -- --host <ssh alias of $(host_name)> [--share]   # tunnel, kept up, and the windows
+laptops:  npm run join (Alexey) · npm run join -- --ivan (Ivan, shares «ЭКРАН») · --host <alias of $(host_name)> once if needed
 tunnel:   ssh -N -L $PORT:localhost:$PORT $(host_name)        # the same by hand
 viewer:   http://localhost:$PORT/#/1                   # ONE window, titled «ЭКРАН»: the one you share
 notes:    http://localhost:$PORT/#/presenter/1         # each speaker, titled «ЗАМЕТКИ»; the laser from here shows on the viewer
@@ -86,7 +86,11 @@ case "$cmd" in
     [ "$behind" != 0 ] && echo "warning: this checkout is $behind commit(s) behind origin/main (use --pull)"
     export VITE_PRESENT=1
     if [ "$FLAT" = 1 ]; then export VITE_FLAT_CLICKS=1; fi
-    nohup node_modules/.bin/slidev slides/slides.md --port "$PORT" < /dev/null > "$LOG" 2>&1 &
+    # In a session of its own: agent harnesses such as Codex exec kill the caller's whole process group or session
+    # when the command returns, and nohup ignores only SIGHUP (Alexey's M1 Max, 13.10). setsid keeps the pid, so the
+    # pid file stays right; perl has it on macOS and Linux alike.
+    nohup perl -MPOSIX -e 'POSIX::setsid() != -1 or die "setsid: $!\n"; exec @ARGV or die "exec: $!\n"' \
+      node_modules/.bin/slidev slides/slides.md --port "$PORT" < /dev/null > "$LOG" 2>&1 &
     echo $! > "$PIDFILE"
     for _ in $(seq 1 60); do
       if answers; then echo "up (pid $(cat "$PIDFILE"))"; print_access; exit 0; fi

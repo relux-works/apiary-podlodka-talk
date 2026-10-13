@@ -2,12 +2,15 @@
 # Join the shared deck from a speaker's laptop (docs/shared-clicker.md). It starts the deck on the presenting host if
 # it is down, holds an SSH tunnel to it and brings the tunnel back when it drops, and opens this speaker's windows.
 #
-#   npm run join -- --host <ssh alias of the mini>   first time; the alias and the options below are remembered
-#   npm run join                                     the presenter window «ЗАМЕТКИ»: notes, next slide, timer, laser
-#   npm run join -- --share                          also the viewer window «ЭКРАН»: this speaker shares the screen
+# Always through the Mac mini (Ivan, 13.10: «по умолчанию всегда шел через мини»); the roles by flag («с флагом --ivan
+# меня как хоста кто шарит экран, а без флага — Алексея»):
 #
-#   --host <alias>      the presenting host as your SSH config names it
-#   --share             this speaker shares the screen; the other speaker runs join without it
+#   npm run join                  Alexey: the presenter window «ЗАМЕТКИ» (notes, next slide, timer, laser)
+#   npm run join -- --ivan        Ivan, the host who shares the screen: «ЗАМЕТКИ» and the viewer window «ЭКРАН»
+#
+#   --ivan              Ivan's windows: this laptop shares «ЭКРАН»; --share is the same for anyone else
+#   --host <alias>      the presenting host if your SSH config names it differently; remembered once given
+#                       (default administrator@relux-macmini, the mini on the tailnet)
 #   --port <n>          the deck's port on the presenting host (3030)
 #   --local-port <n>    the port on this laptop (as --port); change it when a local deck already uses that port
 #   --dir <path>        the repository on the presenting host, relative to the SSH user's home
@@ -23,7 +26,7 @@ cd "$(dirname "$0")/.."
 
 CONF=.temp/join/config
 SSH_LOG=.temp/join/ssh.log
-HOST=""
+HOST="administrator@relux-macmini" # the Mac mini by its tailnet name
 DIR="Developer/ReluxWorks/apiary-podlodka-talk"
 BROWSER="default"
 if [ -f "$CONF" ]; then
@@ -38,7 +41,7 @@ START=1
 while [ $# -gt 0 ]; do
   case "$1" in
     --host) HOST="$2"; shift 2 ;;
-    --share) SHARE=1; shift ;;
+    --ivan|--share) SHARE=1; shift ;;
     --port) PORT="$2"; shift 2 ;;
     --local-port) LPORT="$2"; shift 2 ;;
     --dir) DIR="$2"; shift 2 ;;
@@ -101,7 +104,7 @@ elif ! ssh "${SSH_OPTS[@]}" "$HOST" true; then
   echo "cannot reach $HOST over SSH" >&2; exit 1
 fi
 
-if [ "$SHARE" = 1 ]; then role="you share the screen"; else role="presenter window only"; fi
+if [ "$SHARE" = 1 ]; then role="you share the screen: «ЭКРАН» and «ЗАМЕТКИ»"; else role="presenter window «ЗАМЕТКИ» only"; fi
 say "$HOST:$PORT to localhost:$LPORT, $role"
 SSH_PID=""
 stop() {
@@ -126,7 +129,7 @@ while true; do
         opened=1
         open_notes
         if [ "$SHARE" = 1 ]; then open_viewer
-        else say "the other speaker shares «ЭКРАН»; to take over: npm run join -- --share in a second terminal"; fi
+        else say "Ivan shares «ЭКРАН»; to share it from this laptop instead: npm run join -- --share in a second terminal"; fi
         say "holding the tunnel; Ctrl-C closes it"
       fi
     fi

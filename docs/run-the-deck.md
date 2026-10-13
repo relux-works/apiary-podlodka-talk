@@ -37,8 +37,10 @@ Each release has the PDF and the static HTML: <https://github.com/relux-works/ap
 
 ## Together on the shared server
 
-Both speakers on one deck, either one clicking, one sharing the screen: `npm run join -- --host <your SSH alias of the Mac mini>`.
+Both speakers on one deck, either one clicking, one sharing the screen. The script always goes through the Mac mini (`administrator@relux-macmini` on the tailnet; `--host <alias>` once if your SSH config names it differently):
 
-- The speaker who shares the screen adds `--share`.
+- Alexey: `npm run join` opens the presenter window «ЗАМЕТКИ».
+- Ivan, the host who shares the screen: `npm run join -- --ivan` also opens the viewer window «ЭКРАН». `--share` does the same for anyone else.
 - The demos and their pauses follow in every window.
 - Details and the stage rules: [`shared-clicker.md`](shared-clicker.md). It needs SSH access to the mini.
+- `npm run present` (`.scripts/present.sh start`) puts the deck's server in a session of its own, so it outlives the command that started it, an agent harness's included (CI step «Shared server outlives its caller»). If something still takes it down, run it as a launchd job instead: `launchctl submit -l works.relux.apiary-podlodka-talk.present -- /bin/zsh -lc 'cd ~/Developer/ReluxWorks/apiary-podlodka-talk && VITE_PRESENT=1 exec node_modules/.bin/slidev slides/slides.md --port 3030'`, and stop it with `launchctl remove works.relux.apiary-podlodka-talk.present`. launchd restarts it if it exits.

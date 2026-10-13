@@ -9,7 +9,7 @@
 // (ровно одно из tag, branch, revision), §7 (одно имя — один коммит, цикл — ошибка), §10 (маркер: коммит и sha256);
 // protocol/registry.md §4 (deny-wins: revoked блокирует); curator v0.15.0-rc.2 docs/cli.md (--strict-tags,
 // status --check); живая проверка rc.2 в review 29.09 (postinstall из package.json не запустился).
-// reveal: Skillfile (1), разрешение и проверка (2), аудит и сборка (3), публикация и status (4), отказ и инвариант (5).
+// reveal: первый ряд ворот (1), второй ряд с публикацией и status (2), отказ и инвариант (3); 13.10 — по двое было мелко.
 import { useId } from 'vue'
 withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
 const id = useId()
@@ -18,11 +18,11 @@ const bx = (i: number) => (i % 3) * (BW + GAP)
 const by = (i: number) => (i < 3 ? 0 : Y2)
 const steps = [
   { t: 'Skillfile.json', a: 'имя, git и tag', b: 'одно из: tag, branch, revision', f: 'n', click: 1 },
-  { t: 'Разрешение', a: 'tag → коммит, зависимости', b: 'одно имя — один коммит', f: 'n', click: 2 },
-  { t: 'Проверка пакета', a: 'SKILL.md: name = объявленному', b: 'схема, пути, коллизии, git есть', f: 'n', click: 2 },
-  { t: 'Аудит', a: 'хэш, канарейка, детекторы', b: 'отзыв в реестре — всегда стоп', f: 'n-orange', click: 3 },
-  { t: 'Сборка', a: 'только если есть build', b: 'go-v1: vendored, без сети', f: 'n-wait', click: 3 },
-  { t: 'Публикация', a: 'одна транзакция: контекст, шимы', b: 'маркер: коммит и sha256', f: 'n-lime', click: 4 },
+  { t: 'Разрешение', a: 'tag → коммит, зависимости', b: 'одно имя — один коммит', f: 'n', click: 1 },
+  { t: 'Проверка пакета', a: 'SKILL.md: name = объявленному', b: 'схема, пути, коллизии, git есть', f: 'n', click: 1 },
+  { t: 'Аудит', a: 'хэш, канарейка, детекторы', b: 'отзыв в реестре — всегда стоп', f: 'n-orange', click: 2 },
+  { t: 'Сборка', a: 'только если есть build', b: 'go-v1: vendored, без сети', f: 'n-wait', click: 2 },
+  { t: 'Публикация', a: 'одна транзакция: контекст, шимы', b: 'маркер: коммит и sha256', f: 'n-lime', click: 2 },
 ]
 const light = (f: string) => f === 'n-orange' || f === 'n-lime'
 </script>
@@ -39,14 +39,14 @@ const light = (f: string) => f === 'n-orange' || f === 'n-lime'
       <text :x="bx(i) + 16" :y="by(i) + 64" :class="light(s.f) ? 't-ink-sec' : 't-sec'">{{ s.b }}</text>
     </g>
     <!-- после публикации -->
-    <g v-click="reveal ? 4 : false">
+    <g v-click="reveal ? 2 : false">
       <line :x1="bx(5) + BW / 2" :y1="Y2 + BH" :x2="bx(5) + BW / 2" y2="199" class="e-dash" :marker-end="`url(#${id})`" />
       <rect :x="bx(5)" y="202" :width="BW" height="44" rx="10" class="n" />
       <text :x="bx(5) + 16" y="220">curator status --check</text>
       <text :x="bx(5) + 16" y="237" class="t-sec">ловит дрейф и сдвинутый тег</text>
     </g>
     <!-- отказ и инвариант -->
-    <g v-click="reveal ? 5 : false">
+    <g v-click="reveal ? 3 : false">
       <text x="0" y="224" class="t-cap t-orange">✕ Отказ на любом шаге до публикации — на диске ничего не меняется</text>
       <rect x="0.75" y="256" width="906.5" height="49" rx="12" class="frame-hive" />
       <text x="16" y="277" class="t-big">Код пакета не исполняется ни при разрешении, ни при проверке, ни при аудите, ни при установке</text>

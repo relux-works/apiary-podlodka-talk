@@ -21,7 +21,7 @@ const states = [
   { x: 0, y: 124, t: 'Оплачен', s: '', cls: 'n', in: [236, 149, 203, 149] },
 ]
 // клики по речи: черновик · одобрение · отправка · ответ поставщика · приёмка, счёт и оплата
-const groups = [[0], [1], [2], [3, 4], [5, 6, 7]]
+const groups = [[0, 1, 2, 3, 4], [5, 6, 7]] // the order and the wait, then acceptance, invoice and payment (13.10: per state was too small)
 const legend = [
   { x: 0, cls: 'n', t: 'агент' },
   { x: 150, cls: 'n-lime', t: 'человек' },
@@ -42,7 +42,7 @@ const sub = (c: string) => ink(c) ? 't-ink-sec' : (c === 'n-purple' ? 't-on' : '
         <text :x="states[i].x + 100" :y="states[i].y + (states[i].s ? 21 : 30)" text-anchor="middle" class="t-big" :class="{ 't-ink': ink(states[i].cls) }">{{ states[i].t }}</text>
         <text v-if="states[i].s" :x="states[i].x + 100" :y="states[i].y + 40" text-anchor="middle" :class="sub(states[i].cls)">{{ states[i].s }}</text>
       </g>
-      <template v-if="gi === 3">
+      <template v-if="gi === 0">
         <text x="796" y="96" text-anchor="end" class="t-cap t-sec">подписанное событие поставщика</text>
         <text x="796" y="115" text-anchor="end" class="t-cap t-sec">иначе через 15 минут — эскалация менеджеру</text>
       </template>
@@ -54,9 +54,9 @@ const sub = (c: string) => ink(c) ? 't-ink-sec' : (c === 'n-purple' ? 't-on' : '
         <rect :x="l.x" y="216" width="22" height="18" rx="5" :class="l.cls" />
         <text :x="l.x + 32" y="230" class="t-cap">{{ l.t }}</text>
       </g>
-    </Step>
+    
     <!-- следующий пример -->
-    <Step :on="reveal">
+
       <rect x="0.75" y="250" width="906.5" height="53" rx="10" class="n-wait" />
       <text x="16" y="272" class="t-head t-lilac">СЛЕДУЮЩИЙ ПРИМЕР · ВНЖ В ГРУЗИИ</text>
       <text x="16" y="292" class="t-cap">Следующий пример не из разработки: документы, службы, записи на приём в Дом юстиции</text>

@@ -5,7 +5,7 @@
 // со скидками или вне пиковых часов»; пример ревью безопасности — «на крутых моделях, а фиксы отдаем на более дешевые».
 // Источники: plan/deck-v4-brief.md §3 «Routing» (бюджеты, подписки и лимиты, ночные окна, промо-недели); wiki book/ru/04-modeli-i-dengi.md
 // (models.toml, окна расписания); curator-model-router spec/model-routing.md §0, R2; Иван 12.10: роутер сделан, режим теста.
-// reveal: входы по одному (1–4), роутер (5), исходы (6).
+// reveal: входы разом (1), роутер (2), исходы (3); 13.10 — по одному было мелко.
 import { useId } from 'vue'
 withDefaults(defineProps<{ reveal?: boolean }>(), { reveal: false })
 const id = useId()
@@ -19,10 +19,12 @@ const inputs = [
 <template>
   <svg width="908" height="232" viewBox="0 0 908 232" aria-hidden="true">
     <defs><marker :id="id" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m" /></marker></defs>
-    <Step v-for="i in inputs" :key="i.y" :on="reveal">
-      <rect x="0" :y="i.y" width="260" height="52" rx="10" class="n" />
-      <text x="18" :y="i.y + 22" class="t-big">{{ i.h }}</text>
-      <text x="18" :y="i.y + 41" class="t-sec">{{ i.s }}</text>
+    <Step :on="reveal">
+      <g v-for="i in inputs" :key="i.y">
+        <rect x="0" :y="i.y" width="260" height="52" rx="10" class="n" />
+        <text x="18" :y="i.y + 22" class="t-big">{{ i.h }}</text>
+        <text x="18" :y="i.y + 41" class="t-sec">{{ i.s }}</text>
+      </g>
     </Step>
     <Step :on="reveal">
       <path d="M260,26 C300,26 296,96 327,102" class="e" :marker-end="`url(#${id})`" />

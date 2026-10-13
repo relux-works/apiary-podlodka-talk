@@ -21,7 +21,7 @@ const cohorts = [
   { label: 'Субагенты', total: v.subagents.sumH, by: v.subagents.byRuntime as Record<string, { sumH: number }> },
 ]
 const hMax = Math.max(...cohorts.map((c) => c.total))
-const BAR = 300 // the longest bar, px
+const BAR = 230 // the longest bar, px; its label must stay inside the svg
 const stack = (c: typeof cohorts[number]) => {
   let x = 0
   return VENDORS.map((vd) => { const w = ((c.by[vd.k]?.sumH || 0) / hMax) * BAR; const seg = { x, w, cls: vd.cls, h: c.by[vd.k]?.sumH || 0 }; x += w; return seg }).filter((s) => s.w > 0)
@@ -35,7 +35,7 @@ const stack = (c: typeof cohorts[number]) => {
     <BigNum :value="`${num(hours)} ч`" :caption="`работы агентов: ${num(v.orchestrators.sumH)} у оркестраторов, ${num(v.subagents.sumH)} у субагентов`" tone="neutral" />
     <BigNum value="2" caption="человека" tone="neutral" />
   </div>
-  <svg class="stats-work" width="908" height="128" viewBox="0 0 908 128" aria-hidden="true">
+  <svg v-click class="stats-work" width="908" height="128" viewBox="0 0 908 128" aria-hidden="true">
     <text x="0" y="14" class="t-head t-sec">ЗАПУСКИ ДОСКИ ПО РОЛЯМ · MINI</text>
     <g v-for="(r, i) in roles" :key="r.k">
       <text x="0" :y="44 + i * 30" class="t-sec">{{ r.label }}</text>
@@ -53,7 +53,7 @@ const stack = (c: typeof cohorts[number]) => {
       <text :x="598 + i * 112" y="117" class="t-sec small">{{ vd.label }}</text>
     </template>
   </svg>
-  <p class="lead lime">{{ num(hours) }} {{ plural(hours, ['час', 'часа', 'часов']) }} работы агентов за две недели — на двоих людей.</p>
+  <p v-click class="lead lime">{{ num(hours) }} {{ plural(hours, ['час', 'часа', 'часов']) }} работы агентов за две недели — на двоих людей.</p>
 </template>
 
 <style scoped>

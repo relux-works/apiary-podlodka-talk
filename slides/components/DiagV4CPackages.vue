@@ -6,7 +6,7 @@
 // profiles/manager.md §2 («Package code MUST NOT execute during any phase»), §7 (канарейка, детекторы, «optionally invokes
 // a configured backend» — анализ моделью), §7.1 (по умолчанию advisory); protocol/registry.md §3–§4 (подписанные записи,
 // отзыв блокирует). Статус строк — в заметках слайда: LLM-бэкенд в коде Curator пока не подключён, сервис реестра без релиза.
-// reveal: строка за строкой.
+// reveal: объявление и аудит, реестр и lock-файл, установка на любой машине (13.10: по строке было мелко).
 defineProps<{ reveal?: boolean }>()
 const rows = [
   { npm: 'зависимости', t: 'Разрешение зависимостей: одно имя — один коммит' },
@@ -20,10 +20,12 @@ const rows = [
   <svg width="908" height="296" viewBox="0 0 908 296" aria-hidden="true">
     <text x="0" y="14" class="t-head t-sec">КАК В NPM</text>
     <text x="236" y="14" class="t-head t-lilac">SKILLFILE.JSON → CURATOR</text>
-    <Step v-for="(r, i) in rows" :key="r.npm" :on="reveal">
-      <text x="0" :y="55 + i * 54" class="t-sec">{{ r.npm }}</text>
-      <rect x="236" :y="28 + i * 54" width="672" height="44" rx="10" :class="i === 4 ? 'n-purple' : 'n'" />
-      <text x="256" :y="56 + i * 54" class="t-lab">{{ r.t }}</text>
+    <Step v-for="g in [[0, 1], [2, 3], [4]]" :key="g[0]" :on="reveal">
+      <g v-for="i in g" :key="rows[i].npm">
+        <text x="0" :y="55 + i * 54" class="t-sec">{{ rows[i].npm }}</text>
+        <rect x="236" :y="28 + i * 54" width="672" height="44" rx="10" :class="i === 4 ? 'n-purple' : 'n'" />
+        <text x="256" :y="56 + i * 54" class="t-lab">{{ rows[i].t }}</text>
+      </g>
     </Step>
   </svg>
 </template>

@@ -49,7 +49,7 @@ tag: '02 · АВТОНОМИЯ'
 
 # Доска задач *и спека*
 
-<Boxes reveal :items="['открыта', 'анализ', 'разработка', 'ревью', 'готово']" :colors="['neutral', 'neutral', 'purple', 'lilac', 'lime']" />
+<Boxes :items="['открыта', 'анализ', 'разработка', 'ревью', 'готово']" :colors="['neutral', 'neutral', 'purple', 'lilac', 'lime']" />
 
 <div class="cards cols-2">
 <div v-click class="card lime big"><h2>Решение</h2><p>Спека режется на задачи, у каждой статус и зависимости. Доска — папка в репозитории, она коммитится вместе с кодом.</p></div>
@@ -189,7 +189,7 @@ tag: '02 · АВТОНОМИЯ'
 <div class="cards v6-route">
 <div v-click class="card lime"><p><strong>Пример — ревью безопасности:</strong> ищут сильные модели разных семейств, исправления уходят дешёвым.</p></div>
 <div v-click class="card v6-qr"><div class="v6-qr-box">QR</div><p>Иван: локальные модели, Podlodka iOS Crew</p></div>
-<div v-click class="card v6-qr"><div class="v6-qr-box">QR</div><p><Ph>⟨второй доклад⟩</Ph></p></div>
+<div v-after class="card v6-qr"><div class="v6-qr-box">QR</div><p><Ph>⟨второй доклад⟩</Ph></p></div>
 </div>
 
 <style>

@@ -24,7 +24,7 @@ const kinds = m.byKind as Record<string, number>
     <BigNum :value="num(m.cross)" :caption="`между агентами Ивана и Алексея, поровну в обе стороны`" tone="neutral" />
     <BigNum :value="num(p.prompts)" :caption="`${plural(p.prompts, ['раз', 'раза', 'раз'])} человек писал оркестраторам; самый долгий перерыв ${p.longestGapH} ${plural(p.longestGapH, ['час', 'часа', 'часов'])}`" tone="neutral" />
   </div>
-  <svg class="stats-swarm" width="908" height="112" viewBox="0 0 908 112" aria-hidden="true">
+  <svg v-click class="stats-swarm" width="908" height="112" viewBox="0 0 908 112" aria-hidden="true">
     <text x="0" y="14" class="t-head t-sec">КТО КОМУ ПИШЕТ ЗА ДВЕ НЕДЕЛИ</text>
     <text x="0" y="44" class="t-sec">Агенты — друг другу</text>
     <rect x="200" y="31" :width="BAR" height="18" rx="3" class="n-purple" />
@@ -34,7 +34,7 @@ const kinds = m.byKind as Record<string, number>
     <text :x="208 + Math.max(3, (p.prompts / m.total) * BAR)" y="76" class="v">{{ num(p.prompts) }}</text>
     <text x="200" y="106" class="t-sec small">из сообщений агентов: решений {{ num(kinds.decision || 0) }} · вопросов {{ num(kinds.question || 0) }} · вопросов людям {{ num(kinds['owner-needed'] || 0) }}</text>
   </svg>
-  <p class="lead lime">Агенты пишут друг другу в {{ WORDS[ratio] ?? ratio }} {{ plural(ratio, ['раз', 'раза', 'раз']) }} чаще, чем люди — оркестраторам.</p>
+  <p v-click class="lead lime">Агенты пишут друг другу в {{ WORDS[ratio] ?? ratio }} {{ plural(ratio, ['раз', 'раза', 'раз']) }} чаще, чем люди — оркестраторам.</p>
 </template>
 
 <style scoped>

@@ -6,7 +6,7 @@
 // «Change Requests, review, rework», «Landing a Story», «Validation binds to the tree that lands»);
 // .specs/validation-binding.md; README «Isolated Story delivery», «Cross-repository landing flow»;
 // wiki research/call-digest-2026-09-28.md §1; text/from-buckets-to-apiary.ru.md §2.
-//   reveal — ряд доставки, возврат, интеграция и публикация, машина
+//   reveal — ряд доставки одним кликом, возврат, интеграция и публикация, машина
 //   brief — v6 (12.10), основной поток «Изоляция и приземление»: без блока машины, публикация — «PR и CI, потом main»
 //   (разговор спикеров 12.10: перегрузку CI и fast-forward обсуждаем вне доклада)
 import { computed, useId } from 'vue'
@@ -29,11 +29,13 @@ const row = [
       <marker :id="`${id}-l`" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="m-lime" /></marker>
     </defs>
     <!-- ряд доставки -->
-    <g v-for="(b, i) in row" :key="b.t" v-click="click">
-      <line v-if="i > 0" :x1="bx(i) - GAP" :x2="bx(i) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e" :marker-end="`url(#${id}-a)`" />
-      <rect :x="bx(i)" :y="Y" :width="BW" :height="BH" rx="10" :class="b.f" />
-      <text :x="bx(i) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big" :class="b.tt">{{ b.t }}</text>
-      <text :x="bx(i) + BW / 2" :y="Y + 45" text-anchor="middle" :class="b.st">{{ b.s }}</text>
+    <g v-click="click">
+      <g v-for="(b, i) in row" :key="b.t">
+        <line v-if="i > 0" :x1="bx(i) - GAP" :x2="bx(i) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e" :marker-end="`url(#${id}-a)`" />
+        <rect :x="bx(i)" :y="Y" :width="BW" :height="BH" rx="10" :class="b.f" />
+        <text :x="bx(i) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big" :class="b.tt">{{ b.t }}</text>
+        <text :x="bx(i) + BW / 2" :y="Y + 45" text-anchor="middle" :class="b.st">{{ b.s }}</text>
+      </g>
     </g>
     <!-- возврат -->
     <g v-click="click">

@@ -89,11 +89,13 @@ let peak = 0
 const returnsAt = tasks.flatMap((t) => t.changes.filter((c) => c.back).map((c) => c.d)).sort((a, b) => a - b)
 
 // day marks: every local midnight inside the window
+const dayLabel = (d: Date) => d.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric' })
 const days: { x: number, label: string }[] = []
+const firstDay = dayLabel(new Date(T0))
 {
   const d = new Date(T0)
   d.setHours(24, 0, 0, 0)
-  for (; d.getTime() < T1; d.setDate(d.getDate() + 1)) days.push({ x: xOf(toPlay(d.getTime())), label: d.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric' }) })
+  for (; d.getTime() < T1; d.setDate(d.getDate() + 1)) days.push({ x: xOf(toPlay(d.getTime())), label: dayLabel(d) })
 }
 
 // ---- words ----------------------------------------------------------------------------------------------------
@@ -181,6 +183,7 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 
     <g class="lanes">
       <line v-for="d in days" :key="d.label" :x1="d.x" y1="220" :x2="d.x" y2="378" class="day" />
+      <text :x="AX + 5" y="391" class="t-dim small">{{ firstDay }}</text>
       <text v-for="d in days" :key="d.label + 'l'" :x="d.x + 5" y="391" class="t-dim small">{{ d.label }}</text>
       <g v-for="lane in LANES" :key="lane.key" :class="['lane', lane.key]">
         <text :x="AX - 10" :y="lane.y + lane.h / 2 + 4" text-anchor="end" class="t-sec">{{ lane.label }}</text>
@@ -195,11 +198,11 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
     </g>
 
     <g class="foot">
-      <text x="0" y="410" class="t-dim small">модель запуска</text>
-      <g v-for="(m, i) in legend" :key="m.name" :transform="`translate(${AX + i * 124}, 410)`">
-        <rect x="0" y="-9" width="10" height="10" rx="2" :class="m.cls" />
-        <text x="16" y="0" class="t-sec small">{{ m.name }}</text>
-      </g>
+      <text :x="AX - 10" y="410" text-anchor="end" class="t-dim small">модель</text>
+      <template v-for="(m, i) in legend" :key="m.name">
+        <rect :x="AX + i * 124" y="401" width="10" height="10" rx="2" :class="m.cls" />
+        <text :x="AX + i * 124 + 16" y="410" class="t-sec small">{{ m.name }}</text>
+      </template>
     </g>
   </svg>
 </template>

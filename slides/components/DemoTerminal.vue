@@ -54,18 +54,18 @@ const STEPS: Step[] = [
     [s('curator-run: native discovery off · project context from approved copies')],
     [s('› ', 'p'), s('codex ready in ~/demo-app', 'c')],
   ] },
-  { pane: 1, beat: 'Второй проект — заказчика Wildfruits, из его временного GitLab', cmd: 'curator profile install git@gitlab.wildfruits.example:ai/profile.git --tag v2.0.0 --as wildfruits', out: [
+  { pane: 1, beat: 'Второй проект — заказчика Wildfruits, из его временного GitLab', cmd: 'curator profile install \\\n    git@gitlab.wildfruits.example:ai/profile.git \\\n    --tag v2.0.0 --as wildfruits', out: [
     [s('audit     strict · signer wildfruits ✓ · '), s('9/9 ok', 'ok')],
     [s('✓ ', 'ok'), s('installed profile wildfruits')],
   ] },
-  { pane: 1, cmd: 'git clone git@gitlab.wildfruits.example:mobile/fruitmarket-iosapp.git', out: [
+  { pane: 1, cmd: 'git clone \\\n    git@gitlab.wildfruits.example:mobile/fruitmarket-iosapp.git', out: [
     [s("Cloning into 'fruitmarket-iosapp'... done.")],
   ] },
-  { pane: 1, cmd: 'curator project register fruitmarket-iosapp && curator context approve fruitmarket-iosapp', out: [
+  { pane: 1, cmd: 'curator project register fruitmarket-iosapp && \\\n    curator context approve fruitmarket-iosapp', out: [
     [s('✓ ', 'ok'), s('approved generation 1 · 7 items')],
   ] },
-  { pane: 1, beat: 'Свой профиль и свой дом: контексты двух заказчиков не смешиваются', cmd: 'curator run claude --profile wildfruits --project fruitmarket-iosapp', out: [
-    [s('curator-run: profile wildfruits + project fruitmarket-iosapp, generation 1')],
+  { pane: 1, beat: 'Свой профиль и свой дом: контексты двух заказчиков не смешиваются', cmd: 'curator run claude --profile wildfruits \\\n    --project fruitmarket-iosapp', out: [
+    [s('curator-run: wildfruits + fruitmarket-iosapp, generation 1')],
     [s('curator-run: home ~/.curator/environments/wildfruits/claude_code')],
     [s('› ', 'p'), s('claude ready in ~/fruitmarket-iosapp', 'c')],
   ] },
@@ -85,6 +85,16 @@ for (const st of STEPS) {
   clock += AFTER
 }
 const SPLIT = rows.find((r) => r.pane === 1)!.at - BEAT // the screen splits when the second project's beat begins
+// after the split the first session is a short summary of itself, its lines short enough for the narrow pane
+const SUMMARY: Seg[][] = [
+  [s('~ $ ', 'p'), s('curator run codex --profile relux \\', 'c')],
+  [s('    --project demo-app', 'c')],
+  [s('profile relux + demo-app, generation 1')],
+  [s('home …/environments/relux/codex_cli')],
+  [s('native discovery off')],
+  [s('context from approved copies only')],
+  [s('› ', 'p'), s('codex ready in ~/demo-app', 'c')],
+]
 const DURATION = clock + OUTRO
 BEATS.push({ at: clock, text: 'Два заказчика, два профиля, два дома: всё, что получил агент, прошло аудит' })
 
@@ -93,7 +103,7 @@ const { t } = useDemoClock('terminal', DURATION, BEATS.map((b) => b.at))
 // ---- layout ---------------------------------------------------------------------------------------------------------
 const W = 908, TOP = 44, H = 366, LH = 17
 const FONT = 12.5, CW = FONT * 0.6 // JetBrains Mono advance: 0.6 em
-const PANES = [{ x: 16, w: W - 32 }, { x: 16, w: (W - 48) / 2 }, { x: 32 + (W - 48) / 2, w: (W - 48) / 2 }]
+const PANES = [{ x: 16, w: W - 32 }, { x: 16, w: 336 }, { x: 368, w: 524 }] // full width; then 40 % for the first session, 60 % for the second
 const ROWS = Math.floor((H - 52) / LH)
 // a long line wraps at the pane's width, as a terminal does
 function wrap(segs: Seg[], cols: number): Seg[][] {
@@ -122,18 +132,18 @@ const frame = computed(() => {
     let lines: Seg[][] = []
     let cursor: null | { line: number, col: number } = null
     for (const r of rows) {
-      if (r.at > time || r.pane !== which) continue
+      if (r.at > time || r.pane !== which || (split && which === 0)) continue
       if (r.cmd) {
         const typed = r.cmd.text.slice(0, Math.max(0, Math.floor((time - r.cmd.start) / CHAR)))
-        const wrapped = wrap([s('~ $ ', 'p'), s(typed, 'c')], cols)
-        lines.push(...wrapped)
-        const last = wrapped[wrapped.length - 1].reduce((a, g) => a + g.t.length, 0)
+        typed.split('\n').forEach((part, i) => lines.push(...wrap([s(i ? '' : '~ $ ', 'p'), s(part, 'c')], cols)))
+        const last = lines[lines.length - 1].reduce((a, g) => a + g.t.length, 0)
         cursor = typed.length < r.cmd.text.length ? { line: lines.length - 1, col: last } : null
       } else {
         lines.push(...wrap(r.segs, cols))
         cursor = null
       }
     }
+    if (split && which === 0) lines = SUMMARY.slice()
     // a prompt waits only between commands: not while a command still prints, not under a running agent
     const pending = rows.find((r) => r.pane === which && r.at > time)
     const printing = pending && !pending.cmd && lines.length > 0

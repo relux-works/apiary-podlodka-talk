@@ -41,7 +41,7 @@ const SUB = 8, SG = 4 // subagent squares under each orchestrator
     <Step :on="reveal">
       <rect x="0.75" y="118" width="906.5" height="24" rx="12" class="n-lilac" />
       <text x="454" y="135" text-anchor="middle" class="t-cap t-ink">Matrix · оркестраторы пишут друг другу через машины</text>
-      <line v-for="h in hosts" :key="h.name" :x1="h.x + FW / 2" y1="142" :x2="h.x + FW / 2" :y2="FY + 30" class="e" :marker-end="`url(#${id})`" />
+      <line v-for="h in hosts" :key="h.name" :x1="h.x + FW / 2 + 30" y1="142" :x2="h.x + FW / 2 + 30" :y2="FY + 30" class="e" :marker-end="`url(#${id})`" />
     </Step>
     <!-- люди и мета-оркестратор -->
     <Step :on="reveal">

@@ -92,9 +92,9 @@ const frame = computed(() => {
       <rect :x="CX" y="74" width="262" height="48" rx="8" class="n-lilac" />
       <text :x="CX + 10" y="93" class="mono t-ink">git …/agent-profile v1.4.0</text>
       <text :x="CX + 10" y="112" class="mono t-ink">~/.curator/environments/relux/</text>
-      <text v-if="frame.profileLock" :x="CX" y="139" class="small t-lime">lock sha256:9f2c… · аудит strict · подпись ✓</text>
+      <text v-if="frame.profileLock" :x="CX" y="139" class="small t-lime">lock · аудит strict · подпись ✓</text>
       <rect v-if="frame.profileLayer > 0" :x="CX" :y="lerp(74, 148, frame.profileLayer)" width="262" height="28" rx="7" class="n-purple" />
-      <text v-if="frame.profileLayer >= 1" :x="CX + 10" y="166" class="small">слой профиля relux · 4 скилла · github-mcp</text>
+      <text v-if="frame.profileLayer >= 1" :x="CX + 10" y="166" class="small">слой профиля relux: 4 скилла, MCP</text>
     </g>
 
     <g v-for="c in frame.chips" :key="c.k">
@@ -105,7 +105,7 @@ const frame = computed(() => {
     </g>
     <text x="12" y="300" class="small t-sec">код — данные работы, не настройка</text>
     <text v-if="frame.chips[0].x > BX - 1" x="302" y="300" class="small t-sec">читаем как данные: ничего не исполняем</text>
-    <text v-if="frame.merge" :x="CX" y="304" class="small t-lime">общий скилл — один пин · конфликт — отказ</text>
+    <text v-if="frame.merge" :x="CX" y="304" class="small t-lime">один пин на скилл · конфликт — отказ</text>
 
     <!-- запуск -->
     <rect x="0.75" y="326.75" width="580.5" height="40" rx="10" class="win" />

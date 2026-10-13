@@ -101,7 +101,7 @@ const frame = computed(() => {
 </script>
 
 <template>
-  <svg class="demo-swarm" :class="{ final: frame.final }" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
+  <svg class="demo-swarm demo-live" :class="{ final: frame.final }" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="908" y="17" text-anchor="end" class="clock">{{ frame.clock }}</text>
     <text x="0" y="36" class="t-sec small">сейчас заняты: оркестраторов <tspan class="v">{{ frame.orchNow }}</tspan> · субагентов <tspan class="v">{{ frame.workNow }}</tspan> · запусков доски <tspan class="v">{{ num(frame.runsN) }}</tspan></text>

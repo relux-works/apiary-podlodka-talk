@@ -161,7 +161,7 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 </script>
 
 <template>
-  <svg class="demo-run" :class="{ final: frame.final }" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
+  <svg class="demo-run demo-live" :class="{ final: frame.final }" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="908" y="17" text-anchor="end" class="clock">{{ frame.clock }}</text>
     <text x="0" y="36" class="t-sec small">запусков <tspan class="v">{{ frame.runsStarted }}</tspan> из {{ runs.length }} · возвратов с ревью <tspan class="v">{{ frame.returns }}</tspan></text>

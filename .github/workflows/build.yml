@@ -55,9 +55,18 @@ jobs:
           check 8093 slides/diagrams.md diagrams
           check 8094 themes/rwb-tech/example.md rwb-tech
           check 8095 themes/rwb-minimal/example.md rwb-minimal
+          check 8098 slides/demos.md demos
 
       - name: Export PDF
         run: npm run export
+
+      # In-slide demos (docs/demos.md): frames at fixed moments and a video of the
+      # autoplay from one press of →, for review without a dev server.
+      - name: Demo frames and video
+        if: always()
+        run: |
+          node .scripts/demo-frames.mjs --deck slides/demos.md --slide 2 --port 8097 --video --out .temp/demo-frames
+          node .scripts/contact-sheet.mjs .temp/demo-frames 2
 
       - uses: actions/upload-artifact@v7
         with:
@@ -69,12 +78,22 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
+          name: demo-frames
+          path: .temp/demo-frames/
+          include-hidden-files: true
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
           name: slides-audit
           path: |
             .temp/audit-deck/
             .temp/audit-diagrams/
             .temp/audit-rwb-tech/
             .temp/audit-rwb-minimal/
+            .temp/audit-demos/
             .temp/audit/
           # .temp is a dot folder, which upload-artifact drops by default.
           include-hidden-files: true

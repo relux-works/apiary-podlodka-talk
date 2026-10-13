@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Лесенка квадратов — пиксельный мотив корпоративного шаблона в масштабе слайда (модуль 69 px).
 // Наборы подобраны так, чтобы не пересекаться с логотипом, футером, иконкой и текстом.
-withDefaults(defineProps<{ set?: 'section' | 'demo' | 'end' | 'statement' }>(), { set: 'section' })
+withDefaults(defineProps<{ set?: 'section' | 'demo' | 'demo-live' | 'end' | 'statement' }>(), { set: 'section' })
 const M = 69
 const SETS: Record<string, { c: string, x: number, y: number, w: number, h: number }[]> = {
   // открывашка: лесенка у верхней кромки справа + сиреневый квадрат у нижней кромки под иконкой
@@ -14,6 +14,8 @@ const SETS: Record<string, { c: string, x: number, y: number, w: number, h: numb
     { c: 'orange', x: 911, y: 0, w: M, h: M },
     { c: 'purple', x: 911, y: 345, w: M, h: M }, { c: 'purple', x: 842, y: 414, w: M, h: M },
   ],
+  // живое демо в слайде: только угловой оранжевый
+  'demo-live': [{ c: 'orange', x: 911, y: 0, w: M, h: M }],
   statement: [
     { c: 'lilac', x: 842, y: 0, w: 2 * M, h: M }, { c: 'orange', x: 773, y: 413, w: M, h: M },
     { c: 'lilac', x: 636, y: 482, w: 2 * M, h: M },

@@ -47,7 +47,8 @@ if (!total) { console.error('could not determine slide count'); process.exit(2) 
 
 const rows = []
 for (let n = 1; n <= total; n++) {
-  await page.goto(`${base}#/${n}?clicks=99`, { waitUntil: 'networkidle' })
+  // ?demo-t holds an in-slide demo at its last frame (slides/demo/clock.ts), the fullest one to measure
+  await page.goto(`${base}?demo-t=99999999#/${n}?clicks=99`, { waitUntil: 'networkidle' })
   // Wait until this slide's layout is mounted and laid out; a slide transition
   // can leave the previous page on screen for a while after the hash changes.
   await page.waitForFunction((k) => {

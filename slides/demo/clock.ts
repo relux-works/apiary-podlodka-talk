@@ -7,7 +7,8 @@
 //   ← PageUp           back to the start of the current beat, or of the previous one within its first 2 seconds;
 //                      before the start, the previous slide as usual
 //   R                  restart from the beginning
-// The build and the PDF have no server: the demo shows its last frame there.
+// The static build has no server: there the demo plays in each browser on its own, and the windows of one browser
+// (the viewer and the presenter tab) follow each other through a BroadcastChannel. The PDF shows the last frame.
 // @ts-expect-error virtual module of vite-plugin-vue-server-ref
 import demoState from 'server-reactive:demo'
 import { useNav, useSlideContext } from '@slidev/client'
@@ -22,6 +23,8 @@ interface DemoState {
 }
 const state = demoState as DemoState
 const live = !!import.meta.hot
+// without a server: share the commands between the tabs of this browser
+const channel = !live && typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('slidev-demo-clock') : null
 // .scripts/demo-frames.mjs renders fixed moments: ?demo-t=<ms> before the hash holds the clock there
 const pinned = Number(new URLSearchParams(location.search).get('demo-t') ?? Number.NaN)
 
@@ -33,12 +36,13 @@ export function useDemoClock(id: string, duration: number, beats: number[]) {
   // laptops whose clocks differ still show the same frame. A window that opens mid-play uses the sender's stamp.
   let base = { at: state.at, local: state.stamp || Date.now() }
   watch(() => state.rev, () => { base = { at: state.at, local: Date.now() } })
+  channel?.addEventListener('message', (e: MessageEvent<DemoState>) => Object.assign(state, e.data))
 
   const status = computed(() => (state.id === id ? state.status : 'idle'))
   const t = computed(() => {
     if (!Number.isNaN(pinned))
       return Math.min(pinned, duration)
-    if (!live || nav.isPrintMode.value)
+    if (nav.isPrintMode.value)
       return duration
     if (status.value === 'idle')
       return 0
@@ -50,6 +54,7 @@ export function useDemoClock(id: string, duration: number, beats: number[]) {
   function command(status: DemoState['status'], at: number) {
     base = { at, local: Date.now() }
     Object.assign(state, { id, status, at, stamp: Date.now(), rev: (state.rev || 0) + 1 })
+    channel?.postMessage({ ...state })
   }
   const start = () => command('playing', 0)
   const pause = () => command('paused', t.value)
@@ -65,7 +70,7 @@ export function useDemoClock(id: string, duration: number, beats: number[]) {
   // Only the window's own copy of the demo's slide listens: not the next-slide preview, not the overview.
   const active = () => nav.currentSlideNo.value === $page.value && ['slide', 'presenter'].includes($renderContext.value)
   function onKey(e: KeyboardEvent) {
-    if (!live || !active() || e.metaKey || e.ctrlKey || e.altKey)
+    if (!active() || e.metaKey || e.ctrlKey || e.altKey)
       return
     const target = e.target as HTMLElement | null
     if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable))
@@ -88,8 +93,7 @@ export function useDemoClock(id: string, duration: number, beats: number[]) {
   }
   onMounted(() => {
     window.addEventListener('keydown', onKey, { capture: true })
-    if (live)
-      raf = requestAnimationFrame(tick)
+    raf = requestAnimationFrame(tick)
   })
   onBeforeUnmount(() => {
     window.removeEventListener('keydown', onKey, { capture: true })

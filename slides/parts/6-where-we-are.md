@@ -8,31 +8,31 @@ tag: '06 · ИТОГ'
 <div class="cards cols-3 grow">
 <div class="card">
 <h2>Работает сегодня</h2>
-<ul>
-<li v-click="1">доска, свои спавны и цели в Claude и Codex</li>
-<li v-click="2">оркестраторы договариваются через Matrix</li>
-<li v-click="3">Curator: профили и управляемые дома</li>
-<li v-click="4">хост сессий на все среды</li>
+<ul v-click="1">
+<li>доска, свои спавны и цели в Claude и Codex</li>
+<li>оркестраторы договариваются через Matrix</li>
+<li>Curator: профили и управляемые дома</li>
+<li>хост сессий на все среды</li>
 </ul>
 </div>
 <div class="card">
 <h2>В разработке</h2>
-<ul>
-<li v-click="5">роутер моделей — в режиме теста</li>
-<li v-click="6">процессы как конфигурация — прототип</li>
-<li v-click="7">доверие на ключах и грантах</li>
+<ul v-click="2">
+<li>роутер моделей — в режиме теста</li>
+<li>процессы как конфигурация — прототип</li>
+<li>доверие на ключах и грантах</li>
 </ul>
 </div>
 <div class="card purple">
 <h2>В спеках</h2>
-<ul>
-<li v-click="8">рабочие места внешних агентов</li>
-<li v-click="9">биржа агентов для открытых проектов</li>
+<ul v-click="3">
+<li>рабочие места внешних агентов</li>
+<li>биржа агентов для открытых проектов</li>
 </ul>
 </div>
 </div>
 
-<p v-click="10" class="lead lime">Главные блоки работают уже сегодня: приходите с идеями и ревью.</p>
+<p v-click="4" class="lead lime">Главные блоки работают уже сегодня: приходите с идеями и ревью.</p>
 
 <!--
 [Алексей] Где мы сейчас. Слева — то, на чём мы работаем каждый день: доска, свои спавны и цели в Claude и Codex, оркестраторы договариваются через Matrix, Curator с профилями и управляемыми домами и хост сессий на все среды.
@@ -54,23 +54,23 @@ tag: '06 · ИТОГ'
 # Ссылки *и контакты*
 
 <div class="cards cols-3">
-<div v-click="1" class="card v7-wide">
+<div class="card v7-wide">
 <h2>Пост, из которого вырос доклад</h2>
 <p><code>relux.works/ru/blog/from-buckets-to-apiary</code></p>
 </div>
-<div v-click="2" class="card">
+<div class="card">
 <h2>Сайт</h2>
 <p><code>relux.works</code></p>
 </div>
-<div v-click="3" class="card">
+<div class="card">
 <h2>Открытые репозитории</h2>
 <p><Ph>⟨что открываем к докладу — решает оператор⟩</Ph></p>
 </div>
-<div v-click="4" class="card">
+<div class="card">
 <h2>Пейпер по рою</h2>
 <p><Ph>⟨ссылка после публикации⟩</Ph></p>
 </div>
-<div v-click="5" class="card">
+<div class="card">
 <h2>Контакты</h2>
 <p><Ph>⟨контакты спикеров — решить⟩</Ph></p>
 <div class="v7-qr-row"><div class="v7-qr-box">QR</div><p>Иван про локальные модели · Podlodka iOS Crew</p></div>

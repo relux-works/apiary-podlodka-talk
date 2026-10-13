@@ -9,19 +9,19 @@ tag: 'ВСТУПЛЕНИЕ'
 ::default::
 <h2>На работе, в бигтехе</h2>
 
-<ul class="v4a-big">
-<li v-click>Параллельные команды</li>
-<li v-click>Висящие merge request</li>
-<li v-click>Старые процессы</li>
+<ul class="v4a-big" v-click>
+<li>Параллельные команды</li>
+<li>Висящие merge request</li>
+<li>Старые процессы</li>
 </ul>
 
 ::right::
 <h2>В своих проектах</h2>
 
-<ul class="v4a-big">
-<li v-click>Идей много</li>
-<li v-click>Рук мало</li>
-<li v-click>Времени мало</li>
+<ul class="v4a-big" v-click>
+<li>Идей много</li>
+<li>Рук мало</li>
+<li>Времени мало</li>
 </ul>
 
 ::bottom::

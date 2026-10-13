@@ -53,7 +53,7 @@ try {
   const errors = []
   const tab = async () => {
     const page = await context.newPage()
-    page.on('pageerror', (e) => errors.push(e.message))
+    page.on('pageerror', (e) => { if (!/Wake Lock/.test(e.message)) errors.push(e.message) }) // headless Chromium refuses Slidev's wake lock, as in demo-frames.mjs
     return page
   }
   const a = await tab()

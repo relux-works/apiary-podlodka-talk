@@ -57,11 +57,12 @@ const LANES = [
   { key: 'reviewer', label: 'Ревьюер', y: 346, h: 28 },
 ]
 const laneOf = Object.fromEntries(LANES.map((l) => [l.key, l]))
+// vendor colours shared with demo 2 (slides/style.css): OpenAI cyan, Meta magenta, Anthropic amber
 const MODELS: Record<string, { cls: string, name: string }> = {
-  'gpt-6.1-sol': { cls: 'm-lilac', name: 'GPT-6.1 Sol' },
-  'muse-spark-1.3-contributor': { cls: 'm-purple', name: 'Muse Spark' },
-  'gpt-6-astra': { cls: 'm-grey', name: 'GPT-6 Astra' },
-  'claude-sonnet-5-5': { cls: 'm-white', name: 'Claude Sonnet' },
+  'gpt-6.1-sol': { cls: 'v-codex', name: 'GPT-6.1 Sol' },
+  'gpt-6-astra': { cls: 'v-codex-2', name: 'GPT-6 Astra' },
+  'muse-spark-1.3-contributor': { cls: 'v-muse', name: 'Muse Spark' },
+  'claude-sonnet-5-5': { cls: 'v-claude', name: 'Claude Sonnet' },
 }
 const xOf = (play: number) => AX + (Math.min(Math.max(play, 0), PLAY) / PLAY) * AW
 
@@ -133,7 +134,7 @@ const frame = computed(() => {
     const lane = laneOf[r.role]
     const n = rows[r.role], rh = (lane.h - (n - 1) * 2) / n
     const x0 = xOf(r.ds), x1 = Math.max(x0 + 2, xOf(Math.min(r.de, p)))
-    return { x: x0, w: x1 - x0, y: lane.y + r.row * (rh + 2), h: rh, cls: MODELS[r.model]?.cls ?? 'm-grey', cut: r.outcome === 'cancelled' && r.de <= p }
+    return { x: x0, w: x1 - x0, y: lane.y + r.row * (rh + 2), h: rh, cls: MODELS[r.model]?.cls ?? 'v-codex-2', cut: r.outcome === 'cancelled' && r.de <= p }
   })
   const quietNow = quiet.find(([a, b]) => real > a && real < b && p > 0 && p < PLAY)
   return {
@@ -224,10 +225,10 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 .demo-run .day { stroke: var(--rwb-rule); stroke-width: 1; stroke-dasharray: 3 4; }
 .demo-run .wake { stroke: var(--rwb-purple); stroke-width: 1; opacity: 0.85; }
 .demo-run .bar { opacity: 0.95; }
-.demo-run .m-lilac { fill: var(--rwb-lilac); }
-.demo-run .m-purple { fill: var(--rwb-purple); }
-.demo-run .m-grey { fill: var(--rwb-sec); }
-.demo-run .m-white { fill: var(--rwb-txt); }
+.demo-run .v-codex { fill: var(--demo-codex); }
+.demo-run .v-codex-2 { fill: var(--demo-codex-2); }
+.demo-run .v-muse { fill: var(--demo-muse); }
+.demo-run .v-claude { fill: var(--demo-claude); }
 .demo-run .cut { fill: var(--rwb-orange); }
 .demo-run .human { fill: var(--rwb-lime); }
 .demo-run .head { stroke: var(--rwb-lilac); stroke-width: 1.5; }

@@ -12,3 +12,7 @@ html.flat-clicks .slidev-vclick-hidden {
 .slidev-layout svg .t-on { fill: rgba(255, 255, 255, 0.82); }
 .slidev-layout svg .knock { fill: var(--rwb-bg); }
 .slidev-layout svg .n-wait.note-bg { fill: var(--rwb-bg); }
+
+/* In-slide demos (docs/demos.md): one colour per vendor, the only colours outside the theme palette, picked for
+   contrast on the black demo layout. OpenAI (Codex, GPT models) cyan, Meta (Muse) magenta, Anthropic (Claude) amber. */
+.slidev-layout { --demo-codex: #3ECBF0; --demo-codex-2: #A5E9F8; --demo-muse: #F06BF4; --demo-claude: #FFB547; }

@@ -62,14 +62,19 @@ const machines = { 1: 'одной машине', 2: 'двух машинах', 3
 const agents = mx ? mx.agents[0] + mx.agents[1] : 0
 const totalHours = c.orchHours + c.workHours
 const peakAt = (slot: number) => INTRO + ((slot * data.slot) / 1000 / SPAN) * PLAY
-const BEATS = [
+const gapH = people ? people.longestGapH : 0
+const hoursWord = (h: number) => (Number.isInteger(h) ? plural(h, ['час', 'часа', 'часов']) : 'часа')
+const RAW_BEATS = [
   { at: 0, text: `Две недели нашего роя: ${c.orchestrators} ${plural(c.orchestrators, ORCH)} на ${machines}${mx ? `, ${agents} ${plural(agents, ['агент', 'агента', 'агентов'])} в Matrix` : ''}` },
   { at: INTRO, text: 'Строка — оркестратор: сверху он сам, снизу его субагенты; цвет — вендор' },
   { at: peakAt(c.peakOrch.slot), text: `Пик: ${c.peakOrch.n} ${plural(c.peakOrch.n, ORCH)} заняты в одни десять минут` },
   ...(mx ? [{ at: Math.max(peakAt(c.peakOrch.slot) + 6000, INTRO + PLAY * 0.66), text: `Агенты Ивана и Алексея пишут друг другу напрямую: больше ${num(Math.floor(mx.crossTotal / 100) * 100)} сообщений` }] : []),
-  ...(people ? [{ at: INTRO + PLAY * 0.84, text: `Лаймовые отметки — человек написал оркестратору: ${num(people.total)} раз, самый долгий перерыв ${String(people.longestGapH).replace('.', ',')} ч` }] : []),
+  ...(people ? [{ at: INTRO + PLAY * 0.84, text: `Человек писал оркестраторам ${num(people.total)} ${plural(people.total, ['раз', 'раза', 'раз'])}, самый долгий перерыв ${String(gapH).replace('.', ',')} ${hoursWord(gapH)}` }] : []),
   { at: INTRO + PLAY, text: `Два человека и ${c.orchestrators} ${plural(c.orchestrators, ORCH)}: ${num(totalHours)} ${plural(totalHours, ['час', 'часа', 'часов'])} работы агентов за две недели` },
 ].sort((a, b) => a.at - b.at)
+// at least 6 s on every beat before the last, so a beat that the data puts late still gets read
+const BEATS = RAW_BEATS.map((b) => ({ ...b }))
+for (let i = 1; i < BEATS.length - 1; i++) BEATS[i].at = Math.min(Math.max(BEATS[i].at, BEATS[i - 1].at + 6000), INTRO + PLAY - 6000 * (BEATS.length - 1 - i))
 
 const { t } = useDemoClock('swarm', DURATION, BEATS.map((b) => b.at))
 
@@ -201,6 +206,11 @@ const frame = computed(() => {
       <template v-for="(name, r) in data.runtimes" :key="name">
         <rect x="0" :y="frames[0].y + HEAD + 70 + r * 16" width="10" height="10" rx="2" :class="VENDOR[r]" />
         <text x="16" :y="frames[0].y + HEAD + 79 + r * 16" class="t-sec small">{{ name }}</text>
+      </template>
+      <template v-if="people">
+        <rect x="4" :y="frames[0].y + HEAD + 118" width="2" height="12" class="pin" />
+        <text x="16" :y="frames[0].y + HEAD + 127" class="small t-lime">человек</text>
+        <text x="16" :y="frames[0].y + HEAD + 141" class="small t-lime">написал</text>
       </template>
       <path v-for="(d, r) in frame.orch" :key="'o' + r" :d="d" :class="VENDOR[r]" />
       <path v-for="(d, r) in frame.sub" :key="'s' + r" :d="d" :class="[VENDOR[r], 'sub']" />

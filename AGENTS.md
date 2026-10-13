@@ -45,6 +45,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run diagrams` | gallery of all stage diagrams | http://localhost:3030 |
 | `npm run demos` | the in-slide demo prototypes (`slides/demos.md`): → starts a demo, → pauses and resumes, ← rewinds a beat, R restarts (`docs/demos.md`) | http://localhost:3030 |
 | `node .scripts/demo-run.mjs --repo <dir> --epic <EPIC> --session <orchestrator.jsonl>` | demo 1's data from one epic's board logs, run ledgers and the orchestrator's session: anonymous ids, no names or text | `slides/demo/run.json` |
+| `node .scripts/static-demos.mjs <url of a served build> [deck.md]` | the live demos in the static build, as the release HTML plays them: start, pause, rewind, restart, two tabs of one browser in step (also in CI, after the deck's verify) | stdout |
 | `node .scripts/demo-frames.mjs --video` | a demo in headless Chromium: frames at fixed moments and a video of the autoplay (also in CI, artifact `demo-frames`) | `.temp/demo-frames/` |
 | `npm run theme:rwb-tech`, `theme:rwb-minimal` | theme showcases | http://localhost:3030 |
 | `.scripts/check-recording.sh <file>` | a demo recording has video, an audio track, and the track is not silence | stdout |

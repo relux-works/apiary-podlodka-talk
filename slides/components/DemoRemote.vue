@@ -50,7 +50,7 @@ const RAW_BEATS = [
   { at: first((d) => d.letter), text: 'Задание приходит письмом: подпись проверяют и у нас, и у донора' },
   { at: first((d) => d.refused), text: 'Инструменты работают у нас, но сборка и тесты в рабочем месте запрещены' },
   { at: first((d) => d.down?.[0] ?? null), text: 'Связь оборвалась: донор сам переподключается, вызовы не повторяются' },
-  { at: first((d) => d.rework?.[0] ?? null), text: 'Код уходит только выгрузкой: ревью у нас, по замечаниям — доработка' },
+  { at: first((d) => d.export1), text: 'Код уходит только выгрузкой: ревью у нас, по замечаниям — доработка' },
   { at: first((d) => d.removed), text: 'Вывод из работы: дом и пользователь удалены, сертификат отозван' },
   { at: INTRO + PLAY, text: 'Обе среды защищены: у нас ни одного исходящего соединения, у донора — свои ключи и подписка' },
 ].sort((a, b) => a.at - b.at)
@@ -69,14 +69,14 @@ const pad = (n: number, max: number) => { const s = String(n), m = String(Math.m
 const OURS = [
   { at: first((d) => d.user), text: 'ноль исходящих, даже loopback' },
   { at: first((d) => d.refused), text: 'только разрешённые команды' },
-  { at: first((d) => d.admit), text: 'гранты: свой тред, свой ящик, срок' },
+  { at: first((d) => d.admit), text: 'гранты: свой тред, со сроком' },
   { at: first((d) => d.removed), text: 'дом и пользователь удаляются' },
 ]
 const THEIRS = [
-  { at: first((d) => d.keys), text: 'init — только человек, ключи у донора' },
-  { at: first((d) => d.letter), text: 'lockdown: своих инструментов нет, веба нет' },
-  { at: first((d) => d.letter) + 1500, text: 'модель на своей подписке' },
-  { at: first((d) => d.down?.[0] ?? null), text: 'к донору — ни одного соединения' },
+  { at: first((d) => d.keys), text: 'init — только человек' },
+  { at: first((d) => d.keys) + 600, text: 'ключи не покидают донора' },
+  { at: first((d) => d.letter), text: 'lockdown, веб выключен' },
+  { at: first((d) => d.down?.[0] ?? null), text: 'к донору не подключаемся' },
 ]
 
 const frame = computed(() => {
@@ -164,7 +164,7 @@ const frame = computed(() => {
 .demo-remote .join { fill: var(--rwb-lilac); }
 .demo-remote .think { fill: var(--rwb-sec-card); }
 .demo-remote .down { fill: var(--rwb-orange); }
-.demo-remote .export { fill: var(--rwb-purple); }
+.demo-remote .export { fill: var(--demo-codex); }
 .demo-remote .user { fill: var(--rwb-purple); }
 .demo-remote .retiring { fill: var(--rwb-dim); }
 .demo-remote .m-no { fill: var(--rwb-orange); }

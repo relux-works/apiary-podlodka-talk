@@ -65,8 +65,10 @@ jobs:
       - name: Demo frames and video
         if: always()
         run: |
-          node .scripts/demo-frames.mjs --deck slides/demos.md --slide 2 --port 8097 --video --out .temp/demo-frames
-          node .scripts/contact-sheet.mjs .temp/demo-frames 2
+          for s in 2 3; do
+            node .scripts/demo-frames.mjs --deck slides/demos.md --slide $s --port 8097 --video --out .temp/demo-frames/slide-$s
+            node .scripts/contact-sheet.mjs .temp/demo-frames/slide-$s 2
+          done
 
       - uses: actions/upload-artifact@v7
         with:

@@ -48,7 +48,16 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
   - The notes' line «человек появляется только в начале и в конце» does not hold for this run.
   - Alexey's tetris run may fit it better. Swap the data with one run of the script when it is available.
 
-## Demo 2: «Оркестраторы в Matrix» (to build)
+## Demo 2: the swarm at scale (prototype, 13.10)
+
+`slides/components/DemoSwarm.vue`, data from `.scripts/demo-swarm.mjs` over the private sessions database of `.scripts/agent-hours.mjs --db` (anonymous lanes into `slides/demo/swarm.json`). Ivan, 13.10: «показать работу нашего роя… где больше 20 оркестраторов… в похожем стиле, но так, чтобы был понятен масштаб».
+
+- **Lanes.** One per orchestrator, that is a project directory on a machine with at least an hour of interactive work in the window, grouped in a frame per machine. The bar colour is the runtime: Claude Code white, Codex lilac, Muse purple. A lime mark at the playhead means busy right now; the number at the right of a frame counts them.
+- **River.** Orchestrators (purple) and subagents (lilac) busy in each 10-minute slot; the peak is marked.
+- **Beats.** The machines and the number of orchestrators; what a lane is; the peak; the subagents and the board's runs; two people against the agents' hours.
+- **Prototype data** (29.09–12.10, mini and ivmbp): 49 orchestrators, peak 27 at once, subagents up to 36, 2 213 board runs. m1max joins when Alexey's keeper sends its numbers; Matrix traffic as arcs between lanes when an export of all a2a rooms exists.
+
+## Demo 2: «Оркестраторы в Matrix» (earlier plan)
 
 Planned in the same style. Three machines as frames, with orchestrators as points inside. Messages fly as comets: lilac for requests and answers, lime for decisions, orange for questions to a human, which wait in a queue at the person. Subagent spawns show as sparks. A three-week timeline with days and nights runs along the bottom.
 

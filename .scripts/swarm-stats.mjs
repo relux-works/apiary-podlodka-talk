@@ -45,14 +45,16 @@ function sessionsView(lo, hi) {
   }
   const lanesBy = (min) => { const o = {}; for (const [k, h] of v.lanes) if (h >= min) { const host = k.split('\u0000')[0]; o[host] = (o[host] || 0) + 1 } return o }
   const pack = (g) => ({ sessions: g.sessions.size, sumH: r1(g.sum), wallH: r1(union(g.iv)), byRuntime: Object.fromEntries(Object.entries(g.byRuntime).map(([k, x]) => [k, { sessions: x.sessions.size, sumH: r1(x.sum) }])) })
-  // concurrency per 10 minutes
-  const n = Math.ceil((hi - lo) / SLOT), co = new Array(n).fill(0), cw = new Array(n).fill(0)
+  // concurrency per 10 minutes: distinct orchestrators (lanes), subagent sessions
+  const n = Math.ceil((hi - lo) / SLOT), cs = Array.from({ length: n }, () => new Set()), cw = new Array(n).fill(0)
   for (const r of rows) {
     const a = Math.max(r.a, lo), b = Math.min(r.b, hi)
     if (b <= a) continue
-    const s = r.cohort === 'orchestrators' ? co : cw
-    for (let k = Math.floor((a - lo) / SLOT); k <= Math.min(n - 1, Math.floor((b - 1 - lo) / SLOT)); k++) s[k]++
+    for (let k = Math.floor((a - lo) / SLOT); k <= Math.min(n - 1, Math.floor((b - 1 - lo) / SLOT)); k++) {
+      if (r.cohort === 'orchestrators') cs[k].add(`${r.host}\u0000${r.project}`); else cw[k]++
+    }
   }
+  const co = cs.map((x) => x.size)
   const peak = (s) => { let k = 0; s.forEach((x, i) => { if (x > s[k]) k = i }); return { n: s[k], at: new Date(lo + k * SLOT).toISOString() } }
   const median = (s) => s.slice().sort((a, b) => a - b)[Math.floor(s.length / 2)]
   return {
@@ -72,6 +74,18 @@ function runsView(lo, hi, jsonFile) {
     for (const r of Array.isArray(j) ? j : [j]) for (const [a, b] of r.cohorts.runs.intervals) if (a >= lo && a < hi) { other++; otherH += (b - a) / H }
   }
   return { total: mini.length + other, mini: mini.length, other, rolesMini: byRole, runtimesMini: byRuntime, sumH: r1(mini.reduce((s, x) => s + (x.b - x.a) / H, 0) + otherH) }
+}
+
+// people: the moments a person wrote into an orchestrator (agent-hours --db, prompts)
+function peopleView(lo, hi) {
+  let rows = []
+  try { rows = db.prepare('SELECT s.host, p.ts_ms t FROM prompts p JOIN sessions s ON s.id = p.session_id WHERE p.ts_ms >= ? AND p.ts_ms < ? ORDER BY p.ts_ms').all(lo, hi) } catch { return null }
+  let gap = 0, gapAt = 0
+  for (let i = 1; i < rows.length; i++) if (rows[i].t - rows[i - 1].t > gap) { gap = rows[i].t - rows[i - 1].t; gapAt = rows[i - 1].t }
+  const byHost = {}
+  for (const r of rows) byHost[r.host] = (byHost[r.host] || 0) + 1
+  const days = Math.round((hi - lo) / 86400e3)
+  return { prompts: rows.length, byHost, perDay: r1(rows.length / days), longestGapH: Math.round((gap / H) * 10) / 10, longestGapFrom: gapAt ? new Date(gapAt).toISOString() : null }
 }
 
 function messagesView(file, lo, hi) {
@@ -98,7 +112,7 @@ function messagesView(file, lo, hi) {
   return { total, lowerBound: true, agents: { ivan: agents.ivan.size, alexey: agents.alexey.size }, bySide, cross, crossFrom, byKind, perDayAvg: r1(total / 14), busiestDay: busiest }
 }
 
-const two = { window: [from, to], ...sessionsView(from, to), runs: runsView(from, to, one('--runs-json')), messages: one('--a2a') ? messagesView(one('--a2a'), from, to) : null }
+const two = { window: [from, to], ...sessionsView(from, to), runs: runsView(from, to, one('--runs-json')), people: peopleView(from, to), messages: one('--a2a') ? messagesView(one('--a2a'), from, to) : null }
 const long = { window: [since, to], ...sessionsView(since, to), runs: runsView(since, to, one('--runs-json-long')) }
 const out = { about: 'Swarm statistics for the talk, aggregates only; .scripts/swarm-stats.mjs. Machines: those in the sessions database (m1max joins with its own numbers). Messages are a lower bound: two long a2a threads are truncated in the export and rooms outside the exporters\' membership are missing.', twoWeeks: two, sinceJuly: long }
 fs.writeFileSync(one('--out', 'slides/demo/stats.json'), JSON.stringify(out, null, 1))
@@ -112,5 +126,6 @@ for (const [name, v] of [['two weeks', two], ['since July', long]]) {
   console.log(`subagents: sessions ${s.sessions}; ${s.sumH} h sum, ${s.wallH} h wall; peak ${s.peak.n} at ${s.peak.at}, median ${s.median}`)
   console.log(`  by runtime: ${Object.entries(s.byRuntime).map(([k, x]) => `${k} ${x.sessions} sessions ${x.sumH} h`).join('; ')}`)
   console.log(`board runs: ${v.runs.total} (mini ${v.runs.mini}, other ${v.runs.other}); ${v.runs.sumH} h; roles on mini ${JSON.stringify(v.runs.rolesMini)}; runtimes on mini ${JSON.stringify(v.runs.runtimesMini)}`)
+  if (v.people) console.log(`people: ${v.people.prompts} prompts into orchestrators ${JSON.stringify(v.people.byHost)}, ${v.people.perDay} a day, longest gap ${v.people.longestGapH} h from ${v.people.longestGapFrom}`)
   if (v.messages) { const m = v.messages; console.log(`messages: at least ${m.total}; agents ${JSON.stringify(m.agents)}; by side ${JSON.stringify(m.bySide)}; across ${m.cross} ${JSON.stringify(m.crossFrom)}; per day ${m.perDayAvg}, busiest ${m.busiestDay}; kinds ${JSON.stringify(m.byKind)}`) }
 }

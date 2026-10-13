@@ -11,52 +11,52 @@
   ],
   "orchestrators": {
    "lanes1h": {
-    "mini": 32,
+    "mini": 14,
     "ivmbp": 17
    },
    "lanes10h": {
-    "mini": 12,
-    "ivmbp": 9
+    "ivmbp": 9,
+    "mini": 12
    },
-   "sessions": 287,
-   "sumH": 1345,
-   "wallH": 305,
+   "sessions": 72,
+   "sumH": 1291,
+   "wallH": 304,
    "byRuntime": {
-    "claude": {
-     "sessions": 44,
-     "sumH": 1248
-    },
     "codex": {
      "sessions": 27,
      "sumH": 42
     },
     "muse": {
-     "sessions": 216,
-     "sumH": 55
+     "sessions": 1,
+     "sumH": 1
+    },
+    "claude": {
+     "sessions": 44,
+     "sumH": 1248
     }
    },
    "peak": {
-    "n": 27,
+    "n": 26,
     "at": "2026-10-08T12:40:00.000Z"
    },
-   "median": 6
+   "median": 5
   },
   "subagents": {
-   "sessions": 6076,
-   "sumH": 1388,
-   "wallH": 290,
+   "sessions": 6291,
+   "sumH": 1443,
+   "wallH": 293,
    "byRuntime": {
-    "claude": {
-     "sessions": 753,
-     "sumH": 211
-    },
     "codex": {
      "sessions": 3087,
      "sumH": 842
     },
     "muse": {
-     "sessions": 2236,
-     "sumH": 335
+     "sessions": 2451,
+     "sumH": 390
+    },
+    "claude": {
+     "sessions": 753,
+     "sumH": 211
     }
    },
    "peak": {
@@ -80,6 +80,16 @@
     "claude": 124
    },
    "sumH": 2172
+  },
+  "people": {
+   "prompts": 882,
+   "byHost": {
+    "ivmbp": 415,
+    "mini": 467
+   },
+   "perDay": 63,
+   "longestGapH": 16,
+   "longestGapFrom": "2026-10-02T16:51:21.635Z"
   },
   "messages": {
    "total": 4858,
@@ -132,56 +142,56 @@
   ],
   "orchestrators": {
    "lanes1h": {
-    "mini": 35,
+    "mini": 17,
     "ivmbp": 52
    },
    "lanes10h": {
-    "mini": 16,
+    "mini": 15,
     "ivmbp": 28
    },
-   "sessions": 3024,
-   "sumH": 4410,
-   "wallH": 1453,
+   "sessions": 972,
+   "sumH": 3665,
+   "wallH": 1385,
    "byRuntime": {
-    "claude": {
-     "sessions": 196,
-     "sumH": 2103
-    },
     "codex": {
      "sessions": 758,
      "sumH": 1538
     },
     "muse": {
-     "sessions": 2070,
-     "sumH": 770
+     "sessions": 18,
+     "sumH": 25
+    },
+    "claude": {
+     "sessions": 196,
+     "sumH": 2103
     }
    },
    "peak": {
-    "n": 132,
-    "at": "2026-08-11T21:50:00.000Z"
+    "n": 26,
+    "at": "2026-10-08T12:40:00.000Z"
    },
    "median": 1
   },
   "subagents": {
-   "sessions": 15990,
-   "sumH": 3900,
-   "wallH": 1208,
+   "sessions": 18042,
+   "sumH": 4646,
+   "wallH": 1281,
    "byRuntime": {
-    "claude": {
-     "sessions": 3245,
-     "sumH": 925
-    },
     "codex": {
      "sessions": 8544,
      "sumH": 2630
     },
     "muse": {
-     "sessions": 4201,
-     "sumH": 345
+     "sessions": 6253,
+     "sumH": 1090
+    },
+    "claude": {
+     "sessions": 3245,
+     "sumH": 925
     }
    },
    "peak": {
-    "n": 60,
+    "n": 64,
     "at": "2026-08-22T17:10:00.000Z"
    },
    "median": 1

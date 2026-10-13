@@ -21,9 +21,18 @@
 // Cohorts:
 //   orchestrators  interactive sessions: Claude Code with an entrypoint other than sdk-*, Codex with any source
 //                  but "exec" and subagent threads (tb-sessiond hosts codex-tui sessions), Muse sessions that
-//                  ran in a terminal (their route facts name a terminal or a tmux pane)
-//   workers        headless sessions (Claude sdk-*, Codex exec, Muse without a terminal), Claude subagent
-//                  transcripts, Codex subagent threads and Muse subagents; task-board runs are their own row
+//                  ran in a terminal (their route facts name a terminal or a tmux pane) AND took two or more user
+//                  intents: a terminal session with a single prompt is a one-task run in a pane, a worker
+//   workers        headless sessions (Claude sdk-*, Codex exec, Muse without a terminal or with one prompt),
+//                  Claude subagent transcripts, Codex subagent threads and Muse subagents; task-board runs are
+//                  their own row
+//   prompts        (--db only) the moments a person wrote into an orchestrator: Claude Code user entries and Codex
+//                  user messages that open in Russian, and interrupts; Muse user intents. Left out as automatic: text
+//                  that starts with a tag (injected context, task notifications, commands, reminders) or a Markdown
+//                  heading (injected goal and instruction blocks), tb-sessiond's auto-continue nudge, English relays
+//                  and machine notices, and on this machine anything tb-sessiond delivered to a session it hosts (its
+//                  sessiond.log: goal activations, goal binds, notices) up to 10 seconds before. Exports carry no
+//                  tb-sessiond logs; there the text rules alone apply.
 //   landings       first-parent commits on the default branch of every local git repository, deduplicated
 //                  by commit hash across clones and worktrees (local refs, no fetch)
 // --orch-cwd / --worker-cwd (regex on the session cwd) override the cohort.
@@ -237,8 +246,50 @@ function intervalsOf(times) {
 
 // One session file, fed line by line. Codex lines start with their timestamp and Muse lines carry
 // recorded_at near the front, so only the metadata lines of those two are parsed as JSON.
+// automatic input: injected blocks, task notifications, commands, reminders, tb-sessiond's goal blocks and nudges
+const automatic = (text) => !text || text.startsWith('<') || text.startsWith('#') || text.startsWith('Caveat:') || text.startsWith('Continue unless you are blocked')
+// a person: Ivan and Alexey write to their orchestrators in Russian, and an interrupt is a person's key. On these
+// machines the English inputs are relays and machine notices: launch prompts of a role, «Relaunched by macmini-infra»,
+// «The Mac mini was rebooted… restored», «Login refreshed», task-board run notices, probes (checked on the mini, 13.10)
+const person = (text) => !automatic(text) && (text.startsWith('[Request interrupted') || /^[^A-Za-zА-Яа-яЁё]*[А-Яа-яЁё]/.test(text.slice(0, 60)))
+
+// tb-sessiond on this machine: which provider sessions it hosts, and when it delivered input to each
+const hostedInputs = (() => {
+  const root = path.join(HOME, 'Library/Application Support/task-board/session-manager')
+  const bySes = new Map(), out = new Map()
+  let dirs = []; try { dirs = fs.readdirSync(root) } catch { return out }
+  for (const h of dirs) {
+    let ses = []; try { ses = fs.readdirSync(path.join(root, h, 'sessions')) } catch {}
+    for (const sid of ses) {
+      try {
+        const r = JSON.parse(fs.readFileSync(path.join(root, h, 'sessions', sid, 'record.json'), 'utf8'))
+        const op = r.provider_host?.opaque || {}
+        const pid = op.thread_id || op.session_uuid
+        if (pid) bySes.set(r.session_id, pid)
+      } catch {}
+    }
+    let log = ''; try { log = fs.readFileSync(path.join(root, h, 'logs/sessiond.log'), 'utf8') } catch {}
+    for (const l of log.split('\n')) {
+      if (!/"event":"(goal_activation|goal_bind_acknowledged|session_notice_delivered)"/.test(l)) continue
+      let e; try { e = JSON.parse(l) } catch { continue }
+      const sid = e.fields?.session_id, t = Date.parse(e.timestamp)
+      if (!sid || Number.isNaN(t)) continue
+      if (!out.has(sid)) out.set(sid, [])
+      out.get(sid).push(t)
+    }
+  }
+  const byProvider = new Map()
+  for (const [sid, ts] of out) if (bySes.has(sid)) byProvider.set(bySes.get(sid), ts)
+  return byProvider
+})()
+const sessionIdOf = (file) => (/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:\.jsonl|\/session\.jsonl)$/.exec(file) || [])[1]
+const humanPrompts = (file, prompts) => {
+  const delivered = hostedInputs.get(sessionIdOf(file))
+  return delivered ? prompts.filter((t) => !delivered.some((d) => t >= d && t - d <= 10e3)) : prompts
+}
+
 function sessionParser(runtime) {
-  const s = { times: [], entry: null, cwd: null, source: null, sidechain: false, terminal: false }
+  const s = { times: [], entry: null, cwd: null, source: null, sidechain: false, terminal: false, intents: 0, prompts: [] }
   const museRecord = (r) => {
     const t = Number(r.recorded_at)
     if (t) s.times.push(t > 1e14 ? Math.floor(t / 1000) : t)
@@ -247,6 +298,7 @@ function sessionParser(runtime) {
       if (f.tmux_pane || f.terminal_title_identity) s.terminal = true
       if (typeof f.cwd === 'string') s.cwd = f.cwd
     } else if (r.payload_type === 'runtime.session.metadata' && !s.cwd && typeof r.payload?.record?.workspace_root === 'string') s.cwd = r.payload.record.workspace_root
+    else if (r.payload_type === 'runtime.user_intent.accepted') { s.intents++; if (t) s.prompts.push(t > 1e14 ? Math.floor(t / 1000) : t) }
   }
   const line = {
     claude(l) {
@@ -256,13 +308,25 @@ function sessionParser(runtime) {
       if (d.isSidechain === true) s.sidechain = true
       const t = Date.parse(d.timestamp)
       if (!Number.isNaN(t)) s.times.push(t)
+      if (d.type === 'user' && !d.isMeta && !d.isCompactSummary && !Number.isNaN(t)) {
+        const c = d.message?.content
+        if (Array.isArray(c) && c.some((b) => b?.type === 'tool_result')) return
+        const text = (Array.isArray(c) ? c.filter((b) => b?.type === 'text').map((b) => b.text).join(' ') : String(c || '')).trimStart()
+        if (person(text)) s.prompts.push(t)
+      }
     },
     codex(l) {
       let t = l.startsWith('{"timestamp":"') ? Date.parse(l.slice(14, l.indexOf('"', 14))) : NaN
-      if (Number.isNaN(t) || l.slice(0, 120).includes('"type":"session_meta"')) {
+      const head = l.slice(0, 160)
+      const userMsg = head.includes('"type":"response_item"') && head.includes('"role":"user"')
+      if (Number.isNaN(t) || head.includes('"type":"session_meta"') || userMsg) {
         let d; try { d = JSON.parse(l) } catch { return }
         if (Number.isNaN(t)) t = Date.parse(d.timestamp)
         if (d.type === 'session_meta' && d.payload) { s.source = d.payload.source; if (typeof d.payload.cwd === 'string') s.cwd = d.payload.cwd }
+        if (userMsg && !Number.isNaN(t)) {
+          const text = (d.payload?.content || []).map((b) => b?.text || '').join(' ').trimStart()
+          if (person(text)) s.prompts.push(t)
+        }
       }
       if (!Number.isNaN(t)) s.times.push(t)
     },
@@ -275,7 +339,11 @@ function sessionParser(runtime) {
         return
       }
       const m = /"recorded_at":(\d{12,17})/.exec(head)
-      if (m) { const t = Number(m[1]); s.times.push(t > 1e14 ? Math.floor(t / 1000) : t) }
+      if (m) {
+        const t = Number(m[1]), ms = t > 1e14 ? Math.floor(t / 1000) : t
+        s.times.push(ms)
+        if (head.includes('"payload_type":"runtime.user_intent.accepted"')) { s.intents++; s.prompts.push(ms) }
+      }
     },
   }[runtime]
   return { line, s }
@@ -285,7 +353,7 @@ function cohortOf(s, file, runtime) {
   if (s.cwd && orchRe && orchRe.test(s.cwd)) return 'orchestrators'
   if (s.cwd && workerRe && workerRe.test(s.cwd)) return 'workers'
   if (runtime === 'claude') return file.includes('/subagents/') || s.sidechain || /^sdk/.test(s.entry || '') ? 'workers' : 'orchestrators'
-  if (runtime === 'muse') return file.includes('/subagent/') || !s.terminal ? 'workers' : 'orchestrators'
+  if (runtime === 'muse') return file.includes('/subagent/') || !s.terminal || s.intents < 2 ? 'workers' : 'orchestrators'
   return s.source === 'exec' || (s.source && typeof s.source === 'object') ? 'workers' : 'orchestrators'
 }
 const kindOf = (s, runtime) => runtime === 'claude' ? s.entry : runtime === 'codex' ? (typeof s.source === 'object' && s.source ? 'subagent' : s.source) : (s.terminal ? 'terminal' : 'headless')
@@ -310,18 +378,24 @@ if (one('--db')) {
     CREATE TABLE IF NOT EXISTS runs (host TEXT NOT NULL, run_id TEXT NOT NULL, repo TEXT, task_id TEXT, role TEXT, model TEXT, effort TEXT,
       runtime TEXT, started_ms INTEGER, ended_ms INTEGER, status TEXT, caller TEXT, PRIMARY KEY (host, run_id));
     CREATE TABLE IF NOT EXISTS commits (hash TEXT PRIMARY KEY, repo TEXT, host TEXT, committed_ms INTEGER);
-    CREATE TABLE IF NOT EXISTS loads (host TEXT, source TEXT, since_ms INTEGER, until_ms INTEGER, loaded_at TEXT, notes TEXT);`)
+    CREATE TABLE IF NOT EXISTS loads (host TEXT, source TEXT, since_ms INTEGER, until_ms INTEGER, loaded_at TEXT, notes TEXT);
+    CREATE TABLE IF NOT EXISTS prompts (session_id INTEGER NOT NULL, ts_ms INTEGER NOT NULL);
+    CREATE INDEX IF NOT EXISTS prompts_session ON prompts (session_id);`)
   const delIv = db.prepare('DELETE FROM intervals WHERE session_id = (SELECT id FROM sessions WHERE host = ? AND runtime = ? AND file = ?)')
   const upS = db.prepare(`INSERT INTO sessions (host, runtime, cohort, kind, project, file, first_ms, last_ms, busy_ms, events) VALUES (?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT (host, runtime, file) DO UPDATE SET cohort = excluded.cohort, kind = excluded.kind, project = excluded.project,
     first_ms = excluded.first_ms, last_ms = excluded.last_ms, busy_ms = excluded.busy_ms, events = excluded.events RETURNING id`)
   const insIv = db.prepare('INSERT INTO intervals (session_id, start_ms, end_ms) VALUES (?,?,?)')
+  const delPr = db.prepare('DELETE FROM prompts WHERE session_id = (SELECT id FROM sessions WHERE host = ? AND runtime = ? AND file = ?)')
+  const insPr = db.prepare('INSERT INTO prompts (session_id, ts_ms) VALUES (?,?)')
   let pending = 0
   db.exec('BEGIN')
   put = (h, runtime, file, s, cohort, iv) => {
     delIv.run(h, runtime, file)
+    delPr.run(h, runtime, file)
     const { id } = upS.get(h, runtime, cohort, kindOf(s, runtime) ?? null, s.cwd ? path.basename(s.cwd) : null, file, iv[0][0], iv[iv.length - 1][1], iv.reduce((x, [a, b]) => x + b - a, 0), s.times.length)
     for (const [a, b] of iv) insIv.run(id, a, b)
+    if (cohort === 'orchestrators') for (const t of humanPrompts(file, s.prompts)) if (t >= since && t <= until) insPr.run(id, t)
     if (++pending >= 500) { db.exec('COMMIT'); db.exec('BEGIN'); pending = 0 }
   }
 }

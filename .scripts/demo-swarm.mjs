@@ -80,18 +80,27 @@ const merge = (iv) => {
 }
 for (const l of kept) { l.o = merge(l.o); l.s = merge(l.s) }
 const sec = (iv) => iv.map(([a, b, r]) => [Math.round((a - from) / 1000), Math.round((b - from) / 1000), r])
+// people: the moments a person wrote into an orchestrator (agent-hours --db, prompts), on its lane and per 30 minutes
+const prompts = (() => { try { return db.prepare(`SELECT s.host, s.project, s.file, p.ts_ms t FROM prompts p JOIN sessions s ON s.id = p.session_id WHERE p.ts_ms >= ? AND p.ts_ms < ? ORDER BY p.ts_ms`).all(from, to) } catch { return [] } })()
+for (const p of prompts) { const k = keyOf(p); if (keptKeys.has(k)) (lanes.get(k).h ||= []).push(Math.round((p.t - from) / 1000)) }
+const HBIN = 1800e3, human = new Array(Math.ceil((to - from) / HBIN)).fill(0)
+for (const p of prompts) human[Math.floor((p.t - from) / HBIN)]++
+let longestGap = 0
+for (let i = 1; i < prompts.length; i++) longestGap = Math.max(longestGap, prompts[i].t - prompts[i - 1].t)
 const hosts = [...new Set(kept.map((l) => l.host))].sort((a, b) => kept.filter((l) => l.host === b).length - kept.filter((l) => l.host === a).length)
-const laneOut = hosts.flatMap((h) => kept.filter((l) => l.host === h).sort((p, q) => q.busy - p.busy).map((l) => ({ host: h, o: sec(l.o), s: sec(l.s) })))
+const laneOut = hosts.flatMap((h) => kept.filter((l) => l.host === h).sort((p, q) => q.busy - p.busy).map((l) => ({ host: h, o: sec(l.o), s: sec(l.s), h: l.h || [] })))
 
-// busy orchestrators and subagents per 10-minute slot
+// busy per 10-minute slot: distinct orchestrators (two sessions of one count once) and subagent sessions
 const n = Math.ceil((to - from) / SLOT)
-const orch = new Array(n).fill(0), work = new Array(n).fill(0)
+const orchSets = Array.from({ length: n }, () => new Set()), work = new Array(n).fill(0)
 for (const r of rows) {
   const [a, b] = clip(r.a, r.b)
   if (b <= a) continue
-  const s = r.cohort === 'orchestrators' ? orch : work
-  for (let k = Math.floor((a - from) / SLOT); k <= Math.min(n - 1, Math.floor((b - 1 - from) / SLOT)); k++) s[k]++
+  for (let k = Math.floor((a - from) / SLOT); k <= Math.min(n - 1, Math.floor((b - 1 - from) / SLOT)); k++) {
+    if (r.cohort === 'orchestrators') orchSets[k].add(keyOf(r)); else work[k]++
+  }
 }
+const orch = orchSets.map((x) => x.size)
 
 // task-board run starts: the database's ledgers plus machines given as JSON
 const runs = db.prepare('SELECT started_ms a FROM runs WHERE started_ms >= ? AND started_ms < ?').all(from, to).map((x) => x.a)
@@ -144,6 +153,7 @@ const data = {
   work,
   runs: runs.map((a) => Math.round((a - from) / 1000)),
   matrix,
+  human: { bin: HBIN, series: human, total: prompts.length, longestGapH: Math.round((longestGap / 3600e3) * 10) / 10 },
   counts: {
     orchestrators: all.filter((l) => l.busy >= 3600e3).length, // at least an hour of work
     shown: kept.length,

@@ -50,12 +50,19 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
 
 ## Demo 2: the swarm at scale (prototype, 13.10)
 
-`slides/components/DemoSwarm.vue`, data from `.scripts/demo-swarm.mjs` over the private sessions database of `.scripts/agent-hours.mjs --db` (anonymous lanes into `slides/demo/swarm.json`). Ivan, 13.10: «показать работу нашего роя… где больше 20 оркестраторов… в похожем стиле, но так, чтобы был понятен масштаб».
+`slides/components/DemoSwarm.vue`, data from `.scripts/demo-swarm.mjs` over the private sessions database of `.scripts/agent-hours.mjs --db` and the a2a metadata export (anonymous lanes into `slides/demo/swarm.json`). Ivan, 13.10: «показать работу нашего роя… где больше 20 оркестраторов… в похожем стиле, но так, чтобы был понятен масштаб»; then: contrasting vendor colours, no near-empty orchestrators, the orchestrator and its subagents apart, and «не понятно в какие моменты было вмешательство человека».
 
-- **Lanes.** One per orchestrator, that is a project directory on a machine with at least an hour of interactive work in the window, grouped in a frame per machine. The bar colour is the runtime: Claude Code white, Codex lilac, Muse purple. A lime mark at the playhead means busy right now; the number at the right of a frame counts them.
-- **River.** Orchestrators (purple) and subagents (lilac) busy in each 10-minute slot; the peak is marked.
-- **Beats.** The machines and the number of orchestrators; what a lane is; the peak; the subagents and the board's runs; two people against the agents' hours.
-- **Prototype data** (29.09–12.10, mini and ivmbp): 49 orchestrators, peak 27 at once, subagents up to 36, 2 213 board runs. m1max joins when Alexey's keeper sends its numbers; Matrix traffic as arcs between lanes when an export of all a2a rooms exists.
+- **Lanes.** One per orchestrator with at least 10 h of work in the window, grouped in a frame per machine («12 из 14»). The top track is the orchestrator itself, the bottom track its subagents. Subagents are the board runs it launched, found through the run's caller session, and worker sessions in its project. The colour is the vendor. A lime mark at the playhead means busy now; a thin lime pin is a moment a person wrote to that orchestrator, and the pins stay as the history.
+- **People and Matrix.** Rows for the person (Ivan; Alexey with m1max's data), Ivan's agents, the messages between the sides, and Alexey's agents. Messages are counted per 30 minutes by kind: work grey, decisions lime, questions orange.
+- **River.** Distinct orchestrators (purple) and subagent sessions (lilac) busy in each 10-minute slot; the peak is marked.
+- **Beats.**
+  1. The swarm's size.
+  2. What a lane is.
+  3. The peak.
+  4. Ivan's and Alexey's agents writing to each other.
+  5. The person's pins and the longest stretch without one.
+  6. Two people against the agents' hours.
+- **Prototype data** (29.09–12.10, mini and ivmbp): 31 orchestrators with at least an hour, 21 lanes, peak 26 at once. Subagent sessions reach 36 at once, with 2 213 board runs. A person wrote 882 times, and the longest stretch without one is 16 h. Messages: at least 4 858 from 72 agents, 1 050 of them across the sides. Numbers and definitions: `docs/swarm-stats.md`.
 
 ## Demo 2: «Оркестраторы в Matrix» (earlier plan)
 

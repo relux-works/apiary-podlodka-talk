@@ -6,7 +6,9 @@
 //   субагенты; цвет — вендор (Claude Code янтарный, Codex голубой, Muse пурпурный); у бегунка — кто занят сейчас;
 // - Matrix: сообщения агентов Ивана и агентов Алексея за каждые полчаса по видам (рабочие серые, решения лаймовые,
 //   вопросы оранжевые) и между ними — что одна сторона писала другой;
-// - река: сколько оркестраторов и субагентов заняты в каждые десять минут, пик отмечен.
+// - люди: тонкая лаймовая отметка на строке — человек написал этому оркестратору (по-русски или прервал; служебные
+//   вводы, пересылки и доставки tb-sessiond не в счёт), отдельная строка — его сообщения по получасам;
+// - река: сколько разных оркестраторов и сессий субагентов заняты в каждые десять минут, пик отмечен.
 // Данные: slides/demo/swarm.json (.scripts/demo-swarm.mjs по закрытой базе сессий и выгрузке метаданных a2a; строки
 // анонимные, без имён проектов и текстов). Управление и часы — как у демо 1 (slides/demo/clock.ts, docs/demos.md).
 import { computed } from 'vue'
@@ -19,12 +21,15 @@ const [W0, W1] = data.window as [number, number]
 const SPAN = (W1 - W0) / 1000 // seconds
 const c = data.counts
 const mx = data.matrix as null | { bin: number, sides: number[][][], cross: number[], total: number, crossTotal: number, agents: number[] }
+const people = (data as any).human as null | { bin: number, series: number[], total: number, longestGapH: number }
 
 // ---- layout ---------------------------------------------------------------------------------------------------------
 const W = 908, AX = 100, AW = 760, TOP = 48
 const VENDOR = ['v-claude', 'v-codex', 'v-muse']
 const RIVER_H = 32, RIVER_Y = 392 - RIVER_H
-const MX_ROW = 13, MX_GAP = 3, MX_Y = mx ? RIVER_Y - 10 - (14 + 3 * MX_ROW + 2 * MX_GAP) : RIVER_Y
+const MX_ROW = 13, MX_GAP = 3
+const MX_N = (mx ? 3 : 0) + (people ? 1 : 0) // rows: a person, Ivan's agents, between, Alexey's agents
+const MX_Y = MX_N ? RIVER_Y - 10 - (14 + MX_N * MX_ROW + (MX_N - 1) * MX_GAP) : RIVER_Y
 const HEAD = 16, FRAME_GAP = 8
 const laneCount = data.lanes.length
 const pitch = Math.min(11, (MX_Y - 8 - TOP - data.hosts.length * (HEAD + FRAME_GAP)) / laneCount)
@@ -61,20 +66,20 @@ const BEATS = [
   { at: 0, text: `Две недели нашего роя: ${c.orchestrators} ${plural(c.orchestrators, ORCH)} на ${machines}${mx ? `, ${agents} ${plural(agents, ['агент', 'агента', 'агентов'])} в Matrix` : ''}` },
   { at: INTRO, text: 'Строка — оркестратор: сверху он сам, снизу его субагенты; цвет — вендор' },
   { at: peakAt(c.peakOrch.slot), text: `Пик: ${c.peakOrch.n} ${plural(c.peakOrch.n, ORCH)} заняты в одни десять минут` },
-  ...(mx ? [{ at: Math.max(peakAt(c.peakOrch.slot) + 6000, INTRO + PLAY * 0.74), text: `Агенты Ивана и Алексея пишут друг другу напрямую: больше ${num(Math.floor(mx.crossTotal / 100) * 100)} сообщений` }] : []),
+  ...(mx ? [{ at: Math.max(peakAt(c.peakOrch.slot) + 6000, INTRO + PLAY * 0.66), text: `Агенты Ивана и Алексея пишут друг другу напрямую: больше ${num(Math.floor(mx.crossTotal / 100) * 100)} сообщений` }] : []),
+  ...(people ? [{ at: INTRO + PLAY * 0.84, text: `Лаймовые отметки — человек написал оркестратору: ${num(people.total)} раз, самый долгий перерыв ${String(people.longestGapH).replace('.', ',')} ч` }] : []),
   { at: INTRO + PLAY, text: `Два человека и ${c.orchestrators} ${plural(c.orchestrators, ORCH)}: ${num(totalHours)} ${plural(totalHours, ['час', 'часа', 'часов'])} работы агентов за две недели` },
 ].sort((a, b) => a.at - b.at)
 
 const { t } = useDemoClock('swarm', DURATION, BEATS.map((b) => b.at))
 
 // ---- Matrix: bars per 30 minutes ----------------------------------------------------------------------------------
-const MX_ROWS = mx
-  ? [
-      { key: 'ivan', label: `Ивана · ${mx.agents[0]}`, y: MX_Y + 14 },
-      { key: 'cross', label: 'между', y: MX_Y + 14 + MX_ROW + MX_GAP },
-      { key: 'alexey', label: `Алексея · ${mx.agents[1]}`, y: MX_Y + 14 + 2 * (MX_ROW + MX_GAP) },
-    ]
-  : []
+const MX_ROWS = [
+  ...(people ? [{ key: 'person', label: 'Иван', y: 0 }] : []),
+  ...(mx ? [{ key: 'ivan', label: 'агенты Ивана', y: 0 }, { key: 'cross', label: 'между', y: 0 }, { key: 'alexey', label: 'агенты Алексея', y: 0 }] : []),
+].map((r, i) => ({ ...r, y: MX_Y + 14 + i * (MX_ROW + MX_GAP) }))
+const rowOf = (key: string) => MX_ROWS.find((r) => r.key === key)!
+const peopleMax = people ? Math.max(1, ...people.series) : 1
 const mxMax = mx ? Math.max(1, ...mx.sides.flatMap((s) => s[0].map((_, k) => s[0][k] + s[1][k] + s[2][k]))) : 1
 const crossMax = mx ? Math.max(1, ...mx.cross) : 1
 
@@ -113,7 +118,7 @@ const frame = computed(() => {
     for (let k = 0; k <= Math.min(lastBin, mx.cross.length - 1); k++) {
       if (now <= 0) break
       const x = xOfSec((k * mx.bin) / 1000)
-      for (const [si, row] of [[0, MX_ROWS[0]], [1, MX_ROWS[2]]] as const) {
+      for (const [si, row] of [[0, rowOf('ivan')], [1, rowOf('alexey')]] as const) {
         let base = row.y + MX_ROW
         for (const [g, key] of [[0, 'work'], [1, 'decision'], [2, 'question']] as const) {
           const n = mx.sides[si][g][k]
@@ -128,8 +133,24 @@ const frame = computed(() => {
       if (mx.cross[k]) {
         crossN += mx.cross[k]
         const h = Math.max(1.5, Math.sqrt(mx.cross[k] / crossMax) * MX_ROW)
-        bars.cross += rect(x, x + bw, MX_ROWS[1].y + (MX_ROW - h) / 2, h)
+        bars.cross += rect(x, x + bw, rowOf('cross').y + (MX_ROW - h) / 2, h)
       }
+    }
+  }
+  // people: a mark on the orchestrator's lane, and the person's row per 30 minutes
+  let pins = '', personBars = '', humanN = 0
+  if (people) {
+    data.lanes.forEach((lane, i) => {
+      const y = laneY(i)
+      for (const t of ((lane as any).h || []) as number[]) { if (t > now) break; const x = xOfSec(t); pins += rect(x - 0.6, x + 0.6, y - 1, pitch - 0.5) }
+    })
+    const bw = Math.max(0.9, (people.bin / 1000 / SPAN) * AW - 0.3), y0 = rowOf('person').y
+    for (let k = 0; k <= Math.min(Math.floor((now * 1000) / people.bin), people.series.length - 1); k++) {
+      const n = people.series[k]
+      if (!n || now <= 0) continue
+      humanN += n
+      const h = Math.max(1.5, Math.sqrt(n / peopleMax) * MX_ROW)
+      personBars += rect(xOfSec((k * people.bin) / 1000), xOfSec((k * people.bin) / 1000) + bw, y0 + MX_ROW - h, h)
     }
   }
   const perFrame = frames.map((f) => liveO.filter((y) => y >= f.y && y < f.y + HEAD + f.n * pitch).length)
@@ -147,6 +168,9 @@ const frame = computed(() => {
     runsN: data.runs.filter((s) => s <= now).length,
     msgs,
     crossN,
+    pins,
+    personBars,
+    humanN,
     bars,
     riverO: area(data.orch),
     riverW: area(data.work),
@@ -161,7 +185,7 @@ const frame = computed(() => {
   <svg class="demo-swarm demo-live" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="908" y="17" text-anchor="end" class="clock">{{ frame.clock }}</text>
-    <text x="0" y="36" class="t-sec small">сейчас заняты: оркестраторов <tspan class="v">{{ frame.liveO.length }}</tspan> · субагентов <tspan class="v">{{ frame.workNow }}</tspan> · запусков доски <tspan class="v">{{ num(frame.runsN) }}</tspan><tspan v-if="mx"> · сообщений <tspan class="v">{{ num(frame.msgs) }}</tspan></tspan></text>
+    <text x="0" y="36" class="t-sec small">сейчас заняты: оркестраторов <tspan class="v">{{ frame.liveO.length }}</tspan> · субагентов <tspan class="v">{{ frame.workNow }}</tspan> · запусков доски <tspan class="v">{{ num(frame.runsN) }}</tspan><tspan v-if="mx"> · сообщений агентов <tspan class="v">{{ num(frame.msgs) }}</tspan></tspan><tspan v-if="people"> · человек написал <tspan class="t-lime">{{ num(frame.humanN) }}</tspan></tspan></text>
 
     <g class="lanes" :style="{ opacity: frame.shown }">
       <line v-for="d in days" :key="d.label" :x1="d.x" :y1="TOP" :x2="d.x" :y2="RIVER_Y + RIVER_H" class="day" />
@@ -180,22 +204,25 @@ const frame = computed(() => {
       </template>
       <path v-for="(d, r) in frame.orch" :key="'o' + r" :d="d" :class="VENDOR[r]" />
       <path v-for="(d, r) in frame.sub" :key="'s' + r" :d="d" :class="[VENDOR[r], 'sub']" />
+      <path :d="frame.pins" class="pin" />
       <rect v-for="(y, i) in frame.liveO" :key="'lo' + i" :x="frame.head - 1" :y="y - 0.5" width="4" :height="OH + 1" rx="1" class="live" />
       <rect v-for="(y, i) in frame.liveS" :key="'ls' + i" :x="frame.head - 1" :y="y" width="3" :height="SH" rx="1" class="live-sub" />
     </g>
 
-    <g v-if="mx" class="matrix">
-      <text :x="AX" :y="MX_Y + 10" class="t-head t-sec">СООБЩЕНИЯ В MATRIX · АГЕНТЫ</text>
+    <g v-if="MX_N" class="matrix">
+      <text :x="AX" :y="MX_Y + 10" class="t-head t-sec">ЛЮДИ И СООБЩЕНИЯ В MATRIX<tspan v-if="mx"> · АГЕНТОВ {{ mx.agents[0] }} И {{ mx.agents[1] }}</tspan></text>
       <text :x="W" :y="MX_Y + 10" text-anchor="end" class="small t-dim">рабочие · <tspan class="t-lime">решения</tspan> · <tspan class="t-orange">вопросы</tspan></text>
       <g v-for="row in MX_ROWS" :key="row.key">
-        <text :x="AX - 10" :y="row.y + MX_ROW - 2" text-anchor="end" class="small t-sec">{{ row.label }}</text>
+        <text x="0" :y="row.y + MX_ROW - 3" class="mx-label" :class="row.key === 'person' ? 't-lime' : 't-sec'">{{ row.label }}</text>
         <rect :x="AX" :y="row.y" :width="AW" :height="MX_ROW" rx="2" class="lane-bg" />
       </g>
       <path :d="frame.bars.work" class="mx-work" />
       <path :d="frame.bars.decision" class="mx-decision" />
       <path :d="frame.bars.question" class="mx-question" />
       <path :d="frame.bars.cross" class="mx-cross" />
-      <text :x="W" :y="MX_ROWS[1].y + MX_ROW - 2" text-anchor="end" class="lane-n">{{ num(frame.crossN) }}</text>
+      <path :d="frame.personBars" class="mx-person" />
+      <text v-if="people" :x="W" :y="rowOf('person').y + MX_ROW - 2" text-anchor="end" class="lane-n t-lime">{{ num(frame.humanN) }}</text>
+      <text v-if="mx" :x="W" :y="rowOf('cross').y + MX_ROW - 2" text-anchor="end" class="lane-n">{{ num(frame.crossN) }}</text>
     </g>
 
     <g class="river">
@@ -220,6 +247,7 @@ const frame = computed(() => {
 .demo-swarm text.clock { font-size: 15px; fill: var(--rwb-lilac); }
 .demo-swarm text.small { font-size: 12px; }
 .demo-swarm text.tiny { font-size: 10px; }
+.demo-swarm text.mx-label { font-size: 11px; }
 .demo-swarm .v, .demo-swarm tspan.v { fill: var(--rwb-txt); }
 .demo-swarm text.lane-n { font-size: 13px; fill: var(--rwb-txt); }
 .demo-swarm .lane-bg { fill: rgba(255, 255, 255, 0.035); }
@@ -234,6 +262,8 @@ const frame = computed(() => {
 .demo-swarm .mx-decision { fill: var(--rwb-lime); }
 .demo-swarm .mx-question { fill: var(--rwb-orange); }
 .demo-swarm .mx-cross { fill: var(--rwb-txt); }
+.demo-swarm .mx-person, .demo-swarm .pin { fill: var(--rwb-lime); }
+.demo-swarm text.t-lime, .demo-swarm tspan.t-lime { fill: var(--rwb-lime); }
 .demo-swarm .river-orch { fill: var(--rwb-purple); opacity: 0.9; }
 .demo-swarm .river-work { fill: var(--rwb-lilac); opacity: 0.55; }
 .demo-swarm .peak { fill: var(--rwb-lime); }

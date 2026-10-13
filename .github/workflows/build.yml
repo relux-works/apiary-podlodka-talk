@@ -44,6 +44,17 @@ jobs:
           mv .temp/audit .temp/audit-deck || true
           exit $rc
 
+      # The demos in the deck's static build, as the release HTML plays them: no dev
+      # server, the tabs of one browser follow each other (docs/run-the-deck.md).
+      # Runs before the next verify replaces .temp/dist-offline.
+      - name: Demos in the static build
+        run: |
+          python3 .scripts/serve-static.py 8096 .temp/dist-offline > /dev/null 2>&1 &
+          server=$!
+          for _ in $(seq 1 25); do curl -s -o /dev/null http://127.0.0.1:8096/ && break; sleep 0.2; done
+          rc=0; node .scripts/static-demos.mjs http://127.0.0.1:8096/ slides/slides.md || rc=$?
+          kill $server; exit $rc
+
       - name: Verify diagram gallery and theme showcases
         run: |
           check() {

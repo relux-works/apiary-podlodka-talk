@@ -7,7 +7,7 @@ For a speaker's laptop. The deck is Slidev; the two demos run inside their slide
 ```bash
 git clone git@github.com:relux-works/apiary-podlodka-talk.git
 cd apiary-podlodka-talk
-npm ci                 # Node 20 or newer; 24 is what CI uses
+npm ci                 # Node 24 as in CI, or 22.12+ or 20.19+ (what Vite 8 accepts)
 npm run dev            # opens http://localhost:3030
 ```
 
@@ -26,7 +26,13 @@ npm run dev            # opens http://localhost:3030
 
 Each release has the PDF and the static HTML: <https://github.com/relux-works/apiary-podlodka-talk/releases>.
 
-- **HTML.** Unzip it and open `index.html` in a browser. Clicks work, and the demos play in that browser; its tabs follow each other.
+- **HTML.** Unzip it, start a local server in that folder and open <http://localhost:8080>:
+
+  ```bash
+  python3 -m http.server 8080
+  ```
+
+  A double click on `index.html` gives a blank page: browsers do not load the deck's modules from `file://`. Clicks work, the presenter window is `http://localhost:8080/#/presenter/1`, and the demos play in that browser; its tabs follow each other (CI step «Demos in the static build»). The archive's `HOW_TO_RUN.md` says the same in Russian.
 - **PDF.** Every slide whole, with the demos at their last frame.
 
 ## Together on the shared server

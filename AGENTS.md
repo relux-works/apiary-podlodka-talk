@@ -46,7 +46,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run present` · `present:status` · `present:stop` | the deck's dev server in the background, localhost only, in present mode (a window that opens joins the live slide; titles «ЭКРАН» and «ЗАМЕТКИ»), for the shared clicker over SSH (`docs/shared-clicker.md`) | http://localhost:3030, `.temp/present/` |
 | `npm run join -- --host <mini> [--share]` | on a speaker's laptop: starts the deck on the mini if it is down, holds the SSH tunnel and reconnects it, opens «ЗАМЕТКИ» (and «ЭКРАН» with `--share`) | http://localhost:3030, `.temp/join/` |
 | `npm run check:sync` | the shared clicker in headless Chromium: windows follow each other, a new or reloaded window joins the live slide (also in CI) | stdout |
-| `npm run agent-hours -- --days 14 --json <host>.json` | busy hours of orchestrators and workers, task-board runs and commits on main on this machine; `-- --merge a.json b.json` sums machines | stdout, JSON |
+| `npm run agent-hours -- --days 14 --json <host>.json` | busy hours of orchestrators and workers (Claude Code, Codex with the tb-sessiond homes, Muse), task-board runs and commits on main on this machine. `--archive <export.tar.zst> --archive-host <name>` streams another machine's session export without extracting it; `--db <file>` writes a private SQLite database, `--report <file>` the table for any window; `--merge a.json b.json:runs,landings` sums machines | stdout, JSON, SQLite |
 
 ## Definition of done for a deck change
 

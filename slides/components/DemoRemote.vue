@@ -60,23 +60,23 @@ for (let i = 1; i < BEATS.length - 1; i++) BEATS[i].at = Math.min(Math.max(BEATS
 const { t } = useDemoClock('remote', DURATION, BEATS.map((b) => b.at))
 
 // ---- layout ---------------------------------------------------------------------------------------------------------
-const W = 908, AX = 92, AW = 700, LANE_Y = 74, PITCH = 24, TH = 8
+const W = 908, AX = 92, AW = 700, LANE_Y = 74, PITCH = 22, TH = 7
 const xOf = (ms: number) => AX + ((Math.min(ms, END) - INTRO) / (END - INTRO)) * AW
 const laneY = (k: number) => LANE_Y + k * PITCH
 // a growing count keeps the text after it in place: tabular figures plus an invisible head as wide as the largest value's
 const pad = (n: number, max: number) => { const s = String(n), m = String(Math.max(n, max)); return m.slice(0, m.length - s.length) }
 
 const OURS = [
-  { at: first((d) => d.user), text: 'ноль исходящих, даже loopback' },
-  { at: first((d) => d.refused), text: 'только разрешённые команды' },
-  { at: first((d) => d.admit), text: 'гранты: свой тред, со сроком' },
-  { at: first((d) => d.removed), text: 'дом и пользователь удаляются' },
+  { at: first((d) => d.admit), text: 'гранты: свой тред и ящик, со сроком' },
+  { at: first((d) => d.user), text: 'ноль исходящих соединений, даже loopback' },
+  { at: first((d) => d.refused), text: 'только разрешённые команды, без сборок и тестов' },
+  { at: first((d) => d.removed), text: 'дом и пользователь удаляются, без архива' },
 ]
 const THEIRS = [
-  { at: first((d) => d.keys), text: 'init — только человек' },
-  { at: first((d) => d.keys) + 600, text: 'ключи не покидают донора' },
-  { at: first((d) => d.letter), text: 'lockdown, веб выключен' },
-  { at: first((d) => d.down?.[0] ?? null), text: 'к донору не подключаемся' },
+  { at: first((d) => d.keys), text: 'init запускает только человек' },
+  { at: first((d) => d.keys) + 600, text: 'ключи не покидают машину донора' },
+  { at: first((d) => d.letter), text: 'lockdown: своих инструментов и веба нет' },
+  { at: first((d) => d.down?.[0] ?? null), text: 'к донору мы не подключаемся' },
 ]
 
 const frame = computed(() => {
@@ -124,7 +124,13 @@ const frame = computed(() => {
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="0" y="38" class="t-sec small status">рабочих мест сейчас <tspan class="pad">{{ pad(frame.live, N) }}</tspan><tspan class="v">{{ frame.live }}</tspan> · пользователей ОС создано <tspan class="pad">{{ pad(frame.created, N) }}</tspan><tspan class="v">{{ frame.created }}</tspan> · удалено <tspan class="pad">{{ pad(frame.removed, N) }}</tspan><tspan class="v">{{ frame.removed }}</tspan> · на ревью <tspan class="pad">{{ pad(frame.review, N) }}</tspan><tspan class="v">{{ frame.review }}</tspan> · приземлено <tspan class="pad">{{ pad(frame.landed, N) }}</tspan><tspan class="t-lime">{{ frame.landed }}</tspan></text>
 
-    <text :x="AX" y="62" class="t-head t-sec">СВЕРХУ — АГЕНТСКИЙ ЦИКЛ У ДОНОРА · СНИЗУ — НАШ ПОЛЬЗОВАТЕЛЬ ОС</text>
+    <g class="legend">
+      <rect :x="AX" y="54" width="10" height="8" rx="2" class="join" /><text :x="AX + 15" y="62" class="small t-sec">присоединение</text>
+      <rect :x="AX + 128" y="54" width="10" height="8" rx="2" class="think" /><text :x="AX + 143" y="62" class="small t-sec">модель думает у донора</text>
+      <rect :x="AX + 312" y="54" width="10" height="8" rx="2" class="export" /><text :x="AX + 327" y="62" class="small t-sec">выгрузка и ревью</text>
+      <rect :x="AX + 452" y="54" width="10" height="8" rx="2" class="user" /><text :x="AX + 467" y="62" class="small t-sec">наш пользователь ОС</text>
+      <rect :x="AX + 612" y="53" width="3" height="10" class="m-no" /><text :x="AX + 620" y="62" class="small t-sec">отказ</text>
+    </g>
     <g v-for="l in frame.lanes" :key="l.k">
       <text :x="AX - 12" :y="l.y + 13" text-anchor="end" class="small" :class="l.gone ? 't-dim' : 't-sec'">донор {{ l.k + 1 }}</text>
       <rect :x="AX" :y="l.y" :width="AW" :height="TH * 2 + 2" rx="3" class="lane-bg" />
@@ -135,20 +141,13 @@ const frame = computed(() => {
     </g>
     <line v-if="frame.playing" :x1="frame.head" :y1="LANE_Y - 4" :x2="frame.head" :y2="LANE_Y + N * PITCH - 4" class="head" />
 
-    <g class="legend">
-      <rect :x="AX" y="322" width="10" height="8" rx="2" class="join" /><text :x="AX + 15" y="330" class="small t-sec">присоединение</text>
-      <rect :x="AX + 128" y="322" width="10" height="8" rx="2" class="think" /><text :x="AX + 143" y="330" class="small t-sec">модель думает у донора</text>
-      <rect :x="AX + 312" y="322" width="10" height="8" rx="2" class="export" /><text :x="AX + 327" y="330" class="small t-sec">выгрузка и ревью</text>
-      <rect :x="AX + 452" y="322" width="10" height="8" rx="2" class="user" /><text :x="AX + 467" y="330" class="small t-sec">наш пользователь ОС</text>
-      <rect :x="AX + 612" y="321" width="3" height="10" class="m-no" /><text :x="AX + 620" y="330" class="small t-sec">отказ</text>
-    </g>
 
-    <rect x="0.75" y="342.75" width="446.5" height="70.5" rx="10" class="panel ours" />
-    <text x="14" y="361" class="t-head t-lilac">У НАС</text>
-    <text v-for="(o, i) in frame.ours" :key="o.text" :x="14 + (i % 2) * 216" :y="381 + Math.floor(i / 2) * 20" class="small" :class="o.on ? 'on' : 't-dim'">{{ o.on ? '✓' : '·' }} {{ o.text }}</text>
-    <rect x="460.75" y="342.75" width="446.5" height="70.5" rx="10" class="panel theirs" />
-    <text x="474" y="361" class="t-head t-sec">У ДОНОРА</text>
-    <text v-for="(o, i) in frame.theirs" :key="o.text" :x="474 + (i % 2) * 216" :y="381 + Math.floor(i / 2) * 20" class="small" :class="o.on ? 'on' : 't-dim'">{{ o.on ? '✓' : '·' }} {{ o.text }}</text>
+    <rect x="0.75" y="304.75" width="446.5" height="108.5" rx="10" class="panel ours" />
+    <text x="14" y="324" class="t-head t-lilac">У НАС</text>
+    <text v-for="(o, i) in frame.ours" :key="o.text" x="14" :y="344 + i * 18" class="small" :class="o.on ? 'on' : 't-dim'">{{ o.on ? '✓' : '·' }} {{ o.text }}</text>
+    <rect x="460.75" y="304.75" width="446.5" height="108.5" rx="10" class="panel theirs" />
+    <text x="474" y="324" class="t-head t-sec">У ДОНОРА</text>
+    <text v-for="(o, i) in frame.theirs" :key="o.text" x="474" :y="344 + i * 18" class="small" :class="o.on ? 'on' : 't-dim'">{{ o.on ? '✓' : '·' }} {{ o.text }}</text>
   </svg>
 </template>
 

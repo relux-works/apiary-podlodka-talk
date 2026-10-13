@@ -2,7 +2,7 @@
 
 Since 13.10 (Ivan): the demos run inside the deck, not in a separate window. «Один раз старт и далее в автономном режиме почти полностью, максимум несколько кликов с нашей стороны, чтобы сделать пояснения или отмотать назад частично». One press starts a demo; it then plays by itself to the end. Either speaker can pause it to explain, resume it, or rewind it by a beat.
 
-Prototypes live in `slides/demos.md` (`npm run demos`) until the speakers approve them; then each moves onto its demo slide in the deck. Demo 1 is a prototype (13.10); demo 2 is not built yet.
+Prototypes live in `slides/demos.md` (`npm run demos`) until the speakers approve them; then each moves onto its demo slide in the deck. Demo 1 is on its slide since 13.10 (Ivan: «берем как вариант визуализации точно»); demo 2 is a prototype in `slides/demos.md`.
 
 ## Controls
 
@@ -27,7 +27,7 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
   - Grey: waiting.
   - Model colours, when a demo needs them: lilac, purple, light grey, white.
 - **Type.** The caption is one line of Inter at 18 px; labels are JetBrains Mono at 13 px, with column heads in capitals. Numbers are white, words secondary grey.
-- **Time.** A replay clock shows the real date and time at the top right. Quiet stretches without events are squeezed and marked «пропуск N ч без событий»; days are dashed lines on the time axis.
+- **Time.** A replay clock shows the real date and time at the top right, in Moscow time on every machine. Quiet stretches without events are squeezed and marked «пропуск N ч без событий»; days are dashed lines on the time axis.
 - **Story.** Four or five beats. Each changes the caption by itself, and every number in a caption is computed from the data. The last beat dims everything except its point.
 - **Length.** About 70 s from one press: an intro of 3.5 s, 56 s of replay and 9 s on the last beat. That leaves the speaker time to talk over it inside a 3-minute slot.
 - **Honesty.** A script builds the data from logs. Ids are anonymous; there are no names and no message text. A claim the data does not show stays off the demo.

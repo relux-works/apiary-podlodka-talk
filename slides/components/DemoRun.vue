@@ -88,21 +88,18 @@ let peak = 0
 }
 const returnsAt = tasks.flatMap((t) => t.changes.filter((c) => c.back).map((c) => c.d)).sort((a, b) => a - b)
 
-// day marks: every local midnight inside the window
-const dayLabel = (d: Date) => d.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric' })
+// Moscow time, the audience's, on every laptop and in CI alike; day marks at each Moscow midnight
+const TZ = 'Europe/Moscow', MSK = 3 * 3600e3, DAY = 86400e3
+const dayLabel = (ms: number) => new Date(ms).toLocaleDateString('ru-RU', { timeZone: TZ, weekday: 'short', day: 'numeric' })
+const firstDay = dayLabel(T0)
 const days: { x: number, label: string }[] = []
-const firstDay = dayLabel(new Date(T0))
-{
-  const d = new Date(T0)
-  d.setHours(24, 0, 0, 0)
-  for (; d.getTime() < T1; d.setDate(d.getDate() + 1)) days.push({ x: xOf(toPlay(d.getTime())), label: dayLabel(d) })
-}
+for (let m = Math.floor((T0 + MSK) / DAY) * DAY - MSK + DAY; m < T1; m += DAY) days.push({ x: xOf(toPlay(m)), label: dayLabel(m) })
 
 // ---- words ----------------------------------------------------------------------------------------------------
 const plural = (n: number, f: [string, string, string]) => f[n % 10 === 1 && n % 100 !== 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2]
 const c = data.counts
 const hours = Math.round((T1 - T0) / 3600e3)
-const range = `${new Date(T0).toLocaleDateString('ru-RU', { day: 'numeric' })}–${new Date(T1).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}`
+const range = `${new Date(T0).toLocaleDateString('ru-RU', { timeZone: TZ, day: 'numeric' })}–${new Date(T1).toLocaleDateString('ru-RU', { timeZone: TZ, day: 'numeric', month: 'long' })}`
 const BEATS = [
   { at: 0, text: `Эпик доски задач: ${c.tasks} ${plural(c.tasks, ['задача', 'задачи', 'задач'])}, ${range}` },
   { at: INTRO, text: 'Оркестратор раздаёт задачи аналитикам, исполнителям и ревьюерам' },
@@ -141,7 +138,7 @@ const frame = computed(() => {
   const quietNow = quiet.find(([a, b]) => real > a && real < b && p > 0 && p < PLAY)
   return {
     p,
-    clock: new Date(real).toLocaleString('ru-RU', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+    clock: `${new Date(real).toLocaleString('ru-RU', { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} мск`,
     skip: quietNow ? `пропуск ${Math.round((quietNow[1] - quietNow[0]) / 3600e3)} ч без событий` : '',
     beat: [...BEATS].reverse().find((b) => b.at <= time)!.text,
     final: time >= INTRO + PLAY,

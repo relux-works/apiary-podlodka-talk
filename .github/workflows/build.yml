@@ -80,6 +80,11 @@ jobs:
             node .scripts/demo-frames.mjs --deck slides/demos.md --slide $s --port 8097 --video --out .temp/demo-frames/slide-$s
             node .scripts/contact-sheet.mjs .temp/demo-frames/slide-$s 2
           done
+          # every live demo of the deck itself, frames only (the mini-demos and demo 3 have no prototype in demos.md)
+          for s in $(node .scripts/static-demos.mjs --list slides/slides.md); do
+            node .scripts/demo-frames.mjs --deck slides/slides.md --slide $s --port 8097 --at 1500,5000,10000,15000,20000,25000,30000,35000,40000,45000,50000,58000 --out .temp/demo-frames/deck-$s
+            node .scripts/contact-sheet.mjs .temp/demo-frames/deck-$s 3
+          done
 
       # Every slide of the deck at every click, a strip per slide, for reviewing
       # the reveals (Ivan, 13.10). Artifact click-frames: sheet-NN.png, clicks.json.

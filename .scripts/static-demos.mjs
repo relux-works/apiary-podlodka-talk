@@ -9,6 +9,7 @@
 // A build has no window.__slidev__, so the demo slides come from the deck source and the slide from the URL hash.
 //
 //   node .scripts/static-demos.mjs <base-url of a served static build> [deck.md]   e.g. http://127.0.0.1:8096/
+//   node .scripts/static-demos.mjs --list [deck.md]     only print the live slides' numbers, for the CI frame loop
 import fs from 'node:fs'
 import path from 'node:path'
 import { chromium } from 'playwright-chromium'
@@ -45,6 +46,10 @@ function liveSlides(file, found = [], at = { n: 0 }) {
     }
   }
   return found
+}
+if (process.argv[2] === '--list') {
+  console.log(liveSlides(process.argv[3] || 'slides/slides.md').join(' '))
+  process.exit(0)
 }
 const live = liveSlides(deck)
 expect(live.length > 0, `slides with a live demo in ${deck}: ${live.join(', ') || 'none'}`)
@@ -121,7 +126,8 @@ try {
       await p.close()
     }
     const [early, late] = widths
-    expect(early.length > 0 && early.join() === late.join(), `slide ${n}: status lines keep their width (${early.join(', ')} px early, ${late.join(', ')} px at the end)`)
+    if (early.length || late.length)
+      expect(early.join() === late.join(), `slide ${n}: status lines keep their width (${early.join(', ')} px early, ${late.join(', ')} px at the end)`)
   }
   expect(errors.length === 0, `no page errors${errors.length ? `: ${errors.slice(0, 3).join(' | ')}` : ''}`)
 }

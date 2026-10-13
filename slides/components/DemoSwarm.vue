@@ -24,11 +24,11 @@ const mx = data.matrix as null | { bin: number, sides: number[][][], cross: numb
 const W = 908, AX = 100, AW = 760, TOP = 48
 const VENDOR = ['v-claude', 'v-codex', 'v-muse']
 const RIVER_H = 32, RIVER_Y = 392 - RIVER_H
-const MX_ROW = 11, MX_GAP = 3, MX_Y = mx ? RIVER_Y - 10 - (14 + 3 * MX_ROW + 2 * MX_GAP) : RIVER_Y
+const MX_ROW = 13, MX_GAP = 3, MX_Y = mx ? RIVER_Y - 10 - (14 + 3 * MX_ROW + 2 * MX_GAP) : RIVER_Y
 const HEAD = 16, FRAME_GAP = 8
 const laneCount = data.lanes.length
 const pitch = Math.min(11, (MX_Y - 8 - TOP - data.hosts.length * (HEAD + FRAME_GAP)) / laneCount)
-const OH = pitch * 0.5, SH = pitch * 0.3 // orchestrator and subagent tracks
+const OH = pitch * 0.46, SH = pitch * 0.38 // orchestrator and subagent tracks
 const frames: { name: string, n: number, of: number, y: number, first: number }[] = []
 {
   let y = TOP, first = 0
@@ -119,14 +119,15 @@ const frame = computed(() => {
           const n = mx.sides[si][g][k]
           if (!n) continue
           msgs += n
-          const h = (n / mxMax) * MX_ROW
+          const all = mx.sides[si][0][k] + mx.sides[si][1][k] + mx.sides[si][2][k]
+          const h = Math.sqrt(all / mxMax) * MX_ROW * (n / all) // the bar's height on a square-root scale, split by kind
           base -= h
           bars[key] += rect(x, x + bw, base, h)
         }
       }
       if (mx.cross[k]) {
         crossN += mx.cross[k]
-        const h = Math.max(1.5, (mx.cross[k] / crossMax) * MX_ROW)
+        const h = Math.max(1.5, Math.sqrt(mx.cross[k] / crossMax) * MX_ROW)
         bars.cross += rect(x, x + bw, MX_ROWS[1].y + (MX_ROW - h) / 2, h)
       }
     }
@@ -161,10 +162,6 @@ const frame = computed(() => {
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="908" y="17" text-anchor="end" class="clock">{{ frame.clock }}</text>
     <text x="0" y="36" class="t-sec small">сейчас заняты: оркестраторов <tspan class="v">{{ frame.liveO.length }}</tspan> · субагентов <tspan class="v">{{ frame.workNow }}</tspan> · запусков доски <tspan class="v">{{ num(frame.runsN) }}</tspan><tspan v-if="mx"> · сообщений <tspan class="v">{{ num(frame.msgs) }}</tspan></tspan></text>
-    <template v-for="(name, r) in data.runtimes" :key="name">
-      <rect :x="W - 300 + r * 104" y="27" width="10" height="10" rx="2" :class="VENDOR[r]" />
-      <text :x="W - 285 + r * 104" y="36" class="t-sec small">{{ name }}</text>
-    </template>
 
     <g class="lanes" :style="{ opacity: frame.shown }">
       <line v-for="d in days" :key="d.label" :x1="d.x" :y1="TOP" :x2="d.x" :y2="RIVER_Y + RIVER_H" class="day" />
@@ -177,6 +174,10 @@ const frame = computed(() => {
       <text x="0" :y="frames[0].y + HEAD + 24" class="small t-dim">оркестратор,</text>
       <text x="0" :y="frames[0].y + HEAD + 38" class="small t-dim">снизу — его</text>
       <text x="0" :y="frames[0].y + HEAD + 52" class="small t-dim">субагенты</text>
+      <template v-for="(name, r) in data.runtimes" :key="name">
+        <rect x="0" :y="frames[0].y + HEAD + 70 + r * 16" width="10" height="10" rx="2" :class="VENDOR[r]" />
+        <text x="16" :y="frames[0].y + HEAD + 79 + r * 16" class="t-sec small">{{ name }}</text>
+      </template>
       <path v-for="(d, r) in frame.orch" :key="'o' + r" :d="d" :class="VENDOR[r]" />
       <path v-for="(d, r) in frame.sub" :key="'s' + r" :d="d" :class="[VENDOR[r], 'sub']" />
       <rect v-for="(y, i) in frame.liveO" :key="'lo' + i" :x="frame.head - 1" :y="y - 0.5" width="4" :height="OH + 1" rx="1" class="live" />
@@ -226,7 +227,7 @@ const frame = computed(() => {
 .demo-swarm .v-claude { fill: var(--demo-claude); }
 .demo-swarm .v-codex { fill: var(--demo-codex); }
 .demo-swarm .v-muse { fill: var(--demo-muse); }
-.demo-swarm .sub { opacity: 0.6; }
+.demo-swarm .sub { opacity: 0.85; }
 .demo-swarm .live { fill: var(--rwb-lime); }
 .demo-swarm .live-sub { fill: var(--rwb-txt); }
 .demo-swarm .mx-work { fill: var(--rwb-sec); }

@@ -70,6 +70,12 @@ jobs:
             node .scripts/contact-sheet.mjs .temp/demo-frames/slide-$s 2
           done
 
+      # Every slide of the deck at every click, a strip per slide, for reviewing
+      # the reveals (Ivan, 13.10). Artifact click-frames: sheet-NN.png, clicks.json.
+      - name: Click frames
+        if: always()
+        run: node .scripts/click-frames.mjs --deck slides/slides.md --port 8099 --out .temp/click-frames
+
       - uses: actions/upload-artifact@v7
         with:
           name: slides-pdf
@@ -82,6 +88,17 @@ jobs:
         with:
           name: demo-frames
           path: .temp/demo-frames/
+          include-hidden-files: true
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: click-frames
+          path: |
+            .temp/click-frames/sheet-*.png
+            .temp/click-frames/clicks.json
           include-hidden-files: true
           retention-days: 30
           if-no-files-found: ignore

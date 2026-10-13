@@ -15,7 +15,7 @@ const SPAN = (W1 - W0) / 1000 // seconds
 const c = data.counts
 
 // ---- layout ---------------------------------------------------------------------------------------------------------
-const W = 908, AX = 100, AW = 760, LH = 3.5, LG = 1.5
+const W = 908, AX = 100, AW = 760, LH = 4, LG = 1
 const RUNTIME_CLS = ['rt-claude', 'rt-codex', 'rt-muse']
 const frames: { name: string, n: number, y: number, lanes: number[] }[] = []
 {
@@ -69,7 +69,7 @@ const frame = computed(() => {
       if (a >= now) break
       const x0 = xOfSec(a), x1 = Math.max(x0 + 0.8, xOfSec(Math.min(b, now)))
       paths[r] += `M${x0.toFixed(1)},${y}h${(x1 - x0).toFixed(1)}v${LH}h${(x0 - x1).toFixed(1)}z`
-      if (a <= now && now < b) live.push(y)
+      if (a <= now && now <= b) live.push(y)
     }
   })
   const area = (s: number[]) => {
@@ -104,7 +104,7 @@ const frame = computed(() => {
   <svg class="demo-swarm demo-live" :class="{ final: frame.final }" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="908" y="17" text-anchor="end" class="clock">{{ frame.clock }}</text>
-    <text x="0" y="36" class="t-sec small">сейчас заняты: оркестраторов <tspan class="v">{{ frame.orchNow }}</tspan> · субагентов <tspan class="v">{{ frame.workNow }}</tspan> · запусков доски <tspan class="v">{{ num(frame.runsN) }}</tspan></text>
+    <text x="0" y="36" class="t-sec small">сейчас заняты: оркестраторов <tspan class="v">{{ frame.live.length }}</tspan> · субагентов <tspan class="v">{{ frame.workNow }}</tspan> · запусков доски <tspan class="v">{{ num(frame.runsN) }}</tspan></text>
 
     <g class="lanes" :style="{ opacity: frame.shown }">
       <line v-for="d in days" :key="d.label" :x1="d.x" :y1="frames[0].y" :x2="d.x" :y2="RIVER_Y + RIVER_H" class="day" />
@@ -164,5 +164,4 @@ const frame = computed(() => {
 .demo-swarm .peak { fill: var(--rwb-lime); }
 .demo-swarm .head { stroke: var(--rwb-lilac); stroke-width: 1.5; }
 .demo-swarm .lanes, .demo-swarm .river { transition: opacity 0.6s ease; }
-.demo-swarm.final .lanes { opacity: 0.35 !important; }
 </style>

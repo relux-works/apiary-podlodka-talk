@@ -13,7 +13,7 @@ npm run dev            # opens http://localhost:3030
 
 - **Show and presenter windows.** The audience window is `http://localhost:3030/#/1`. The presenter window is `http://localhost:3030/#/presenter/1`, with notes, the next slide and the timer; open it in a second window, and both follow each other.
 - **Clicks.** Space or → is the next click, ← goes back. Arrow down and up move by whole slides.
-- **Live demos** on slides 27 «Разработка по логам», 38 «Curator в терминале», 42 «Сборка запуска из профиля и проекта», 44 «Рой за две недели» and 58 «Внешние агенты в одной среде»:
+- **Live demos** on slides 28 «Разработка по логам», 39 «Curator в терминале», 43 «Сборка запуска из профиля и проекта», 45 «Рой за две недели» and 59 «Внешние агенты в одной среде»:
   - → or Space starts the demo, and it then plays by itself for about a minute;
   - → again pauses and resumes it, for an explanation;
   - ← goes back to the start of the current beat;

@@ -15,7 +15,7 @@
     "demos": "slidev slides/demos.md --open",
     "lint": "python3 .scripts/check-frontmatter.py slides/slides.md slides/diagrams.md slides/demos.md themes/rwb-tech/example.md themes/rwb-minimal/example.md",
     "verify": ".scripts/verify.sh slides/slides.md",
-    "timing": "python3 .scripts/timing.py slides/slides.md --demo 'Демо 1=3,Демо 2=2,Демо 3=1.5'",
+    "timing": "python3 .scripts/timing.py slides/slides.md --demo 'Демо 1=2,Демо 2=2,Демо 3=1.5'",
     "build": "slidev build slides/slides.md --out ../dist",
     "build:offline": "slidev build slides/slides.md --base ./ --out ../.temp/dist-offline",
     "export": "mkdir -p .temp/export && slidev export slides/slides.md --per-slide --output .temp/export/apiary-podlodka-talk.pdf",

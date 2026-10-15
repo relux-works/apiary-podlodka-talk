@@ -4,14 +4,20 @@
 // белая с фиолетовым ободком — над ней сейчас работает субагент, оранжевая вспышка — ревью вернуло на доработку,
 // лаймовая — готово. Снизу дорожки: человек (его сообщения оркестратору), оркестратор (сам просыпается по событиям),
 // роли субагентов; полоска — запуск, цвет — модель. Тихие часы без событий проматываются быстро.
-// Данные: slides/demo/run.json (.scripts/demo-run.mjs; анонимные id, без имён и текстов). Часы и управление:
-// slides/demo/clock.ts. Стиль демо: docs/demos.md.
+// Данные: slides/demo/run.json (.scripts/demo-run.mjs; анонимные id, без имён и текстов); run="infra-exit" берёт
+// slides/demo/demo-1/infra-exit.json, у каждого набора свои часы. Часы и управление: slides/demo/clock.ts. Стиль демо:
+// docs/demos.md.
+// finish (Иван, 16.10: «синтетически доведем… что все задачи дошли до готовности»): когда журнал кончился, короткий
+// финал переводит в «Готово» каждую задачу, которая там не оказалась. Этого нет в журналах: заметки слайда говорят об этом.
 import { computed } from 'vue'
-import data from '../demo/run.json'
+import onStage from '../demo/run.json'
+import infraExit from '../demo/demo-1/infra-exit.json'
 import { useDemoClock } from '../demo/clock'
 
-const INTRO = 3500, PLAY = 56000, OUTRO = 9000, QUIET = 450
-const DURATION = INTRO + PLAY + OUTRO
+const props = defineProps<{ run?: 'infra-exit', finish?: boolean }>()
+const data = props.run === 'infra-exit' ? infraExit : onStage
+const INTRO = 3500, PLAY = 56000, FINALE = props.finish ? 4500 : 0, OUTRO = 9000, QUIET = 450
+const DURATION = INTRO + PLAY + FINALE + OUTRO
 const [T0, T1] = data.window as [number, number]
 
 // the replay clock: busy time at one speed, each quiet stretch squeezed to QUIET ms
@@ -63,11 +69,18 @@ const MODELS: Record<string, { cls: string, name: string }> = {
   'gpt-6-astra': { cls: 'v-codex-2', name: 'GPT-6 Astra' },
   'muse-spark-1.3-contributor': { cls: 'v-muse', name: 'Muse Spark' },
   'claude-sonnet-5-5': { cls: 'v-claude', name: 'Claude Sonnet' },
+  'claude-opus-5': { cls: 'v-claude', name: 'Claude Opus' },
 }
 const xOf = (play: number) => AX + (Math.min(Math.max(play, 0), PLAY) / PLAY) * AW
 
 // ---- the data on the play clock ---------------------------------------------------------------------------
 const tasks = data.tasks.map((t, i) => ({ id: t.id, i, start: t.start, changes: t.changes.map(([r, s, back]) => ({ d: toPlay(r as number), s: s as string, back: !!back })) }))
+// the synthetic finale: the tasks that are not done when the log ends move to «Готово» one by one
+if (props.finish) {
+  const open = tasks.filter((t) => (t.changes.length ? t.changes[t.changes.length - 1].s : t.start) !== 'done')
+  const step = (FINALE - 1400) / Math.max(1, open.length)
+  open.forEach((t, k) => t.changes.push({ d: PLAY + 400 + k * step, s: 'done', back: false }))
+}
 // runs in role lanes; parallel runs of one role get their own row
 const runs = data.runs.map((r) => ({ ...r, ds: toPlay(r.start), de: toPlay(r.end) })).sort((a, b) => a.ds - b.ds)
 const rowEnd: Record<string, number[]> = {}
@@ -108,15 +121,20 @@ const plural = (n: number, f: [string, string, string]) => f[n % 10 === 1 && n %
 const c = data.counts
 const hours = Math.round((T1 - T0) / 3600e3)
 const range = `${new Date(T0).toLocaleDateString('ru-RU', { timeZone: TZ, day: 'numeric' })}–${new Date(T1).toLocaleDateString('ru-RU', { timeZone: TZ, day: 'numeric', month: 'long' })}`
+// the roles that have runs in this dataset, in lane order
+const roleWords: Record<string, string> = { analyst: 'аналитикам', implementer: 'исполнителям', reviewer: 'ревьюерам' }
+const present = ['analyst', 'implementer', 'reviewer'].filter((k) => runs.some((r) => r.role === k)).map((k) => roleWords[k])
+const roles = present.length > 1 ? `${present.slice(0, -1).join(', ')} и ${present[present.length - 1]}` : present.join('')
 const BEATS = [
   { at: 0, text: `Эпик доски задач: ${c.tasks} ${plural(c.tasks, ['задача', 'задачи', 'задач'])}, ${range}` },
-  { at: INTRO, text: 'Оркестратор раздаёт задачи аналитикам, исполнителям и ревьюерам' },
+  { at: INTRO, text: `Оркестратор раздаёт задачи ${roles}` },
   { at: INTRO + (returnsAt[2] ?? PLAY * 0.3), text: 'Ревью возвращает задачи на доработку' },
   { at: INTRO + PLAY * 0.62, text: `Запуски идут параллельно, до ${peak} одновременно, днём и ночью` },
-  { at: INTRO + PLAY, text: `Человек написал ${c.human} ${plural(c.human, ['раз', 'раза', 'раз'])} за ${hours} ${plural(hours, ['час', 'часа', 'часов'])}, оркестратор просыпался сам ${c.wakes} ${plural(c.wakes, ['раз', 'раза', 'раз'])}` },
+  ...(props.finish ? [{ at: INTRO + PLAY, text: 'Все задачи доходят до готовности' }] : []),
+  { at: INTRO + PLAY + FINALE, text: `Человек написал ${c.human} ${plural(c.human, ['раз', 'раза', 'раз'])} за ${hours} ${plural(hours, ['час', 'часа', 'часов'])}, оркестратор просыпался сам ${c.wakes} ${plural(c.wakes, ['раз', 'раза', 'раз'])}` },
 ].sort((a, b) => a.at - b.at)
 
-const { t } = useDemoClock('run', DURATION, BEATS.map((b) => b.at))
+const { t } = useDemoClock(props.run ? `run-${props.run}` : 'run', DURATION, BEATS.map((b) => b.at))
 
 // ---- one frame --------------------------------------------------------------------------------------------------
 const frame = computed(() => {
@@ -149,7 +167,7 @@ const frame = computed(() => {
     clock: `${new Date(real).toLocaleString('ru-RU', { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} мск`,
     skip: quietNow ? `пропуск ${Math.round((quietNow[1] - quietNow[0]) / 3600e3)} ч без событий` : '',
     beat: [...BEATS].reverse().find((b) => b.at <= time)!.text,
-    final: time >= INTRO + PLAY,
+    final: time >= INTRO + PLAY + FINALE,
     counts: COLS.map((_, i) => cols[i].length),
     tokens,
     bars,
@@ -169,7 +187,7 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 </script>
 
 <template>
-  <svg class="demo-run demo-live" :class="{ final: frame.final }" :data-demo-t="Math.round(t)" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
+  <svg class="demo-run demo-live" :class="{ final: frame.final, finished: finish }" :data-demo-t="Math.round(t)" width="908" height="414" viewBox="0 0 908 414" aria-hidden="true">
     <text x="0" y="18" class="t-lab cap">{{ frame.beat }}</text>
     <text x="908" y="17" text-anchor="end" class="clock">{{ frame.clock }}</text>
     <text x="0" y="36" class="t-sec small status">запусков <tspan class="pad">{{ pad(frame.runsStarted, runs.length) }}</tspan><tspan class="v">{{ frame.runsStarted }}</tspan> из {{ runs.length }} · возвратов с ревью <tspan class="pad">{{ pad(frame.returns, returnsAt.length) }}</tspan><tspan class="v">{{ frame.returns }}</tspan></text>
@@ -241,6 +259,6 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 .demo-run .cut { fill: var(--rwb-orange); }
 .demo-run .human { fill: var(--rwb-lime); }
 .demo-run .head { stroke: var(--rwb-lilac); stroke-width: 1.5; }
-.demo-run.final .board, .demo-run.final .lane.analyst, .demo-run.final .lane.implementer, .demo-run.final .lane.reviewer { opacity: 0.35; }
+.demo-run.final:not(.finished) .board, .demo-run.final .lane.analyst, .demo-run.final .lane.implementer, .demo-run.final .lane.reviewer { opacity: 0.35; }
 .demo-run.final .bar { opacity: 0.35; }
 </style>

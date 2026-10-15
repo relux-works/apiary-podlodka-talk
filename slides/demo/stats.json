@@ -7,68 +7,79 @@
   ],
   "hosts": [
    "ivmbp",
+   "m1max",
    "mini"
   ],
   "orchestrators": {
    "lanes1h": {
     "mini": 14,
-    "ivmbp": 17
+    "ivmbp": 17,
+    "m1max": 25
    },
    "lanes10h": {
     "ivmbp": 9,
-    "mini": 12
+    "mini": 12,
+    "m1max": 13
    },
-   "sessions": 72,
-   "sumH": 1291,
+   "sessions": 193,
+   "sumH": 1834,
    "wallH": 304,
    "byRuntime": {
     "codex": {
-     "sessions": 27,
-     "sumH": 42
+     "sessions": 67,
+     "sumH": 294
     },
     "muse": {
      "sessions": 1,
      "sumH": 1
     },
     "claude": {
-     "sessions": 44,
-     "sumH": 1248
+     "sessions": 125,
+     "sumH": 1539
     }
    },
    "peak": {
-    "n": 26,
+    "n": 30,
     "at": "2026-10-08T12:40:00.000Z"
    },
-   "median": 5
+   "median": 7,
+   "wallHosts": [
+    "ivmbp",
+    "mini"
+   ]
   },
   "subagents": {
-   "sessions": 6291,
-   "sumH": 1443,
+   "sessions": 7536,
+   "sumH": 1815,
    "wallH": 293,
    "byRuntime": {
     "codex": {
-     "sessions": 3087,
-     "sumH": 842
+     "sessions": 3856,
+     "sumH": 1092
     },
     "muse": {
      "sessions": 2451,
      "sumH": 390
     },
     "claude": {
-     "sessions": 753,
-     "sumH": 211
+     "sessions": 1229,
+     "sumH": 333
     }
    },
    "peak": {
     "n": 36,
     "at": "2026-10-04T03:00:00.000Z"
    },
-   "median": 6
+   "median": 8,
+   "wallHosts": [
+    "ivmbp",
+    "mini"
+   ]
   },
   "runs": {
-   "total": 2213,
+   "total": 2996,
    "mini": 871,
-   "other": 1342,
+   "other": 2125,
    "rolesMini": {
     "analyst": 194,
     "implementer": 401,
@@ -79,25 +90,33 @@
     "muse": 264,
     "claude": 124
    },
-   "sumH": 2172
+   "sumH": 2619,
+   "byHost": {
+    "m1max": 783
+   }
   },
   "people": {
-   "prompts": 882,
+   "prompts": 1681,
    "byHost": {
     "ivmbp": 415,
-    "mini": 467
+    "mini": 467,
+    "m1max": 799
    },
-   "perDay": 63,
+   "perDay": 120,
    "longestGapH": 16,
    "longestGapFrom": "2026-10-02T16:51:21.635Z",
    "hours": [
-    67.8,
-    69
+    109.1,
+    110.3
    ],
    "hoursBy": {
     "ivan": [
      67.8,
      69
+    ],
+    "alexey": [
+     41.3,
+     41.3
     ]
    }
   },

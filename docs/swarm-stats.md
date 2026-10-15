@@ -8,7 +8,7 @@ Numbers from `.scripts/swarm-stats.mjs`, aggregates only, in `slides/demo/stats.
 - the a2a metadata export `~/private/a2a-export/messages-0929-1012.ndjson.gz`, from tb-keeper and macmini-infra;
 - the agent-hours JSON from ivmbp's keeper, for ivmbp's board runs.
 
-**Machines:** the mini and ivmbp. m1max (Alexey) joins with one file from `.scripts/host-export.mjs` (see «Adding a machine» below).
+**Machines:** the mini, ivmbp and m1max. m1max (Alexey) joined on 15.10 with one file from `.scripts/host-export.mjs` (sha256 `6f922742d7b3a7352b86fea1985a01edeea802b6edbed3c04a4563e1b247938f`), merged by `merge-host.mjs --person alexey` (see «Adding a machine» below). Wall-clock hours stay those of the mini and ivmbp.
 
 **After the mini incident (15.10).** The mini's private inputs stay on the quarantined mini; nothing is fetched from it. The mini's part of every number below comes from the aggregates already in `slides/demo/stats.json` and `slides/demo/swarm.json`. ivmbp's sessions database was rebuilt on ivmbp on 15.10 (`agent-hours.mjs --db`, kept under `.temp/`) and matches the export the numbers were built from: 415 prompts, the same lanes and the same busy time on them.
 
@@ -16,20 +16,20 @@ Numbers from `.scripts/swarm-stats.mjs`, aggregates only, in `slides/demo/stats.
 
 | | |
 | --- | --- |
-| Orchestrators with at least 1 h of work | **31**: mini 14, ivmbp 17 |
-| … with at least 10 h | 21: mini 12, ivmbp 9 |
-| Orchestrator sessions | 72: Claude Code 44, Codex 27, Muse 1 |
-| Orchestrator hours, sum and wall clock | 1 291 h, 304 h |
-| Orchestrators busy at once, per 10 minutes | peak **26** (08.10, 15:40), median 5 |
-| Subagent sessions | **6 291**: Codex 3 087, Muse 2 451, Claude Code 753 |
-| Subagent hours, sum and wall clock | 1 443 h, 293 h |
-| Subagents busy at once | peak 36 (04.10, 06:00), median 6 |
-| Task-board runs | **2 213**: mini 871, ivmbp 1 342 |
+| Orchestrators with at least 1 h of work | **56**: mini 14, ivmbp 17, m1max 25 |
+| … with at least 10 h | 34: mini 12, ivmbp 9, m1max 13 |
+| Orchestrator sessions | 193: Claude Code 125, Codex 67, Muse 1 |
+| Orchestrator hours, sum and wall clock | 1 834 h, 304 h (wall clock: mini and ivmbp) |
+| Orchestrators busy at once, per 10 minutes | peak **30** (08.10, 15:40), median 7 |
+| Subagent sessions | **7 536**: Codex 3 856, Muse 2 451, Claude Code 1 229 |
+| Subagent hours, sum and wall clock | 1 815 h, 293 h (wall clock: mini and ivmbp) |
+| Subagents busy at once | peak 36 (04.10, 06:00), median 8 |
+| Task-board runs | **2 996**: mini 871, ivmbp 1 342, m1max 783 |
 | Mini runs by role | implementer 401, reviewer 276, analyst 194 |
 | Mini runs by runtime | Codex 483, Muse 264, Claude Code 124 |
-| Agent hours in all | **2 734 h** |
-| People's time writing into orchestrators | **67.8–69.0 h**, on the slide 68 h, about 40 times less than the agents: ivmbp 36.2 h, the mini 39.0–40.2 h, one timeline |
-| A person wrote into an orchestrator | **882 times**, about 63 a day: mini 467, ivmbp 415 |
+| Agent hours in all | **3 649 h** |
+| People's time writing into orchestrators | **109.1–110.3 h**, on the slide 109 h, about 33 times less than the agents: Ivan 67.8–69.0 h (ivmbp 36.2 h, the mini 39.0–40.2 h, one timeline), Alexey 41.3 h (m1max) |
+| A person wrote into an orchestrator | **1 681 times**, about 120 a day: mini 467, ivmbp 415, m1max 799 |
 | … longest stretch with no person | **16 h** (from 02.10, 19:51), then 13.8 h and 12.8 h |
 | a2a messages | **at least 4 858**, from 72 agents: Ivan's side 51, Alexey's 21 |
 | … by side | Ivan's agents 3 745, Alexey's 1 113 |

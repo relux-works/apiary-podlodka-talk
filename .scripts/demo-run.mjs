@@ -5,8 +5,11 @@
 // one JSON with anonymous task ids, status changes, runs (role, model, start, end, outcome), the times the human
 // wrote to the orchestrator and the times the orchestrator woke up on its own. No names, no message text.
 //
-//   node .scripts/demo-run.mjs --repo <repository with the board> --epic <EPIC-…> --session <orchestrator .jsonl>
-//        [--gap-min 40] [--out slides/demo/run.json]
+//   node .scripts/demo-run.mjs --repo <repository with the board> --epic <EPIC-…[,EPIC-…]> --session <orchestrator .jsonl>
+//        [--gap-min 40] [--skip-human <ISO timestamp>,…] [--out slides/demo/run.json]
+//
+// --skip-human drops the person's entries at those exact transcript timestamps: messages about something else than
+// the epic (in tetris, 11.09: the board's own goal and worktree bugs, fixed in the task-board skill meanwhile).
 //
 // The orchestrator transcript is a Claude Code session: a user entry with typed text is the human, a
 // <task-notification> entry is the orchestrator waking on its own (a run finished, a message arrived).
@@ -17,6 +20,7 @@ import path from 'node:path'
 const argv = process.argv.slice(2)
 const one = (k, d) => { const i = argv.indexOf(k); return i >= 0 && argv[i + 1] ? argv[i + 1] : d }
 const repo = one('--repo'), epic = one('--epic'), sessionFile = one('--session')
+const epics = new Set(String(epic || '').split(',').filter(Boolean)) // several epics of one orchestrator replay together
 const out = one('--out', 'slides/demo/run.json')
 const gapMs = Number(one('--gap-min', '40')) * 60e3
 if (!repo || !epic || !sessionFile) { console.error('usage: --repo DIR --epic EPIC-… --session FILE.jsonl [--out FILE]'); process.exit(2) }
@@ -35,7 +39,8 @@ for (const id of fs.readdirSync(actDir)) {
       const a = c.after || {}, b = c.before || {}
       if (e.operation === 'create' && a.kind === 'element') { el.set(a.element.id, a.element); parent.set(a.element.id, a.element.parent_id) }
       else if (e.operation === 'move' && c.field === 'parent_id') parent.set(id, a.element_id)
-      else if (e.operation === 'progress' && c.field === 'status' && a.status) {
+      // a status moves by hand (progress) and on landing (aggregation: worktree.integrate takes integrating to done)
+      else if ((e.operation === 'progress' || e.operation === 'aggregation') && c.field === 'status' && a.status) {
         if (!statuses.has(id)) statuses.set(id, [])
         statuses.get(id).push([ms(e.timestamp), b.status || null, a.status])
       }
@@ -51,7 +56,7 @@ for (const name of fs.readdirSync(runsDir)) {
   if (!name.startsWith('RUN-')) continue
   let m, st
   try { m = JSON.parse(fs.readFileSync(path.join(runsDir, name, 'manifest.json'), 'utf8')); st = JSON.parse(fs.readFileSync(path.join(runsDir, name, 'state.json'), 'utf8')) } catch { continue }
-  if (epicOf(st.task_id) !== epic) continue
+  if (!epics.has(epicOf(st.task_id))) continue
   const a = ms(st.started_at), b = ms(st.completed_at || st.last_heartbeat_at || '')
   if (Number.isNaN(a) || Number.isNaN(b) || b <= a) continue
   runs.push({ task: st.task_id, role: m.role_archetype || m.role, model: m.model, start: a, end: b, outcome: st.status, caller: st.caller_session_id })
@@ -74,6 +79,7 @@ const tasks = order.map((id) => {
 })
 
 // ---- the orchestrator's session: the human writes, the orchestrator wakes ------------------------------
+const skipHuman = new Set(String(one('--skip-human', '')).split(',').filter(Boolean).map(ms))
 const human = [], wakes = []
 for (const l of fs.readFileSync(sessionFile, 'utf8').split('\n')) {
   if (!l) continue
@@ -84,7 +90,9 @@ for (const l of fs.readFileSync(sessionFile, 'utf8').split('\n')) {
   const c = d.message?.content
   if (Array.isArray(c) && c.some((x) => x?.type === 'tool_result')) continue
   const text = (Array.isArray(c) ? c.filter((x) => x?.type === 'text').map((x) => x.text).join(' ') : String(c || '')).trimStart()
-  if (text.startsWith('<task-notification') || text.slice(0, 200).includes('[SYSTEM NOTIFICATION')) wakes.push(t)
+  // older boards (09.2026) wake the orchestrator with a plain «task-board run RUN-…» notice instead of <task-notification>
+  if (text.startsWith('<task-notification') || text.startsWith('task-board run RUN-') || text.slice(0, 200).includes('[SYSTEM NOTIFICATION')) wakes.push(t)
+  else if (skipHuman.has(t)) continue
   else if (!text.startsWith('<command-') && !text.startsWith('<local-command') && !text.startsWith('Caveat:') && !text.startsWith('<system-reminder')) human.push(t)
 }
 

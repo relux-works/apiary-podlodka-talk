@@ -94,7 +94,12 @@ const TZ = 'Europe/Moscow', MSK = 3 * 3600e3, DAY = 86400e3
 const dayLabel = (ms: number) => new Date(ms).toLocaleDateString('ru-RU', { timeZone: TZ, weekday: 'short', day: 'numeric' })
 const firstDay = dayLabel(T0)
 const days: { x: number, label: string }[] = []
-for (let m = Math.floor((T0 + MSK) / DAY) * DAY - MSK + DAY; m < T1; m += DAY) days.push({ x: xOf(toPlay(m)), label: dayLabel(m) })
+for (let m = Math.floor((T0 + MSK) / DAY) * DAY - MSK + DAY; m < T1; m += DAY) {
+  const d = { x: xOf(toPlay(m)), label: dayLabel(m) }
+  // midnights inside a squeezed quiet stretch land on one x: keep only the day the work resumes on
+  while (days.length && d.x - days[days.length - 1].x < 48) days.pop()
+  if (d.x - AX >= 48) days.push(d)
+}
 
 // ---- words ----------------------------------------------------------------------------------------------------
 // a growing count keeps the text after it in place: tabular figures plus an invisible head as wide as the largest value's

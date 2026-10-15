@@ -44,9 +44,8 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
   3. Review returns tasks.
   4. Runs go in parallel, by day and by night.
   5. How often the human wrote, against how often the orchestrator woke up by itself.
-- **Prototype data** (13.10): an epic of the task board itself, from the mini's infra-exit worktree, 8–11.10. It has 36 tasks, 84 runs, 22 returns from review, 4 models, 33 messages from the human and 930 wake-ups of the orchestrator; 2 tasks reached done.
-  - The notes' line «человек появляется только в начале и в конце» does not hold for this run.
-  - Alexey's tetris run may fit it better. Swap the data with one run of the script when it is available.
+- **Data** (16.10): Alexey's tetris board on m1max, epics foundation, backend and web-client, 11–13.09, one Claude Code orchestrator. 20 tasks, 82 runs, 8 review returns, all 20 reach done; the orchestrator woke by itself 64 times; the person wrote 7 times, counting only the messages that refine the tetris spec (the other 30 in the window are left out by timestamp).
+  - Both datasets, tetris and Ivan's earlier infra-exit epic (36 tasks, 2 done), are in `slides/demo/demo-1/` with their provenance in its README. `slides/demo/run.json` is the one on stage.
 
 ## Demo 2: the swarm at scale (prototype, 13.10)
 

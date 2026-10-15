@@ -68,6 +68,10 @@ Node.js 20+ and Python 3. `npm install` brings Slidev and headless Chromium (Pla
 | Diagram gallery | the stage versions of all diagrams, one per slide | `npm run diagrams` | http://localhost:3030 |
 | Theme showcases | every layout and component of a theme | `npm run theme:rwb-tech`, `npm run theme:rwb-minimal` | http://localhost:3030 |
 | `.scripts/check-recording.sh` | a demo recording has an audio track that is not silence | `.scripts/check-recording.sh <file>` | stdout |
+| `.scripts/people-hours.mjs` | people's hours for «Работа агентов за две недели»: 10-minute buckets with a prompt into an orchestrator, one timeline per person | `node .scripts/people-hours.mjs --db <sessions.sqlite> --swarm slides/demo/swarm.json --swarm-host mini --person ivan=mini,ivmbp --write slides/demo/stats.json` | stdout, `slides/demo/stats.json` |
+| `.scripts/host-export.mjs` | one machine's statistics and demo 2 lanes in one file to send: aggregates and timestamps, no names, paths or text | `npm run host-export -- --host m1max` | `.temp/host-export/<host>-export.json` |
+| `.scripts/merge-host.mjs` | folds a machine's export into the statistics and demo 2 | `node .scripts/merge-host.mjs --export <file> --person alexey` | `slides/demo/stats.json`, `slides/demo/swarm.json` |
+| `qrcode` (npm) | QR codes of public links, computed from the URL on the slide | `<Qr url="…" />` | — |
 | GitHub Actions `Build` | lint, verify the deck, the diagram gallery and both showcases, PDF, on every push and pull request | automatic | artifacts `slides-pdf`, `slides-audit` |
 | GitHub Actions `Release` | on a `v*` tag: HTML archive with `HOW_TO_RUN.md` and PDF as a GitHub Release | `git tag -s vX.Y.Z && git push origin vX.Y.Z` | release assets |
 

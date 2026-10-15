@@ -89,7 +89,17 @@
    },
    "perDay": 63,
    "longestGapH": 16,
-   "longestGapFrom": "2026-10-02T16:51:21.635Z"
+   "longestGapFrom": "2026-10-02T16:51:21.635Z",
+   "hours": [
+    67.8,
+    69
+   ],
+   "hoursBy": {
+    "ivan": [
+     67.8,
+     69
+    ]
+   }
   },
   "messages": {
    "total": 4858,

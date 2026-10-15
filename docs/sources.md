@@ -85,6 +85,15 @@ Demo metrics: board events in `.task-board/.activity/<ID>/events.ndjson`, runs i
 - relux-agents-infra **P** is deprecated, a residual being exited now.
 - The post: relux-works/blog **P**, `posts/from-buckets-to-apiary.*.md`, still `draft: true`.
 
+## Talks
+
+Ivan's earlier talks on local models, public recordings, QR codes on «Роутер моделей», the iOS Crew one also on «Ссылки и контакты» (addresses from Ivan, 15.10; both pages checked on 15.10):
+
+- «Локальные модели для кодинга», Podlodka AI Engineers club, 23.07.2026, «можно смотреть без регистрации»: https://club.podlodka.ai/share/cmv55xwm10001ru01b7pkpqaw
+- «Локальные модели для разработки под iOS на Apple Silicon», Podlodka iOS Crew, recording on the Podlodka Crew YouTube channel, 14.09.2026: https://www.youtube.com/watch?v=6FFApxRm2Ok
+
+The QR codes are generated from these URLs at build time (`slides/components/Qr.vue`, the `qrcode` package); a changed URL changes the code.
+
 ## What the Apiary is made of
 
 | Element | Repository | State |

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// Слайд 9, цикл продюсер → ревьюер → доработка. Оркестратор спавнит обоих; ревьюер обычно другой семьи (пост §2:
-// «обычно модель другого вендора»; not_same_publisher_as — решено, но не проверяется ядром, техзаписка гл. 04);
-// вердикт принимает ревизию или возвращает её на доработку новой ревизией.
+// Слайд 9, цикл продюсер → ревьюер → доработка. Оркестратор спавнит обоих; вердикт принимает ревизию или возвращает её
+// на доработку новой ревизией. Ревьюер другой семьи моделей (пост §2: «обычно модель другого вендора») с 15.10 — на слайде
+// «Роутер моделей», не здесь: зритель ещё не умеет выбирать модель на спавн (ревью Алексея 15.10, Иван — ок).
 // Источник: skill-project-management SPEC.md Part 2 (статусы, возвраты из reviewing, Orchestrator Routing Invariant);
 // references/change-request-lifecycle.md (accept_cr — только ревьюер, которому выдана ревизия);
 // README «Isolated Story delivery, end to end» п. 3; text/from-buckets-to-apiary.ru.md §2.
@@ -27,7 +27,7 @@ const bx = (i: number) => i * (BW + GAP)
       <text x="170" y="52" class="t-cap t-sec">спавнит</text>
       <rect :x="bx(0)" :y="Y" :width="BW" :height="BH" rx="10" class="n-purple" />
       <text :x="bx(0) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big">Продюсер</text>
-      <text :x="bx(0) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-on">модель семьи A</text>
+      <text :x="bx(0) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-on">публикует ревизию</text>
       <line :x1="bx(0) + BW" :x2="bx(1) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e" :marker-end="`url(#${id}-a)`" />
       <rect :x="bx(1)" :y="Y" :width="BW" :height="BH" rx="10" class="n" />
       <text :x="bx(1) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big">Change Request</text>
@@ -39,7 +39,7 @@ const bx = (i: number) => i * (BW + GAP)
       <line :x1="bx(1) + BW" :x2="bx(2) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e" :marker-end="`url(#${id}-a)`" />
       <rect :x="bx(2)" :y="Y" :width="BW" :height="BH" rx="10" class="n-lilac" />
       <text :x="bx(2) + BW / 2" :y="Y + 26" text-anchor="middle" class="t-big t-ink">Ревьюер</text>
-      <text :x="bx(2) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-ink-sec">обычно другая семья</text>
+      <text :x="bx(2) + BW / 2" :y="Y + 45" text-anchor="middle" class="t-ink-sec">вердикт по ревизии</text>
     </g>
     <g v-click="click">
       <line :x1="bx(2) + BW" :x2="bx(3) - 3" :y1="Y + BH / 2" :y2="Y + BH / 2" class="e-lime" :marker-end="`url(#${id}-l)`" />

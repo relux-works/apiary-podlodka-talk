@@ -73,23 +73,22 @@ tag: '06 · ИТОГ'
 <div class="card">
 <h2>Контакты</h2>
 <p><Ph>⟨контакты спикеров — решить⟩</Ph></p>
-<div class="v7-qr-row"><div class="v7-qr-box">QR</div><p>Иван про локальные модели · Podlodka iOS Crew</p></div>
+<div class="v7-qr-row"><Qr url="https://www.youtube.com/watch?v=6FFApxRm2Ok" :size="64" /><p>Иван про локальные модели · Podlodka iOS Crew</p></div>
 </div>
 </div>
 
 <style>
 .v7-wide { grid-column: span 2; }
 .v7-qr-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
-.v7-qr-box { width: 64px; height: 64px; flex: none; border: 1.5px dashed var(--rwb-dim); border-radius: 8px; display: grid; place-items: center; font-family: var(--rwb-mono); font-size: 13px; letter-spacing: 0.08em; color: var(--rwb-sec); }
 .v7-qr-row p { margin: 0; font-size: 14px; line-height: 1.35; color: var(--rwb-sec-card); }
 </style>
 
 <!--
 [Иван] Всё, что мы сегодня рассказали, выросло из поста в нашем блоге: там каждая глава со ссылками на решения и спецификации. Сайт студии — relux.works. Пейпер по рою — по ссылке на слайде. Про локальные модели подробно я рассказывал на Podlodka iOS Crew — QR на слайде.
 
-[Для себя] Заменить карточки «Открытые репозитории», «Пейпер по рою» и плейсхолдер контактов, когда решения будут приняты (open-questions.md, п. 11; список oss-release ждём с 11.10). Карточку пейпера убрать, если он не выйдет к докладу. QR — пунктирное место, публичного адреса записи пока нет. Уже публичные: waggle, curator, curator-spec, skill-agents-management, curator-agent-launcher, agent-session-manager. Пост — черновик: страница отвечает, но помечена «[Draft]».
+[Для себя] Заменить карточки «Открытые репозитории», «Пейпер по рою» и плейсхолдер контактов, когда решения будут приняты (open-questions.md, п. 11; список oss-release ждём с 11.10). Карточку пейпера убрать, если он не выйдет к докладу. QR — доклад Ивана «Локальные модели для разработки под iOS на Apple Silicon», Podlodka iOS Crew, YouTube 14.09.2026 — https://www.youtube.com/watch?v=6FFApxRm2Ok (Иван, 15.10). Второй доклад, «Локальные модели для кодинга» (Podlodka AI Engineers, 23.07.2026), — QR на «Роутере моделей»; второй QR сюда не помещается. Уже публичные: waggle, curator, curator-spec, skill-agents-management, curator-agent-launcher, agent-session-manager. Пост — черновик: страница отвечает, но помечена «[Draft]».
 
-Источники: relux-works/blog, posts/from-buckets-to-apiary.ru.md — draft: true (проверено 29.09); relux.works — открывается (проверено 29.09); docs/sources.md (публичные репозитории отмечены P); open-questions.md, п. 11; разговор спикеров 12.10 («Там, где ссылки и контакты, дать ссылку на пейпер, пускай читают как научную работу»). Статус: пост — черновик; сайт — работает; репозитории, пейпер и контакты — открыто.
+Источники: relux-works/blog, posts/from-buckets-to-apiary.ru.md — draft: true (проверено 29.09); relux.works — открывается (проверено 29.09); docs/sources.md (публичные репозитории отмечены P; доклады Ивана — раздел «Talks»); open-questions.md, п. 11; разговор спикеров 12.10 («Там, где ссылки и контакты, дать ссылку на пейпер, пускай читают как научную работу»). Статус: пост — черновик; сайт — работает; репозитории, пейпер и контакты — открыто.
 -->
 
 ---

@@ -53,6 +53,9 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run join` · `npm run join -- --ivan` | on a speaker's laptop, always through the Mac mini (`administrator@relux-macmini`; `--host <alias>` once to override): starts the deck there if it is down, holds the SSH tunnel and reconnects it, opens «ЗАМЕТКИ»; with `--ivan` (or `--share`) also «ЭКРАН», for the speaker who shares the screen | http://localhost:3030, `.temp/join/` |
 | `npm run check:sync` | the shared clicker in headless Chromium: windows follow each other, a new or reloaded window joins the live slide (also in CI) | stdout |
 | `npm run agent-hours -- --days 14 --json <host>.json` | busy hours of orchestrators and workers (Claude Code, Codex with the tb-sessiond homes, Muse), task-board runs and commits on main on this machine. `--archive <export.tar.zst> --archive-host <name>` streams another machine's session export without extracting it; `--db <file>` writes a private SQLite database, `--report <file>` the table for any window; `--merge a.json b.json:runs,landings` sums machines | stdout, JSON, SQLite |
+| `npm run host-export -- --host m1max` | on another machine: its share of the statistics and demo 2 in one file, aggregates and timestamps only (`docs/swarm-stats.md`, «Adding a machine») | `.temp/host-export/<host>-export.json` |
+| `node .scripts/merge-host.mjs --export <file> --person alexey` | folds that file into `slides/demo/stats.json` and `slides/demo/swarm.json` | the two data files |
+| `node .scripts/people-hours.mjs … --write slides/demo/stats.json` | people's hours on «Работа агентов за две недели» (10-minute buckets, one timeline per person) | `slides/demo/stats.json` |
 
 ## Definition of done for a deck change
 

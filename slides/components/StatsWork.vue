@@ -1,6 +1,8 @@
 <script setup lang="ts">
 // Статистика после демо 1 (Иван, 13.10: «1 слайд после первого демо… наглядно покажут статистику»): две недели работы
-// агентов на наших машинах. Карточки: запуски доски, сессии субагентов, часы агентов, люди; ниже — запуски по ролям
+// агентов на наших машинах. Карточки: запуски доски, сессии субагентов, часы агентов, часы людей (ревью Алексея 15.10:
+// вместо «2 человека» — часы; Иван 15.10: 10-минутки, в которых человек писал оркестратору, .scripts/people-hours.mjs);
+// ниже — запуски по ролям
 // (журналы mini) и часы по вендорам у оркестраторов и у субагентов: оркестраторы в основном на Claude, исполнители —
 // на Codex и Muse. Цифры читаются из slides/demo/stats.json (.scripts/swarm-stats.mjs), определения — docs/swarm-stats.md.
 import stats from '../demo/stats.json'
@@ -9,6 +11,8 @@ const v = stats.twoWeeks
 const num = (n: number) => n.toLocaleString('ru-RU')
 const plural = (n: number, f: [string, string, string]) => f[n % 10 === 1 && n % 100 !== 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2]
 const hours = v.orchestrators.sumH + v.subagents.sumH
+const people = Math.round(v.people.hours[0]) // the low end of the range: some prompts are known only to their half hour
+const times = Math.round(hours / v.people.hours[0])
 const roles = [
   { k: 'implementer', label: 'Исполнитель' },
   { k: 'reviewer', label: 'Ревьюер' },
@@ -33,7 +37,7 @@ const stack = (c: typeof cohorts[number]) => {
     <BigNum :value="num(v.runs.total)" :caption="`${plural(v.runs.total, ['запуск', 'запуска', 'запусков'])} доски: анализ, код, ревью`" />
     <BigNum :value="num(v.subagents.sessions)" :caption="`${plural(v.subagents.sessions, ['сессия', 'сессии', 'сессий'])} субагентов, до ${v.subagents.peak.n} одновременно`" />
     <BigNum :value="`${num(hours)} ч`" :caption="`работы агентов: ${num(v.orchestrators.sumH)} у оркестраторов, ${num(v.subagents.sumH)} у субагентов`" tone="neutral" />
-    <BigNum value="2" caption="человека" tone="neutral" />
+    <BigNum :value="`${num(people)} ч`" :caption="`люди: в ${times} ${plural(times, ['раз', 'раза', 'раз'])} меньше, чем у агентов`" tone="neutral" />
   </div>
   <svg v-click class="stats-work" width="908" height="128" viewBox="0 0 908 128" aria-hidden="true">
     <text x="0" y="14" class="t-head t-sec">ЗАПУСКИ ДОСКИ ПО РОЛЯМ · MINI</text>
@@ -53,7 +57,7 @@ const stack = (c: typeof cohorts[number]) => {
       <text :x="598 + i * 112" y="117" class="t-sec small">{{ vd.label }}</text>
     </template>
   </svg>
-  <p v-click class="lead lime">{{ num(hours) }} {{ plural(hours, ['час', 'часа', 'часов']) }} работы агентов за две недели — на двоих людей.</p>
+  <p v-click class="lead lime">{{ num(hours) }} {{ plural(hours, ['час', 'часа', 'часов']) }} агентов против {{ num(people) }} {{ plural(people, ['часа', 'часов', 'часов']) }} людей.</p>
 </template>
 
 <style scoped>

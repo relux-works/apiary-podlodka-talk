@@ -21,6 +21,7 @@
     "export": "mkdir -p .temp/export && slidev export slides/slides.md --per-slide --output .temp/export/apiary-podlodka-talk.pdf",
     "notes": "mkdir -p .temp/export && slidev export-notes slides/slides.md --output .temp/export/notes.pdf",
     "agent-hours": "node .scripts/agent-hours.mjs",
+    "host-export": "node .scripts/host-export.mjs",
     "present": ".scripts/present.sh start",
     "present:status": ".scripts/present.sh status",
     "present:stop": ".scripts/present.sh stop",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@slidev/cli": "^52.19.1",
     "@slidev/types": "^52.19.1",
+    "qrcode": "^1.5.4",
     "unocss": "^66.0.0",
     "vue": "^3.5.13"
   },

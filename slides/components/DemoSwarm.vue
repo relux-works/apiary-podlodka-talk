@@ -21,7 +21,7 @@ const [W0, W1] = data.window as [number, number]
 const SPAN = (W1 - W0) / 1000 // seconds
 const c = data.counts
 const mx = data.matrix as null | { bin: number, sides: number[][][], cross: number[], total: number, crossTotal: number, agents: number[] }
-const people = (data as any).human as null | { bin: number, series: number[], total: number, longestGapH: number }
+const people = (data as any).human as null | { bin: number, series: number[], total: number, longestGapH: number, who?: string }
 
 // ---- layout ---------------------------------------------------------------------------------------------------------
 const W = 908, AX = 100, AW = 760, TOP = 48
@@ -65,13 +65,15 @@ const agents = mx ? mx.agents[0] + mx.agents[1] : 0
 const totalHours = c.orchHours + c.workHours
 const peakAt = (slot: number) => INTRO + ((slot * data.slot) / 1000 / SPAN) * PLAY
 const gapH = people ? people.longestGapH : 0
+// people.who is set by .scripts/merge-host.mjs once a second person's machine is in: «люди» instead of Ivan alone
+const many = people?.who === 'люди'
 const hoursWord = (h: number) => (Number.isInteger(h) ? plural(h, ['час', 'часа', 'часов']) : 'часа')
 const RAW_BEATS = [
   { at: 0, text: `Две недели нашего роя: ${c.orchestrators} ${plural(c.orchestrators, ORCH)} на ${machines}${mx ? `, ${agents} ${plural(agents, ['агент', 'агента', 'агентов'])} в Matrix` : ''}` },
   { at: INTRO, text: 'Строка — оркестратор: сверху он сам, снизу его субагенты; цвет — вендор' },
   { at: peakAt(c.peakOrch.slot), text: `Пик: ${c.peakOrch.n} ${plural(c.peakOrch.n, ORCH)} заняты в одни десять минут` },
   ...(mx ? [{ at: Math.max(peakAt(c.peakOrch.slot) + 6000, INTRO + PLAY * 0.66), text: `Агенты Ивана и Алексея пишут друг другу напрямую: больше ${num(Math.floor(mx.crossTotal / 100) * 100)} сообщений` }] : []),
-  ...(people ? [{ at: INTRO + PLAY * 0.84, text: `Человек писал оркестраторам ${num(people.total)} ${plural(people.total, ['раз', 'раза', 'раз'])}, самый долгий перерыв ${String(gapH).replace('.', ',')} ${hoursWord(gapH)}` }] : []),
+  ...(people ? [{ at: INTRO + PLAY * 0.84, text: `${many ? 'Люди писали' : 'Человек писал'} оркестраторам ${num(people.total)} ${plural(people.total, ['раз', 'раза', 'раз'])}, самый долгий перерыв ${String(gapH).replace('.', ',')} ${hoursWord(gapH)}` }] : []),
   { at: INTRO + PLAY, text: `Два человека и ${c.orchestrators} ${plural(c.orchestrators, ORCH)}: ${num(totalHours)} ${plural(totalHours, ['час', 'часа', 'часов'])} работы агентов за две недели` },
 ].sort((a, b) => a.at - b.at)
 // at least 6 s on every beat before the last, so a beat that the data puts late still gets read
@@ -82,7 +84,7 @@ const { t } = useDemoClock('swarm', DURATION, BEATS.map((b) => b.at))
 
 // ---- Matrix: bars per 30 minutes ----------------------------------------------------------------------------------
 const MX_ROWS = [
-  ...(people ? [{ key: 'person', label: 'Иван', y: 0 }] : []),
+  ...(people ? [{ key: 'person', label: many ? 'люди' : 'Иван', y: 0 }] : []),
   ...(mx ? [{ key: 'ivan', label: 'агенты Ивана', y: 0 }, { key: 'cross', label: 'между', y: 0 }, { key: 'alexey', label: 'агенты Алексея', y: 0 }] : []),
 ].map((r, i) => ({ ...r, y: MX_Y + 14 + i * (MX_ROW + MX_GAP) }))
 const rowOf = (key: string) => MX_ROWS.find((r) => r.key === key)!

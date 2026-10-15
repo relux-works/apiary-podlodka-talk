@@ -29,8 +29,9 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
 - **Type.** The caption is one line of Inter at 18 px; labels are JetBrains Mono at 13 px, with column heads in capitals. Numbers are white, words secondary grey.
 - **Time.** A replay clock shows the real date and time at the top right, in Moscow time on every machine. Quiet stretches without events are squeezed and marked «пропуск N ч без событий»; days are dashed lines on the time axis.
 - **Story.** Four or five beats. Each changes the caption by itself, and every number in a caption is computed from the data. The last beat dims everything except its point.
-- **Length.** About 70 s from one press: an intro of 3.5 s, 56 s of replay and 9 s on the last beat. That leaves the speaker time to talk over it inside a 3-minute slot.
+- **Length.** About 70 s from one press: an intro of 3.5 s, 56 s of replay and 9 s on the last beat. That leaves the speaker time to talk over it inside a 3-minute slot. Demo 1 with `finish` adds a 4.5 s finale before the last beat, about 73 s in all.
 - **Honesty.** A script builds the data from logs. Ids are anonymous; there are no names and no message text. A claim the data does not show stays off the demo.
+  - One exception (Ivan, 16.10: «давай просто синтетически доведем слайд что все задачи дошли до готовности»): demo 1's `finish` finale moves every task that is not done when the log ends into done. It is not in the logs. The slide's notes say so and give the speaker a line to say it aloud.
 
 ## Demo 1: «Разработка по логам»
 
@@ -43,8 +44,9 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
   2. The orchestrator hands out tasks.
   3. Review returns tasks.
   4. Runs go in parallel, by day and by night.
-  5. How often the human wrote, against how often the orchestrator woke up by itself.
-- **Prototype data** (13.10): an epic of the task board itself, from the mini's infra-exit worktree, 8–11.10. It has 36 tasks, 84 runs, 22 returns from review, 4 models, 33 messages from the human and 930 wake-ups of the orchestrator; 2 tasks reached done.
+  5. With `finish`: every task reaches done (synthetic, see «Honesty»).
+  6. How often the human wrote, against how often the orchestrator woke up by itself.
+- **Prototype data** (13.10): an epic of the task board itself, from the mini's infra-exit worktree, 8–11.10. It has 36 tasks, 84 runs, 22 returns from review, 4 models, 33 messages from the human and 930 wake-ups of the orchestrator; 2 tasks reached done. After the window, by the board's git copy on ivmbp, 6 more reached done (13–15.10) and 25 were closed on 15.10 without done.
   - The notes' line «человек появляется только в начале и в конце» does not hold for this run.
   - Alexey's tetris run may fit it better. Swap the data with one run of the script when it is available.
 

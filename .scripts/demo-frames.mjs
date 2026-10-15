@@ -3,7 +3,7 @@
 // whole autoplay from one press of →, as the audience sees it. Starts the deck's dev server itself.
 //
 //   node .scripts/demo-frames.mjs [--deck slides/demos.md] [--slide 2] [--port 8097] [--at 1200,6000,…]
-//        [--video] [--duration 68500] [--out .temp/demo-frames]
+//        [--video] [--duration 73000] [--out .temp/demo-frames]
 //
 // Frames land as slide-NN.png (so .scripts/contact-sheet.mjs can glue them), the video as demo.webm.
 // A frame is the demo held at one moment through ?demo-t=<ms> (slides/demo/clock.ts).
@@ -15,8 +15,8 @@ import { chromium } from 'playwright-chromium'
 const args = process.argv.slice(2)
 const opt = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d)
 const deck = opt('--deck', 'slides/demos.md'), slide = opt('--slide', '2'), port = opt('--port', '8097')
-const at = opt('--at', '1200,6000,16000,28000,40000,52000,60500,67000').split(',').map(Number)
-const duration = Number(opt('--duration', '68500'))
+const at = opt('--at', '1200,6000,16000,28000,40000,52000,61500,66000,72000').split(',').map(Number)
+const duration = Number(opt('--duration', '73000'))
 const out = path.resolve(opt('--out', '.temp/demo-frames'))
 const base = `http://localhost:${port}`
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))

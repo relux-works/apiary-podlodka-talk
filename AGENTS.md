@@ -41,6 +41,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run lint` | frontmatter traps (`: ` and ` #` in unquoted values) | stdout |
 | `npm run verify` | lint → offline build → every slide measured in Chromium → contact sheet | `.temp/audit/sheet.png`, `slide-NN.png`, `audit.json` |
 | `npm run timing` | spoken minutes per part from the speaker notes (130 wpm, demos at the plan's length; backup not summed) | stdout |
+| `.scripts/ci-local.sh` | the hosted job «Build, audit, PDF» step by step on this machine, every lane even after a red one; since 16.10 the gate for landing while GitHub Actions cannot run (billing) | stdout, `.temp/ci-local/<lane>.log` |
 | `npm run export` | PDF | `.temp/export/apiary-podlodka-talk.pdf` |
 | `npm run diagrams` | gallery of all stage diagrams | http://localhost:3030 |
 | `npm run demos` | the in-slide demo prototypes (`slides/demos.md`): → starts a demo, → pauses and resumes, ← rewinds a beat, R restarts (`docs/demos.md`) | http://localhost:3030 |

@@ -14,7 +14,7 @@
 // model at the start, then almost nothing, «как в тетрисе»): the messages in its first 5 % of busy time go into the
 // opening, keeping their spacing in proportion; the rest land at the same fraction of this run's busy time.
 //
-//   node .scripts/demo-smooth.mjs --in slides/demo/demo-1/infra-exit.json --out slides/demo/demo-1/infra-exit-smoothed.json [--opening 180] [--human-like slides/demo/demo-1/tetris.json]
+//   node .scripts/demo-smooth.mjs --in slides/demo/demo-1/infra-exit.json --out slides/demo/demo-1/infra-exit-smoothed.json [--opening 180] [--review-hours 1.5] [--human-like slides/demo/demo-1/tetris.json]
 import fs from 'node:fs'
 
 const argv = process.argv.slice(2)
@@ -73,8 +73,8 @@ open.forEach((o, i) => {
   for (const [d, s] of o.pre) o.t.changes.push([Math.min(o.at + d, T1 - 5 * MIN), s, 0, 1])
   const start = Math.max(o.ready, ...o.t.changes.map((c) => c[0]))
   const done = Math.min(Math.max(slot, start + 3 * MIN), T1)
-  // review and integration take the stretch before done, at most an hour and a half of it
-  const span = Math.min(done - start, 90 * MIN)
+  // review and integration take the stretch before done, at most --review-hours of it (default 1.5)
+  const span = Math.min(done - start, Number(one('--review-hours', 1.5)) * 60 * MIN)
   const at = { reviewing: done - span * 0.9, integrating: done - span * 0.4, done }
   for (const s of o.steps) o.t.changes.push([Math.round(at[s]), s, 0, 1])
   o.t.changes.sort((a, b) => a[0] - b[0])

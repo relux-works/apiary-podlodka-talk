@@ -101,11 +101,14 @@ const placed = runs.map((r) => {
 const rows = Object.fromEntries(Object.entries(rowEnd).map(([k, v]) => [k, Math.max(1, v.length)]))
 const human = data.human.map(toPlay)
 const wakes = data.wakes.map(toPlay)
-let peak = 0
+// tasks in work at once: analysis, development, review and integration, whether or not an agent is on them this minute
+const ACTIVE = new Set(['analysis', 'development', 'reviewing', 'integrating'])
+let peakTasks = 0
 {
-  const ev = runs.flatMap((r) => [[r.ds, 1], [r.de, -1]]).sort((a, b) => a[0] - b[0] || a[1] - b[1])
-  let cur = 0
-  for (const [, k] of ev) peak = Math.max(peak, (cur += k))
+  const ev = tasks.flatMap((t) => [[t.from, t.id, t.start], ...t.changes.map((c) => [c.d, t.id, c.s]), [t.until, t.id, '']] as [number, string, string][])
+    .filter((e) => Number.isFinite(e[0]) || e[2] !== '').map((e) => [Number.isFinite(e[0]) ? e[0] : -1, e[1], e[2]] as [number, string, string]).sort((a, b) => a[0] - b[0])
+  const cur = new Map<string, string>()
+  for (const [, id, s] of ev) { cur.set(id, s); peakTasks = Math.max(peakTasks, [...cur.values()].filter((x) => ACTIVE.has(x)).length) }
 }
 const returnsAt = tasks.flatMap((t) => t.changes.filter((c) => c.back).map((c) => c.d)).sort((a, b) => a - b)
 
@@ -136,7 +139,7 @@ const BEATS = [
   { at: 0, text: `Эпик доски задач: ${c.tasks} ${plural(c.tasks, ['задача', 'задачи', 'задач'])}, ${range}` },
   { at: INTRO, text: `Оркестратор раздаёт задачи ${roles}` },
   { at: INTRO + (returnsAt[2] ?? PLAY * 0.3), text: 'Ревью возвращает задачи на доработку' },
-  { at: INTRO + PLAY * 0.62, text: `Запуски идут параллельно, до ${peak} одновременно, днём и ночью` },
+  { at: INTRO + PLAY * 0.62, text: `Задачи идут параллельно: до ${peakTasks} в работе одновременно, днём и ночью` },
   ...(props.finish ? [{ at: INTRO + PLAY, text: 'Все задачи доходят до готовности' }] : []),
   { at: INTRO + PLAY + FINALE, text: `Человек написал ${c.human} ${plural(c.human, ['раз', 'раза', 'раз'])} за ${hours} ${plural(hours, ['час', 'часа', 'часов'])}, оркестратор просыпался сам ${c.wakes} ${plural(c.wakes, ['раз', 'раза', 'раз'])}` },
 ].sort((a, b) => a.at - b.at)

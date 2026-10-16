@@ -48,5 +48,5 @@ Synthetic, built from `infra-exit.json` (Alexey, 16.10); everything added is lis
 
 ```bash
 node .scripts/demo-smooth.mjs --in slides/demo/demo-1/infra-exit.json --out slides/demo/demo-1/infra-exit-smoothed.json \
-  --opening 180 --human-like slides/demo/demo-1/tetris.json
+  --opening 180 --review-hours 5 --human-like slides/demo/demo-1/tetris.json
 ```

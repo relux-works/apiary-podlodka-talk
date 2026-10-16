@@ -56,6 +56,7 @@ Then read `open-questions.md` and the part of the plan you are working on.
 | `npm run host-export -- --host m1max` | on another machine: its share of the statistics and demo 2 in one file, aggregates and timestamps only (`docs/swarm-stats.md`, «Adding a machine») | `.temp/host-export/<host>-export.json` |
 | `node .scripts/merge-host.mjs --export <file> --person alexey` | folds that file into `slides/demo/stats.json` and `slides/demo/swarm.json` | the two data files |
 | `node .scripts/people-hours.mjs … --write slides/demo/stats.json` | people's hours on «Работа агентов за две недели» (10-minute buckets, one timeline per person) | `slides/demo/stats.json` |
+| `node .scripts/prompt-triage.mjs --db <sessions.sqlite>` | a light model (Haiku) marks a person's status pings and filler among the orchestrator prompts of this machine; `people-hours.mjs --drop <host>=<file>` leaves them out (docs/swarm-stats.md) | `.temp/prompt-triage/<host>-noise.json`, timestamps only |
 
 ## Definition of done for a deck change
 

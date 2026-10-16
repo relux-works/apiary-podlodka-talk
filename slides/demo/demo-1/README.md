@@ -11,6 +11,7 @@ Every file here is built by `.scripts/demo-run.mjs`: anonymous task ids, status 
 | File | Board and orchestrator | Tasks | Runs | Review returns | Done | Person wrote | Orchestrator woke |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | `infra-exit.json` | skill-project-management, epic in the infra-exit worktree on the mini, 8–11.10, orchestrator orch-infra-exit (Ivan, 13.10) | 36 | 84 | 22 | 2 | 33 | 930 |
+| `infra-exit-smoothed.json` | the same epic with a synthetic ending (`.scripts/demo-smooth.mjs`, Alexey 16.10): every open task reaches done, evenly over the run; plays on slide 29 | 36 | 84 | 22 | 36 | 33 | 930 |
 | `tetris.json` | tetris (Alexey's m1max), epics foundation, backend and web-client, 11–13.09, one Claude Code orchestrator | 20 | 82 | 8 | 20 | 7 | 64 |
 
 ## infra-exit.json

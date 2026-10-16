@@ -5,13 +5,13 @@
 // лаймовая — готово. Снизу дорожки: человек (его сообщения оркестратору), оркестратор (сам просыпается по событиям),
 // роли субагентов; полоска — запуск, цвет — модель. Тихие часы без событий проматываются быстро.
 // Данные: slides/demo/run.json (.scripts/demo-run.mjs; анонимные id, без имён и текстов); run="infra-exit" берёт
-// slides/demo/demo-1/infra-exit.json, у каждого набора свои часы. Часы и управление: slides/demo/clock.ts. Стиль демо:
+// slides/demo/demo-1/infra-exit-smoothed.json (конец дорисован .scripts/demo-smooth.mjs), у каждого набора свои часы. Часы и управление: slides/demo/clock.ts. Стиль демо:
 // docs/demos.md.
 // finish (Иван, 16.10: «синтетически доведем… что все задачи дошли до готовности»): когда журнал кончился, короткий
 // финал переводит в «Готово» каждую задачу, которая там не оказалась. Этого нет в журналах: заметки слайда говорят об этом.
 import { computed } from 'vue'
 import onStage from '../demo/run.json'
-import infraExit from '../demo/demo-1/infra-exit.json'
+import infraExit from '../demo/demo-1/infra-exit-smoothed.json'
 import { useDemoClock } from '../demo/clock'
 
 const props = defineProps<{ run?: 'infra-exit', finish?: boolean }>()

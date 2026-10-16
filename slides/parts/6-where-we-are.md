@@ -54,41 +54,40 @@ tag: '06 · ИТОГ'
 # Ссылки *и контакты*
 
 <div class="cards cols-3">
+<div class="card v7-qr"><Qr url="https://t.me/swarmasi" /><p><strong>Канал платформы</strong><code>t.me/swarmasi</code><span>новости и ссылки на открытые репозитории</span></p></div>
+<div class="card v7-qr"><Qr url="https://t.me/ivanopcode" /><p><strong>Иван Опарин</strong><code>t.me/ivanopcode</code></p></div>
+<div class="card v7-qr"><Qr url="https://t.me/a1exxxis" /><p><strong>Алексей Григорьев</strong><code>t.me/a1exxxis</code></p></div>
 <div class="card v7-wide">
-<h2>Пост, из которого вырос доклад</h2>
-<p><code>relux.works/ru/blog/from-buckets-to-apiary</code></p>
+<h2>Доклады Ивана про локальные модели</h2>
+<div class="v7-talks">
+<div class="v7-qr"><Qr url="https://club.podlodka.ai/share/cmv55xwm10001ru01b7pkpqaw" :size="80" /><p><strong>Локальные модели для кодинга</strong><span>Podlodka AI Engineers<br>23.07.2026</span></p></div>
+<div class="v7-qr"><Qr url="https://www.youtube.com/watch?v=6FFApxRm2Ok" :size="80" /><p><strong>Локальные модели для разработки под iOS на Apple Silicon</strong><span>Podlodka iOS Crew<br>09.2026</span></p></div>
+</div>
 </div>
 <div class="card">
 <h2>Сайт</h2>
 <p><code>relux.works</code></p>
 </div>
-<div class="card">
-<h2>Открытые репозитории</h2>
-<p><Ph>⟨что открываем к докладу — решает оператор⟩</Ph></p>
-</div>
-<div class="card">
-<h2>Пейпер по рою</h2>
-<p><Ph>⟨ссылка после публикации⟩</Ph></p>
-</div>
-<div class="card">
-<h2>Контакты</h2>
-<p><Ph>⟨контакты спикеров — решить⟩</Ph></p>
-<div class="v7-qr-row"><Qr url="https://www.youtube.com/watch?v=6FFApxRm2Ok" :size="64" /><p>Иван про локальные модели · Podlodka iOS Crew</p></div>
-</div>
 </div>
 
 <style>
 .v7-wide { grid-column: span 2; }
-.v7-qr-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
-.v7-qr-row p { margin: 0; font-size: 14px; line-height: 1.35; color: var(--rwb-sec-card); }
+.v7-qr { display: flex; align-items: center; gap: 16px; }
+.v7-qr p { margin: 0; color: var(--rwb-sec-card); }
+.v7-qr p strong { display: block; font-weight: 600; color: var(--rwb-txt); }
+.v7-qr p code { display: inline-block; margin-top: 8px; }
+.v7-qr p span { display: block; margin-top: 8px; font-size: 14px; line-height: 1.35; }
+.v7-talks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 12px; }
+.v7-talks p { font-size: 15px; line-height: 1.35; }
+.v7-talks p span { font-family: var(--rwb-mono); font-size: 13px; color: var(--rwb-sec); }
 </style>
 
 <!--
-[Иван] Всё, что мы сегодня рассказали, выросло из поста в нашем блоге: там каждая глава со ссылками на решения и спецификации. Сайт студии — relux.works. Пейпер по рою — по ссылке на слайде. Про локальные модели подробно я рассказывал на Podlodka iOS Crew — QR на слайде.
+[Иван] Подписывайтесь на канал платформы: там новости, и туда же мы выложим ссылки на открытые репозитории. Рядом наши телеграмы — пишите. Сайт студии — relux.works. А про локальные модели я подробно рассказывал в двух докладах на «Подлодке» — QR обоих тоже здесь.
 
-[Для себя] Заменить карточки «Открытые репозитории», «Пейпер по рою» и плейсхолдер контактов, когда решения будут приняты (open-questions.md, п. 11; список oss-release ждём с 11.10). Карточку пейпера убрать, если он не выйдет к докладу. QR — доклад Ивана «Локальные модели для разработки под iOS на Apple Silicon», Podlodka iOS Crew, YouTube 14.09.2026 — https://www.youtube.com/watch?v=6FFApxRm2Ok (Иван, 15.10). Второй доклад, «Локальные модели для кодинга» (Podlodka AI Engineers, 23.07.2026), — QR на «Роутере моделей»; второй QR сюда не помещается. Уже публичные: waggle, curator, curator-spec, skill-agents-management, curator-agent-launcher, agent-session-manager. Пост — черновик: страница отвечает, но помечена «[Draft]».
+[Для себя] 16.10 (Иван): поста из блога на слайде больше нет; телеграм-канал платформы t.me/swarmasi (Swarma.si), телеграмы Ивана t.me/ivanopcode и Алексея t.me/a1exxxis; ссылки на GitHub выложим в канале, поэтому карточки репозиториев нет. Оба QR докладов Ивана стоят вместе — здесь и на «Роутере моделей» (Иван, 16.10: везде, где QR на его доклады, их два сразу). Карточка пейпера убрана: к докладу он не опубликован (было записано: убрать, если не выйдет к докладу); если выйдет — ссылка пойдёт в канал, как и GitHub. Уже публичные репозитории: waggle, curator, curator-spec, skill-agents-management, curator-agent-launcher, agent-session-manager.
 
-Источники: relux-works/blog, posts/from-buckets-to-apiary.ru.md — draft: true (проверено 29.09); relux.works — открывается (проверено 29.09); docs/sources.md (публичные репозитории отмечены P; доклады Ивана — раздел «Talks»); open-questions.md, п. 11; разговор спикеров 12.10 («Там, где ссылки и контакты, дать ссылку на пейпер, пускай читают как научную работу»). Статус: пост — черновик; сайт — работает; репозитории, пейпер и контакты — открыто.
+Источники: адреса телеграма — Иван, 16.10, все три страницы открываются (проверено 16.10); доклады Ивана — docs/sources.md, раздел «Talks»; relux.works — открывается (проверено 29.09); open-questions.md, п. 11. Статус: канал, контакты и сайт — работают.
 -->
 
 ---

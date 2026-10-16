@@ -87,12 +87,20 @@ Demo metrics: board events in `.task-board/.activity/<ID>/events.ndjson`, runs i
 
 ## Talks
 
-Ivan's earlier talks on local models, public recordings, QR codes on «Роутер моделей», the iOS Crew one also on «Ссылки и контакты» (addresses from Ivan, 15.10; both pages checked on 15.10):
+Ivan's earlier talks on local models, public recordings, QR codes for both together on «Роутер моделей» and on «Ссылки и контакты» (Ivan, 16.10: wherever his talks get a QR code, both do; addresses from Ivan, 15.10; both pages checked on 15.10):
 
 - «Локальные модели для кодинга», Podlodka AI Engineers club, 23.07.2026, «можно смотреть без регистрации»: https://club.podlodka.ai/share/cmv55xwm10001ru01b7pkpqaw
 - «Локальные модели для разработки под iOS на Apple Silicon», Podlodka iOS Crew, recording on the Podlodka Crew YouTube channel, 14.09.2026: https://www.youtube.com/watch?v=6FFApxRm2Ok
 
 The QR codes are generated from these URLs at build time (`slides/components/Qr.vue`, the `qrcode` package); a changed URL changes the code.
+
+## Contacts
+
+On «Ссылки и контакты», with QR codes (addresses from Ivan, 16.10; all three pages checked on 16.10). GitHub links go to the channel, not on the slide.
+
+- The platform's Telegram channel «Swarma.si»: https://t.me/swarmasi
+- Ivan: https://t.me/ivanopcode
+- Alexey: https://t.me/a1exxxis
 
 ## What the Apiary is made of
 

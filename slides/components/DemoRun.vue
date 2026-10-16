@@ -45,6 +45,9 @@ const toReal = (play: number) => {
 
 // ---- layout -----------------------------------------------------------------------------------------------
 const W = 908, AX = 100, AW = 760 // the time axis; lane counters sit right of it
+// a column or a lane with no event in the dataset is left out, and the rest share its room (Alexey, 16.10: the tetris
+// had no analysis phase and no analysts, its spec was written up front)
+const STATUSES = new Set(data.tasks.flatMap((t) => [t.start, ...t.changes.map((c) => c[1] as string)]))
 const COLS = [
   { key: 'queue', label: 'ОЧЕРЕДЬ', of: ['backlog'] },
   { key: 'analysis', label: 'АНАЛИЗ', of: ['analysis'] },
@@ -52,16 +55,19 @@ const COLS = [
   { key: 'review', label: 'РЕВЬЮ', of: ['to-review', 'reviewing'] },
   { key: 'integrating', label: 'ИНТЕГРАЦИЯ', of: ['integrating'] },
   { key: 'done', label: 'ГОТОВО', of: ['done'] },
-]
+].filter((c) => c.key === 'done' || c.of.some((x) => STATUSES.has(x)))
 const colOf = (s: string) => Math.max(0, COLS.findIndex((c) => c.of.includes(s)))
-const CW = 148, CG = 4, TOK = 16, TG = 6, PER_ROW = 6, BOARD_Y = 44
+const CG = 4, TOK = 16, TG = 6, BOARD_Y = 44
+const CW = (W - (COLS.length - 1) * CG) / COLS.length, PER_ROW = Math.floor((CW - 22 + TG) / (TOK + TG))
+// the people and the orchestrator keep fixed rows; the role lanes share 276–374
 const LANES = [
   { key: 'human', label: 'Человек', y: 226, h: 18 },
   { key: 'orch', label: 'Оркестратор', y: 250, h: 18 },
-  { key: 'analyst', label: 'Аналитик', y: 276, h: 30 },
-  { key: 'implementer', label: 'Исполнитель', y: 312, h: 28 },
-  { key: 'reviewer', label: 'Ревьюер', y: 346, h: 28 },
-]
+  ...(['analyst', 'implementer', 'reviewer'] as const).filter((k) => data.runs.some((r) => r.role === k)).map((key, i, all) => {
+    const h = (98 - (all.length - 1) * 6) / all.length
+    return { key, label: { analyst: 'Аналитик', implementer: 'Исполнитель', reviewer: 'Ревьюер' }[key], y: 276 + i * (h + 6), h }
+  }),
+].filter((l) => l.key === 'human' ? data.human.length : l.key === 'orch' ? data.wakes.length : true)
 const laneOf = Object.fromEntries(LANES.map((l) => [l.key, l]))
 // vendor colours shared with demo 2 (slides/style.css): OpenAI cyan, Meta magenta, Anthropic amber
 const MODELS: Record<string, { cls: string, name: string }> = {

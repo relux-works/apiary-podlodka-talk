@@ -80,7 +80,8 @@ const MODELS: Record<string, { cls: string, name: string }> = {
 const xOf = (play: number) => AX + (Math.min(Math.max(play, 0), PLAY) / PLAY) * AW
 
 // ---- the data on the play clock ---------------------------------------------------------------------------
-const tasks = data.tasks.map((t, i) => ({ id: t.id, i, start: t.start, changes: t.changes.map(([r, s, back]) => ({ d: toPlay(r as number), s: s as string, back: !!back })) }))
+// a task can live only from `from` until `until` (real ms): a synthetic opening's spec task, and the tasks it creates
+const tasks = data.tasks.map((t: { from?: number, until?: number }, i) => ({ id: t.id, i, start: t.start, from: t.from ? toPlay(t.from) : -Infinity, until: t.until ? toPlay(t.until) : Infinity, changes: t.changes.map(([r, s, back]) => ({ d: toPlay(r as number), s: s as string, back: !!back })) }))
 // the synthetic finale: the tasks that are not done when the log ends move to «Готово» one by one
 if (props.finish) {
   const open = tasks.filter((t) => (t.changes.length ? t.changes[t.changes.length - 1].s : t.start) !== 'done')
@@ -152,12 +153,13 @@ const frame = computed(() => {
   const tokens = tasks.map((tk) => {
     let s = tk.start, back = -Infinity
     for (const ch of tk.changes) { if (ch.d > p) break; s = ch.s; if (ch.back) back = ch.d }
-    const col = colOf(s)
-    cols[col].push(tk.i)
+    const col = colOf(s), live = (p >= tk.from || tk.from <= 0) && p < tk.until
+    if (live) cols[col].push(tk.i)
     const working = runs.some((r) => r.task === tk.id && r.ds <= p && p < r.de)
-    return { id: tk.id, col, s, working, flash: p - back < 1200, shown: tk.i / tasks.length < appear, x: 0, y: 0 }
+    return { id: tk.id, col, s, working, flash: p - back < 1200, shown: live && tk.i / tasks.length < appear, x: 0, y: 0 }
   })
   for (const tk of tokens) {
+    if (!tk.shown && !cols[tk.col].includes(tasks.find((x) => x.id === tk.id)!.i)) continue
     const k = cols[tk.col].indexOf(tasks.find((x) => x.id === tk.id)!.i)
     Object.assign(tk, { x: tk.col * (CW + CG) + 11 + (k % PER_ROW) * (TOK + TG), y: BOARD_Y + 30 + Math.floor(k / PER_ROW) * (TOK + TG) })
   }

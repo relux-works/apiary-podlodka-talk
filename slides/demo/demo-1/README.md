@@ -11,7 +11,7 @@ Every file here is built by `.scripts/demo-run.mjs`: anonymous task ids, status 
 | File | Board and orchestrator | Tasks | Runs | Review returns | Done | Person wrote | Orchestrator woke |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | `infra-exit.json` | skill-project-management, epic in the infra-exit worktree on the mini, 8–11.10, orchestrator orch-infra-exit (Ivan, 13.10) | 36 | 84 | 22 | 2 | 33 | 930 |
-| `infra-exit-smoothed.json` | the same epic with a synthetic ending (`.scripts/demo-smooth.mjs`, Alexey 16.10): every open task reaches done, evenly over the run; plays on slide 29 | 36 | 84 | 22 | 36 | 33 | 930 |
+| `infra-exit-smoothed.json` | the same epic with a synthetic ending (`.scripts/demo-smooth.mjs`, Alexey 16.10): every open task reaches done, evenly over the run, and a 3 h opening with one spec-decomposition task and one analyst run (`--opening 180`), late analysis moved into the analysis wave, and the person's 7 messages after the tetris's pattern (`--human-like tetris.json`); plays on slide 29 | 36 + 1 | 84 + 1 | 22 | 36 | 7 | 930 |
 | `tetris.json` | tetris (Alexey's m1max), epics foundation, backend and web-client, 11–13.09, one Claude Code orchestrator | 20 | 82 | 8 | 20 | 7 | 64 |
 
 ## infra-exit.json
@@ -41,3 +41,12 @@ node .scripts/demo-run.mjs --repo ~/src/tetris \
 - Boards of 09.2026 wake the orchestrator with a plain `task-board run RUN-…` notice. These now count as wakes, not as the person.
 - `--epic` takes several epics, and `--skip-human` drops the person's entries at given timestamps.
 - `DemoRun.vue` keeps one day mark where a squeezed quiet stretch puts several midnights on one spot.
+
+## infra-exit-smoothed.json
+
+Synthetic, built from `infra-exit.json` (Alexey, 16.10); everything added is listed in its `synthetic` field:
+
+```bash
+node .scripts/demo-smooth.mjs --in slides/demo/demo-1/infra-exit.json --out slides/demo/demo-1/infra-exit-smoothed.json \
+  --opening 180 --human-like slides/demo/demo-1/tetris.json
+```

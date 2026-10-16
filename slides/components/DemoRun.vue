@@ -165,7 +165,7 @@ const frame = computed(() => {
     const lane = laneOf[r.role]
     const n = rows[r.role], rh = (lane.h - (n - 1) * 2) / n
     const x0 = xOf(r.ds), x1 = Math.max(x0 + 2, xOf(Math.min(r.de, p)))
-    return { x: x0, w: x1 - x0, y: lane.y + r.row * (rh + 2), h: rh, cls: MODELS[r.model]?.cls ?? 'v-codex-2', cut: r.outcome === 'cancelled' && r.de <= p }
+    return { x: x0, w: x1 - x0, y: lane.y + r.row * (rh + 2), h: rh, cls: MODELS[r.model]?.cls ?? 'v-codex-2', op: shade((r as { effort?: string }).effort), cut: (r.outcome === 'cancelled' || r.outcome === 'failed') && r.de <= p }
   })
   const quietNow = quiet.find(([a, b]) => real > a && real < b && p > 0 && p < PLAY)
   return {
@@ -189,7 +189,23 @@ const frame = computed(() => {
     head: xOf(Math.max(0, p)),
   }
 })
-const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model === m)).map(([, v]) => v)
+// an orange tick ends a run that was cancelled or failed; the legend names it when the dataset has one (Alexey, 16.10)
+const cutRuns = runs.some((r) => r.outcome === 'cancelled' || r.outcome === 'failed')
+// reasoning effort from the run ledgers (older datasets have none): named in the legend; when a dataset mixes levels,
+// a lower level is a paler bar of its model's colour
+const EFFORTS = ['minimal', 'low', 'medium', 'high', 'xhigh', 'max']
+const effortsIn = [...new Set(runs.map((r) => (r as { effort?: string }).effort).filter(Boolean))] as string[]
+const shade = (e?: string) => effortsIn.length > 1 && e ? 0.4 + 0.6 * (EFFORTS.indexOf(e) + 1) / EFFORTS.length : 0.95
+const legendItems = Object.entries(MODELS).flatMap(([m, v]) => {
+  const levels = EFFORTS.filter((e) => runs.some((r) => r.model === m && (r as { effort?: string }).effort === e))
+  if (!runs.some((r) => r.model === m)) return []
+  return levels.length ? levels.map((e) => ({ cls: v.cls, name: `${v.name} · ${e}`, op: shade(e) })) : [{ cls: v.cls, name: v.name, op: 0.95 }]
+})
+// laid out by text width (monospace small: about 7.3 px a character)
+const legend: { cls: string, name: string, op: number, x: number }[] = []
+let lx = AX
+for (const it of legendItems) { legend.push({ ...it, x: lx }); lx += 16 + it.name.length * 7.3 + 22 }
+const cutX = lx
 </script>
 
 <template>
@@ -220,7 +236,7 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
         <text :x="W" :y="lane.y + lane.h / 2 + 4" text-anchor="end" class="lane-n">{{ frame.lane[lane.key] }}</text>
       </g>
       <path :d="frame.wakes" class="wake" />
-      <rect v-for="(b, i) in frame.bars" :key="i" :x="b.x" :y="b.y" :width="b.w" :height="b.h" rx="2" :class="['bar', b.cls]" />
+      <rect v-for="(b, i) in frame.bars" :key="i" :x="b.x" :y="b.y" :width="b.w" :height="b.h" rx="2" :class="['bar', b.cls]" :style="{ '--op': b.op }" />
       <rect v-for="(b, i) in frame.bars.filter(b => b.cut)" :key="'c' + i" :x="b.x + b.w - 2" :y="b.y" width="2" :height="b.h" class="cut" />
       <circle v-for="(x, i) in frame.human" :key="'h' + i" :cx="x" :cy="laneOf.human.y + laneOf.human.h / 2" r="4" class="human" />
       <line v-if="frame.p > 0 && frame.p < PLAY" :x1="frame.head" y1="220" :x2="frame.head" y2="378" class="head" />
@@ -228,9 +244,13 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 
     <g class="foot">
       <text :x="AX - 10" y="410" text-anchor="end" class="t-dim small">модель</text>
-      <template v-for="(m, i) in legend" :key="m.name">
-        <rect :x="AX + i * 124" y="401" width="10" height="10" rx="2" :class="m.cls" />
-        <text :x="AX + i * 124 + 16" y="410" class="t-sec small">{{ m.name }}</text>
+      <template v-for="m in legend" :key="m.name">
+        <rect :x="m.x" y="401" width="10" height="10" rx="2" :class="m.cls" :style="{ opacity: m.op }" />
+        <text :x="m.x + 16" y="410" class="t-sec small">{{ m.name }}</text>
+      </template>
+      <template v-if="cutRuns">
+        <rect :x="cutX + 4" y="401" width="2" height="10" class="cut" />
+        <text :x="cutX + 12" y="410" class="t-sec small">запуск прерван</text>
       </template>
     </g>
   </svg>
@@ -257,7 +277,7 @@ const legend = Object.entries(MODELS).filter(([m]) => runs.some((r) => r.model =
 .demo-run .lane-bg { fill: rgba(255, 255, 255, 0.035); }
 .demo-run .day { stroke: var(--rwb-rule); stroke-width: 1; stroke-dasharray: 3 4; }
 .demo-run .wake { stroke: var(--rwb-purple); stroke-width: 1; opacity: 0.85; }
-.demo-run .bar { opacity: 0.95; }
+.demo-run .bar { opacity: var(--op, 0.95); }
 .demo-run .v-codex { fill: var(--demo-codex); }
 .demo-run .v-codex-2 { fill: var(--demo-codex-2); }
 .demo-run .v-muse { fill: var(--demo-muse); }

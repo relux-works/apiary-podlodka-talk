@@ -38,7 +38,7 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
 `slides/components/DemoRun.vue`, with data from `.scripts/demo-run.mjs`, which reads one epic of a task board into `slides/demo/run.json`. Slide 28 plays `run.json` (the tetris). `<DemoRun run="infra-exit" />` plays Ivan's dataset instead, with its own clock.
 
 - **Board.** Columns for the phases: queue, analysis, development, review, integration, done. Each task is a square that moves between columns as its status changed. White with a purple ring means a subagent is working on it now. An orange flash means review sent it back. Lime means done.
-- **Lanes.** The human's messages to the orchestrator, the orchestrator's own wake-ups, and the runs by role (analyst, implementer, reviewer). Each bar is a run; its colour is the model. Counters sit at the right end of each lane.
+- **Lanes.** The human's messages to the orchestrator, the orchestrator's own wake-ups, and the runs by role (analyst, implementer, reviewer). Each bar is a run; its colour is the model. The legend names each model with its reasoning effort from the run ledgers (since 16.10; a dataset without it shows the model alone), and a dataset that mixes levels draws a lower level paler. An orange tick ends a run that was cancelled or failed, named «запуск прерван» in the legend. Counters sit at the right end of each lane.
 - **Beats.**
   1. The epic and its size.
   2. The orchestrator hands out tasks.

@@ -2,7 +2,7 @@
 // Data for demo 1 «Разработка по логам» (slides/components/DemoRun.vue): one epic of a task board, replayed.
 // Reads the board's activity streams (.task-board/.activity/*/events.ndjson), its run ledgers
 // (.temp/spawn-runs/RUN-*/manifest.json and state.json) and the orchestrator's session transcript, and writes
-// one JSON with anonymous task ids, status changes, runs (role, model, start, end, outcome), the times the human
+// one JSON with anonymous task ids, status changes, runs (role, model, reasoning effort, start, end, outcome), the times the human
 // wrote to the orchestrator and the times the orchestrator woke up on its own. No names, no message text.
 //
 //   node .scripts/demo-run.mjs --repo <repository with the board> --epic <EPIC-…[,EPIC-…]> --session <orchestrator .jsonl>
@@ -59,7 +59,7 @@ for (const name of fs.readdirSync(runsDir)) {
   if (!epics.has(epicOf(st.task_id))) continue
   const a = ms(st.started_at), b = ms(st.completed_at || st.last_heartbeat_at || '')
   if (Number.isNaN(a) || Number.isNaN(b) || b <= a) continue
-  runs.push({ task: st.task_id, role: m.role_archetype || m.role, model: m.model, start: a, end: b, outcome: st.status, caller: st.caller_session_id })
+  runs.push({ task: st.task_id, role: m.role_archetype || m.role, model: m.model, effort: m.reasoning_effort, start: a, end: b, outcome: st.status, caller: st.caller_session_id })
 }
 if (!runs.length) { console.error(`no runs of ${epic} in ${repo}`); process.exit(1) }
 runs.sort((p, q) => p.start - q.start)
@@ -114,7 +114,7 @@ const data = {
   window: [t0, t1],
   quiet,
   tasks,
-  runs: runs.map((r) => ({ task: anon.get(r.task), role: r.role, model: r.model, start: r.start, end: r.end, outcome: r.outcome })),
+  runs: runs.map((r) => ({ task: anon.get(r.task), role: r.role, model: r.model, ...(r.effort ? { effort: r.effort } : {}), start: r.start, end: r.end, outcome: r.outcome })),
   human,
   wakes,
   counts: {

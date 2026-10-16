@@ -65,6 +65,11 @@ Then read `open-questions.md` and the part of the plan you are working on.
 2. Look at `.temp/audit/sheet.png` (the whole deck in one image), then at `slide-NN.png` for every slide you changed.
 3. Every number or outside fact on a slide has a source in the speaker notes or in `open-questions.md`. Nothing is invented.
 4. Signed commit on a branch, pull request, land by fast-forward of the reviewed head. Both speakers work this way.
+5. The hosted job «Build, audit, PDF» is green on that head. When it cannot run for a cause outside the repository (Alexey, 16.10: «если си лежит — эт независящая от нас причина — гоняем его на локале как пруф, что не сломано, и пушим в транк… шоб не стопарить приземления»): an outage that is not ours does not stop landings.
+   - Confirm the cause from the run itself (`gh run view <id>`: an annotation such as GitHub's billing refusal, an Actions outage, no runner). A job that ran and failed is a repository failure and blocks, wherever it fails.
+   - Run `.scripts/ci-local.sh` on the exact head with a clean tree. Every lane must be `ok`; only the setsid lane may be `skip` on macOS.
+   - In the PR's comment review, name the hosted refusal (run id and message) and the local evidence: head SHA, each lane's verdict, machine and node version. Then land by fast-forward as usual.
+   - Never call the hosted check green or edit its status. When Actions runs again, the hosted job is the gate again.
 
 ## Rules that are easy to miss
 

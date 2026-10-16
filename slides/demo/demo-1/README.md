@@ -11,7 +11,7 @@ Every file here is built by `.scripts/demo-run.mjs`: anonymous task ids, status 
 | File | Board and orchestrator | Tasks | Runs | Review returns | Done | Person wrote | Orchestrator woke |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | `infra-exit.json` | skill-project-management, epic in the infra-exit worktree on the mini, 8–11.10, orchestrator orch-infra-exit (Ivan, 13.10) | 36 | 84 | 22 | 2 | 33 | 930 |
-| `tetris.json` | tetris (Alexey's m1max), epics foundation, backend and web-client, 11–13.09, one Claude Code orchestrator | 20 | 82 | 8 | 20 | 37 | 64 |
+| `tetris.json` | tetris (Alexey's m1max), epics foundation, backend and web-client, 11–13.09, one Claude Code orchestrator | 20 | 82 | 8 | 20 | 7 | 64 |
 
 ## infra-exit.json
 
@@ -31,9 +31,8 @@ node .scripts/demo-run.mjs --repo ~/src/tetris \
 
 - The orchestrator session comes from the agent-sessions backup. Claude Code had already deleted its own copy.
 - The fourth epic, board-infra-tooling, has no runs.
-- **Person wrote = 37** since 16.10 (Ivan: honest numbers on screen whenever a person wrote them, not our infrastructure). The file was first built with `--skip-human` and 7 messages; the 30 skipped ones were put back on 16.10, and the human list, `counts.human` and the quiet stretches were recounted by the script's own rules. Rebuilding: the command above without `--skip-human`.
-- **7 of them refine the tetris spec** (Alexey, 16.10). These are the critical path and concurrent development, `make` as the entry point, e2e scripts in `.scripts`, e2e as acceptance, an e2e with two parallel sessions, start instructions in the README, and a description of the Makefile.
-- The other 30 messages in the window are listed by transcript timestamp in `tetris-skip-human.txt`; they are on stage too. One of them, the Claude Code Remote Control error, is not yet checked: if Claude Code inserted it rather than Alexey, the honest count is 36. They cover the task-board skill's goal and worktree bugs, status questions, estimates, the git remote, agents-infra, and a Claude Code Remote Control error.
+- **Person wrote = 7: only the messages that refine the tetris spec** (Alexey, 16.10). These are the critical path and concurrent development, `make` as the entry point, e2e scripts in `.scripts`, e2e as acceptance, an e2e with two parallel sessions, start instructions in the README, and a description of the Makefile.
+- The other 30 messages in the window are listed by transcript timestamp in `tetris-skip-human.txt` and left out. They cover the task-board skill's goal and worktree bugs, status questions, estimates, the git remote, agents-infra, and a Claude Code Remote Control error.
 
 ## Script fixes made for tetris (16.10)
 

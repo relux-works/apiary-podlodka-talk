@@ -45,7 +45,7 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
   3. Review returns tasks.
   4. Runs go in parallel, by day and by night.
   5. How often the human wrote, against how often the orchestrator woke up by itself.
-- **Data** (16.10): Alexey's tetris board on m1max, epics foundation, backend and web-client, 11–13.09, one Claude Code orchestrator. 20 tasks, 82 runs, 8 review returns, all 20 reach done; the orchestrator woke by itself 64 times; the person wrote 37 times: 7 messages refine the tetris spec, 30 are about other things. All 37 are the person's, so all count (Ivan, 16.10: honest numbers on screen whenever a person wrote them); the board's `task-board run` notices are system messages and count as wakes.
+- **Data** (16.10): Alexey's tetris board on m1max, epics foundation, backend and web-client, 11–13.09, one Claude Code orchestrator. 20 tasks, 82 runs, 8 review returns, all 20 reach done; the orchestrator woke by itself 64 times; the person wrote 7 times, counting only the messages that refine the tetris spec (Alexey, 16.10; the other 30 in the window, about the board's skill, status and other projects, are left out by timestamp; Ivan put all 37 on screen on 16.10 and Alexey restored the 7 the same day); the board's `task-board run` notices are system messages and count as wakes.
   - Both datasets, tetris and Ivan's earlier infra-exit epic (36 tasks, 2 done by the log), are in `slides/demo/demo-1/` with their provenance in its README. `slides/demo/run.json` plays on slide 28.
 
 ## Demo 2: the swarm at scale (prototype, 13.10)

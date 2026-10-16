@@ -10,7 +10,10 @@
 //
 //   node .scripts/people-hours.mjs [--db FILE.sqlite]… [--export HOST-export.json]… [--swarm slides/demo/swarm.json
 //        --swarm-host mini…] [--person ivan=mini,ivmbp --person alexey=m1max] [--from 2026-09-29] [--to 2026-10-13]
-//        [--write slides/demo/stats.json] [--json out.json]
+//        [--drop HOST=noise.json]… [--write slides/demo/stats.json] [--json out.json]
+//
+// --drop takes a machine's status pings and filler out of its prompts: a JSON array of timestamps (ms) from
+// .scripts/prompt-triage.mjs, which labels each prompt with a light model (Alexey, 16.10: «чокак», «где мы»).
 //
 // --person groups machines by person (default: all machines are one person). --write sets twoWeeks.people.hours in a
 // statistics file to [low, high] hours.
@@ -25,7 +28,9 @@ const from = day(one('--from', '2026-09-29')), to = day(one('--to', '2026-10-13'
 
 // ---- prompts by machine ---------------------------------------------------------------------------------
 const byHost = new Map() // host -> timestamps (ms)
-const add = (host, t) => { if (t >= from && t < to) { if (!byHost.has(host)) byHost.set(host, []); byHost.get(host).push(t) } }
+const drop = new Map(multi('--drop').map((spec) => { const [h, f] = spec.split('='); return [h, new Set(JSON.parse(fs.readFileSync(f, 'utf8')))] }))
+const dropped = new Map() // host -> timestamps left out
+const add = (host, t) => { if (t >= from && t < to && drop.get(host)?.has(t)) { if (!dropped.has(host)) dropped.set(host, []); dropped.get(host).push(t); return }; if (t >= from && t < to) { if (!byHost.has(host)) byHost.set(host, []); byHost.get(host).push(t) } }
 for (const f of multi('--db')) {
   const { DatabaseSync } = await import('node:sqlite')
   const db = new DatabaseSync(f, { readOnly: true })
@@ -47,7 +52,8 @@ if (swarmHosts.length) {
   for (const l of sw.lanes) if (swarmHosts.includes(l.host)) for (const s of l.h || []) add(l.host, from + s * 1000)
   // human.series counts every prompt of the swarm's machines; what the database and the kept lanes do not explain is missing
   const bin = sw.human.bin, left = sw.human.series.slice()
-  for (const h of sw.hosts.map((x) => x.id)) for (const t of byHost.get(h) || []) left[Math.floor((t - from) / bin)]--
+  // a dropped prompt is known, not missing
+  for (const h of sw.hosts.map((x) => x.id)) for (const t of [...(byHost.get(h) || []), ...(dropped.get(h) || [])]) left[Math.floor((t - from) / bin)]--
   left.forEach((m, k) => {
     if (m < 0) { console.error(`bin ${k}: ${-m} more prompts than demo 2 counted: the database is not the one demo 2 was built from`); process.exit(1) }
     if (m > 0) missing.push([from + k * bin, m, bin])
@@ -78,6 +84,7 @@ for (const [p, hs] of people) {
 result.hours = result.hours.map((b) => Math.round((b * BUCKET) / H * 10) / 10)
 
 for (const [p, v] of Object.entries(result.people)) console.log(`${p} (${v.hosts.join(', ')}): ${v.prompts} prompts, ${v.buckets} buckets of 10 min known, ${v.hours[0]}–${v.hours[1]} h`)
+for (const [h, ts] of dropped) console.log(`${h}: ${ts.length} status pings and filler left out (--drop)`)
 console.log(`people: ${result.prompts} prompts, ${result.hours[0]}–${result.hours[1]} h${missing.length ? ` (${missing.reduce((s, [, m]) => s + m, 0)} prompts known only to their 30-minute bin)` : ''}`)
 if (one('--json')) fs.writeFileSync(one('--json'), JSON.stringify(result))
 if (one('--write')) {

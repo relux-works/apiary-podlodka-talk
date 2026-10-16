@@ -106,8 +106,8 @@
    "longestGapH": 16,
    "longestGapFrom": "2026-10-02T16:51:21.635Z",
    "hours": [
-    109.1,
-    110.3
+    106.8,
+    108.0
    ],
    "hoursBy": {
     "ivan": [
@@ -115,9 +115,12 @@
      69
     ],
     "alexey": [
-     41.3,
-     41.3
+     39.0,
+     39.0
     ]
+   },
+   "hoursDropped": {
+    "m1max": 95
    }
   },
   "messages": {

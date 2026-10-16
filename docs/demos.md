@@ -29,13 +29,13 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
 - **Type.** The caption is one line of Inter at 18 px; labels are JetBrains Mono at 13 px, with column heads in capitals. Numbers are white, words secondary grey.
 - **Time.** A replay clock shows the real date and time at the top right, in Moscow time on every machine. Quiet stretches without events are squeezed and marked «пропуск N ч без событий»; days are dashed lines on the time axis.
 - **Story.** Four or five beats. Each changes the caption by itself, and every number in a caption is computed from the data. The last beat dims everything except its point.
-- **Length.** About 70 s from one press: an intro of 3.5 s, 56 s of replay and 9 s on the last beat. That leaves the speaker time to talk over it inside a 3-minute slot. Demo 1 with `finish` adds a 4.5 s finale before the last beat, about 73 s in all.
+- **Length.** About 70 s from one press: an intro of 3.5 s, 56 s of replay and 9 s on the last beat. That leaves the speaker time to talk over it inside a 3-minute slot.
 - **Honesty.** A script builds the data from logs. Ids are anonymous; there are no names and no message text. A claim the data does not show stays off the demo.
-  - One exception (Ivan, 16.10: «давай просто синтетически доведем слайд что все задачи дошли до готовности»): demo 1's `finish` finale on the infra-exit run moves every task that is not done when the log ends into done. It is not in the logs. The slide's notes say so; the speakers do not say it aloud (Ivan, 16.10).
+  - `DemoRun`'s `finish` prop (a synthetic finale that moves every unfinished task into done) is not used on stage: on 16.10 the infra-exit run played with it as a second run of demo 1, and Alexey removed that slide the same day.
 
 ## Demo 1: «Разработка по логам»
 
-`slides/components/DemoRun.vue`, with data from `.scripts/demo-run.mjs`, which reads one epic of a task board into `slides/demo/run.json`. Since 16.10 demo 1 is two runs in a row (Ivan: «сделай обе версии последовательно»): slide 28 plays `run.json` (the tetris), slide 29 plays `<DemoRun run="infra-exit" finish />`. Each run has its own clock, so → on slide 29 starts that run from the beginning.
+`slides/components/DemoRun.vue`, with data from `.scripts/demo-run.mjs`, which reads one epic of a task board into `slides/demo/run.json`. Slide 28 plays `run.json` (the tetris). `<DemoRun run="infra-exit" />` plays Ivan's dataset instead, with its own clock.
 
 - **Board.** Columns for the phases: queue, analysis, development, review, integration, done. Each task is a square that moves between columns as its status changed. White with a purple ring means a subagent is working on it now. An orange flash means review sent it back. Lime means done.
 - **Lanes.** The human's messages to the orchestrator, the orchestrator's own wake-ups, and the runs by role (analyst, implementer, reviewer). Each bar is a run; its colour is the model. Counters sit at the right end of each lane.
@@ -44,10 +44,9 @@ The state sits in the deck's dev server (`server-reactive:demo`, `slides/vite.co
   2. The orchestrator hands out tasks.
   3. Review returns tasks.
   4. Runs go in parallel, by day and by night.
-  5. With `finish`: every task reaches done (synthetic, see «Honesty»).
-  6. How often the human wrote, against how often the orchestrator woke up by itself.
+  5. How often the human wrote, against how often the orchestrator woke up by itself.
 - **Data** (16.10): Alexey's tetris board on m1max, epics foundation, backend and web-client, 11–13.09, one Claude Code orchestrator. 20 tasks, 82 runs, 8 review returns, all 20 reach done; the orchestrator woke by itself 64 times; the person wrote 37 times: 7 messages refine the tetris spec, 30 are about other things. All 37 are the person's, so all count (Ivan, 16.10: honest numbers on screen whenever a person wrote them); the board's `task-board run` notices are system messages and count as wakes.
-  - Both datasets, tetris and Ivan's earlier infra-exit epic (36 tasks, 2 done by the log), are in `slides/demo/demo-1/` with their provenance in its README. `slides/demo/run.json` plays on slide 28; `infra-exit.json` plays on slide 29 with the synthetic finale.
+  - Both datasets, tetris and Ivan's earlier infra-exit epic (36 tasks, 2 done by the log), are in `slides/demo/demo-1/` with their provenance in its README. `slides/demo/run.json` plays on slide 28.
 
 ## Demo 2: the swarm at scale (prototype, 13.10)
 
